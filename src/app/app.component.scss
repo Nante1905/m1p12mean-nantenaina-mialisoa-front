@@ -11,6 +11,10 @@
   padding: 20px;
   margin-left: 280px;
   transition: margin-left 0.3s;
+
+  &.expand {
+    margin-left: 70px;
+  }
 }
 
 @media (max-width: 768px) {

@@ -11,4 +11,8 @@ import { SidebarComponent } from './shared/sidebar/sidebar.component';
 export class AppComponent {
   title = 'm1p12mean-nantenaina-mialisoa-front';
   sidebarCollapsed = false;
+
+  toggleSidebar(value: boolean) {
+    this.sidebarCollapsed = value;
+  }
 }

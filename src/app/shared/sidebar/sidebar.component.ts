@@ -35,15 +35,19 @@ export class SidebarComponent {
 
   navItems: NavItem[] = [
     {
-      label: 'Dashboard',
-      icon: 'dashboard',
-      route: '/dashboard',
-      badge: { text: 'New', variant: 'primary' },
+      label: 'Accueil',
+      icon: 'home',
+      route: 'home',
     },
-    { label: 'Utilisateurs', icon: 'people', route: '/users' },
-    { label: 'Projets', icon: 'work', route: '/projects' },
-    { label: 'Rapports', icon: 'bar_chart', route: '/reports' },
-    { label: 'Paramètres', icon: 'settings', route: '/settings' },
+    {
+      label: 'Devis',
+      icon: 'request_quote',
+      route: 'test',
+    },
+    // { label: 'Utilisateurs', icon: 'people', route: 'users' },
+    // { label: 'Projets', icon: 'work', route: 'projects' },
+    // { label: 'Rapports', icon: 'bar_chart', route: 'reports' },
+    // { label: 'Paramètres', icon: 'settings', route: 'settings' },
   ];
 
   @HostListener('window:resize', ['$event'])
