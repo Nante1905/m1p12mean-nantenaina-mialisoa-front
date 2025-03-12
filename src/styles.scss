@@ -1,1 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
+@import url("https://fonts.googleapis.com/css?family=Inter:700|Mona%20Sans:400");
+
+body {
+  font-family: "Mona Sans";
+  font-weight: 400;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: "Mona Sans";
+  font-weight: 700;
+}

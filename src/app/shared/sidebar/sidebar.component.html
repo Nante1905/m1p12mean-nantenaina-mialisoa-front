@@ -1,0 +1,49 @@
+<aside class="sidebar" [class.collapsed]="collapsed">
+  <div class="sidebar-header">
+    <div class="logo-container">
+      <img *ngIf="!collapsed" src="assets/logo.png" alt="Logo" class="logo" />
+      <img *ngIf="collapsed" src="assets/icon.png" alt="Icon" class="icon" />
+    </div>
+    <button class="toggle-btn" (click)="toggleSidebar()" title="Toggle sidebar">
+      <span class="material-icons">{{
+        collapsed ? "chevron_right" : "chevron_left"
+      }}</span>
+    </button>
+  </div>
+
+  <div class="sidebar-content">
+    <nav class="sidebar-nav">
+      <ul class="nav-list">
+        <li *ngFor="let item of navItems" class="nav-item">
+          <a
+            [routerLink]="item.route"
+            routerLinkActive="active"
+            class="nav-link"
+            [title]="collapsed ? item.label : ''"
+          >
+            <span class="material-icons nav-icon">{{ item.icon }}</span>
+            <span *ngIf="!collapsed" class="nav-text">{{ item.label }}</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+  <div class="sidebar-footer">
+    <!-- <div class="user-info" *ngIf="!collapsed" title="Profile">
+      <img src="assets/user-avatar.jpg" alt="User Avatar" class="user-avatar" />
+      <div class="user-details">
+        <span class="user-name">Utilisateur</span>
+        <span class="user-role">Administrateur</span>
+      </div>
+    </div>
+    <div class="user-icon" *ngIf="collapsed">
+      <img
+        src="assets/user-avatar.jpg"
+        alt="User Avatar"
+        class="user-avatar-small"
+        title="Profile"
+      />
+    </div> -->
+  </div>
+</aside>
