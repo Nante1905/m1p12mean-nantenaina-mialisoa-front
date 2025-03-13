@@ -1,0 +1,10 @@
+<h1>Vos devis</h1>
+<div class="w-full flex justify-end">
+  <app-primary-button [children]="estimationButtonText" />
+</div>
+<mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" class="my-8">
+  <mat-tab label="Demandes de devis"> Demandes de devis </mat-tab>
+  <mat-tab label="Réponses">
+    <app-estimation-list [estimations]="estimations" />
+  </mat-tab>
+</mat-tab-group>

@@ -42,7 +42,7 @@ export class SidebarComponent {
     {
       label: 'Devis',
       icon: 'request_quote',
-      route: 'test',
+      route: 'devis',
     },
     // { label: 'Utilisateurs', icon: 'people', route: 'users' },
     // { label: 'Projets', icon: 'work', route: 'projects' },
