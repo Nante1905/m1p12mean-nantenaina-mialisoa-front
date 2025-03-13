@@ -1,10 +1,22 @@
 <h1>Vos devis</h1>
 <div class="w-full flex justify-end">
-  <app-primary-button [children]="estimationButtonText" />
+  <app-primary-button
+    [children]="estimationButtonText"
+    [link]="'/demande-devis'"
+  />
 </div>
-<mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" class="my-8">
-  <mat-tab label="Demandes de devis"> Demandes de devis </mat-tab>
-  <mat-tab label="Réponses">
-    <app-estimation-list [estimations]="estimations" />
-  </mat-tab>
-</mat-tab-group>
+
+<p-tabs>
+  <p-tablist>
+    <p-tab value="0">Demade de devis</p-tab>
+    <p-tab value="1">Devis</p-tab>
+  </p-tablist>
+  <p-tabpanels>
+    <p-tabpanel value="0">
+      <p>demande de devis</p>
+    </p-tabpanel>
+    <p-tabpanel value="1">
+      <app-estimation-list [estimations]="estimations" />
+    </p-tabpanel>
+  </p-tabpanels>
+</p-tabs>

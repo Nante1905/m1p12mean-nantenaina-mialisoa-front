@@ -20,9 +20,7 @@
             "outputPath": "dist/m1p12mean-nantenaina-mialisoa-front",
             "index": "src/index.html",
             "browser": "src/main.ts",
-            "polyfills": [
-              "zone.js"
-            ],
+            "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -31,8 +29,12 @@
                 "input": "public"
               }
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": ["src/app/styles"]
+            },
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/@ng-select/ng-select/themes/default.theme.css"
             ],
             "scripts": []
           },
@@ -78,10 +80,7 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ],
+            "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -90,8 +89,12 @@
                 "input": "public"
               }
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": ["src/styles"]
+            },
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/@ng-select/ng-select/themes/default.theme.css"
             ],
             "scripts": []
           }

@@ -3,3 +3,14 @@ $background: #f8fdf7;
 $primary: #4760ee;
 $secondary: #94b5e9;
 $accent: #88ea6f;
+
+$primary-light: lighten($primary, 10%);
+$placeholder-color: #5f6369;
+$border-color: #d1d5db;
+$disabled-bg: #f3f4f6;
+$disabled-border: #e5e7eb;
+$disabled-text: #6b7280;
+$error-color: #ef4444;
+$label-color: #374151;
+$helper-text-color: #6b7280;
+$icon-color: #9ca3af;

@@ -1,0 +1,65 @@
+<section class="demande-devis-form mx-5">
+  <form
+    [formGroup]="form"
+    class="flex gap-5 justify-between"
+    (submit)="onFormSubmit()"
+  >
+    <div class="vehicule-info m-2 flex flex-col gap-5 w-[40%]">
+      <p class="font-semibold underline underline-offset-4">
+        Information du véhicule
+      </p>
+      <p-select
+        formControlName="vehicule"
+        [options]="vehicules"
+        optionLabel="name"
+        optionValue="id"
+        placeholder="Choisir un vehicule"
+      >
+      </p-select>
+      <p-select
+        formControlName="marque"
+        [options]="vehicules"
+        optionLabel="name"
+        optionValue="id"
+        placeholder="Choisir une marque"
+      >
+      </p-select>
+
+      <input
+        pInputText
+        type="text"
+        class=""
+        formControlName="modele"
+        placeholder="Entre le modele"
+      />
+      <p-datepicker
+        [iconDisplay]="'input'"
+        [showIcon]="true"
+        inputId="icondisplay"
+        view="year"
+        dateFormat="yy"
+        formControlName="annee"
+        placeholder="Choisir l'année"
+      />
+      <p-select
+        formControlName="motorisation"
+        [options]="motorisations"
+        optionLabel="name"
+        optionValue="id"
+        placeholder="Choisir un type de moteur"
+      />
+      <p-button label="Soumettre la demande" type="submit"></p-button>
+    </div>
+    <div class="demande-description flex flex-col gap-5 w-[40%]">
+      <p class="font-semibold underline underline-offset-4">
+        Decrivez nous votre demande
+      </p>
+      <textarea
+        rows="5"
+        cols="30"
+        pTextarea
+        formControlName="description"
+      ></textarea>
+    </div>
+  </form>
+</section>

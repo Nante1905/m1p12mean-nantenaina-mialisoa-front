@@ -1,23 +1,10 @@
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
-@use "@angular/material" as mat;
+// @use "@angular/material" as mat;
 @use "./app/styles/themes/colors.scss" as themeColors;
 @import url("https://fonts.googleapis.com/css?family=Inter:700|Mona%20Sans:400");
 @import "./import-tailwind.css";
-
-html {
-  @include mat.theme(
-    (
-      color: (
-        theme-type: light,
-        primary: mat.$azure-palette,
-        tertiary: mat.$blue-palette,
-      ),
-      typography: "Mona Sans",
-      density: 0,
-    )
-  );
-}
+// @import "~@ng-select/ng-select/themes/default.theme.css";
 
 html,
 body {
@@ -38,7 +25,7 @@ h5 {
 }
 
 h1 {
-  font-size: 3.053rem; /* 48.8px */
+  font-size: 2rem; /* 48.8px */
 }
 
 h2 {
@@ -59,15 +46,4 @@ h5 {
 
 small {
   font-size: 0.8rem; /* 12.8px */
-}
-
-:root {
-  @include mat.tabs-overrides(
-    (
-      active-indicator-color: themeColors.$accent,
-      active-focus-indicator-color: themeColors.$accent,
-      active-indicator-height: 3px,
-      label-text-weight: "bold",
-    )
-  );
 }
