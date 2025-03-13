@@ -1,0 +1,76 @@
+.img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  //   clip-path: circle(50% at 50% 50%);
+  clip-path: circle(6% at 50% 50%);
+  background: #ff8c00; /* Orange vif au début */
+
+  //   background: linear-gradient(rgba(255, 87, 51, 0.7), rgba(199, 0, 57, 0.7)),
+  //     url("https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/011_The_lion_king_Tryggve_in_the_Serengeti_National_Park_Photo_by_Giles_Laurent.jpg/360px-011_The_lion_king_Tryggve_in_the_Serengeti_National_Park_Photo_by_Giles_Laurent.jpg");
+  //   background-position: center;
+  //   background-size: cover;
+
+  animation: move 0.5s cubic-bezier(0.45, 0, 0.55, 1) alternate both,
+    grow 0.4s ease-out 0.4s both, changeBack 0s linear 0.5s both;
+  will-change: transform;
+}
+
+@keyframes grow {
+  0% {
+    clip-path: circle(3.4% at 50% 50%);
+  }
+  100% {
+    clip-path: circle(50% at 50% 50%);
+  }
+}
+
+@keyframes changeBack {
+  0% {
+    background: #ff8c00; /* Orange vif au début */
+  }
+
+  100% {
+    background: linear-gradient(rgba(255, 87, 51, 0), rgba(199, 0, 57, 0)),
+      url("https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/011_The_lion_king_Tryggve_in_the_Serengeti_National_Park_Photo_by_Giles_Laurent.jpg/360px-011_The_lion_king_Tryggve_in_the_Serengeti_National_Park_Photo_by_Giles_Laurent.jpg");
+    background-position: center;
+    background-size: cover;
+  }
+}
+
+@keyframes move {
+  0% {
+    transform: translate(0, 0);
+  }
+  10% {
+    transform: translate(12px, 15px);
+  }
+  20% {
+    transform: translate(24px, 28px);
+  }
+  30% {
+    transform: translate(36px, 39px);
+  }
+  40% {
+    transform: translate(48px, 48px);
+  }
+  50% {
+    transform: translate(60px, 50px); /* Sommet de la parabole */
+  }
+  60% {
+    transform: translate(72px, 48px);
+  }
+  70% {
+    transform: translate(84px, 39px);
+  }
+  80% {
+    transform: translate(96px, 28px);
+  }
+  90% {
+    transform: translate(108px, 15px);
+  }
+  100% {
+    transform: translate(120px, 0);
+    /* Retour au niveau initial */
+  }
+}

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTabsModule } from '@angular/material/tabs';
 import { PrimaryButtonComponent } from '../../../../shared/button/primary-button/primary-button.component';
-import { EstimationListComponent } from '../components/estimation-list/estimation-list.component';
+import { EstimationListComponent } from '../../components/estimation-list/estimation-list.component';
 
 @Component({
   selector: 'app-estimation-list-root',

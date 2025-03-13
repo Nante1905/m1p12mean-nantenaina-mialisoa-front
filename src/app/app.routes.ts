@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { EstimationListRoot } from './modules/estimation/estimation-list/containers/estimation-list.root';
+import { EstimationListRoot } from './modules/estimation/containers/estimation-list-root/estimation-list.root';
 import { TestComponentComponent } from './test/components/test-component/test-component.component';
 
 export const routes: Routes = [
