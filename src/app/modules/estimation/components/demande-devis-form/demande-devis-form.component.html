@@ -9,7 +9,7 @@
         Information du véhicule
       </p>
       <p-select
-        formControlName="vehicule"
+        formControlName="vehiculeId"
         [options]="vehicules"
         optionLabel="name"
         optionValue="id"
@@ -48,6 +48,22 @@
         optionValue="id"
         placeholder="Choisir un type de moteur"
       />
+      <input
+        pInputText
+        type="number"
+        class=""
+        formControlName="kilometrage"
+        placeholder="Entre le kilometrage"
+      />
+      <div>
+        <p-checkbox
+          inputId="ny"
+          value="true"
+          (onChange)="onSaveVehiculeChange($event)"
+          [disabled]="disableSave"
+        />
+        <label for="ny" class="ml-2">Sauvegarder votre vehicule</label>
+      </div>
       <p-button label="Soumettre la demande" type="submit"></p-button>
     </div>
     <div class="demande-description flex flex-col gap-5 w-[40%]">

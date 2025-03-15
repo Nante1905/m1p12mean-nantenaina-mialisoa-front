@@ -1,8 +1,8 @@
-export interface DemandeDevis {
-  vehicule: number;
+export interface Vehicule {
+  id: string;
   marque: string;
   modele: string;
   annee: string;
+  kilometrage: number;
   motorisation: string;
-  description: string;
 }
