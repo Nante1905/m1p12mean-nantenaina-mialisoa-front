@@ -14,6 +14,7 @@ export interface DemandeDevisForm {
 export interface DemandeDevis {
   vehiculeId: number;
   vehicule: Vehicule;
-  saveVehicle: boolean;
+  saveVehicule: boolean;
   description: string;
+  kilometrage: number;
 }

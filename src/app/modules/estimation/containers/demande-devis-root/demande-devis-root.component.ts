@@ -1,37 +1,79 @@
-import { Component } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+import { catchError, finalize, Observable } from 'rxjs';
 import {
   DemandeDevis,
   DemandeDevisForm,
 } from '../../../../shared/types/DemandeDevis';
+import { Marque } from '../../../../shared/types/Marque';
+import { Motorisation } from '../../../../shared/types/Motorisation';
 import { DemandeDevisFormComponent } from '../../components/demande-devis-form/demande-devis-form.component';
 import { DevisService } from '../../services/devis.service';
 
 @Component({
   selector: 'app-demande-devis-root',
-  imports: [DemandeDevisFormComponent],
-  providers: [DevisService],
+  imports: [DemandeDevisFormComponent, ToastModule],
+  providers: [DevisService, MessageService],
   templateUrl: './demande-devis-root.component.html',
   styleUrl: './demande-devis-root.component.scss',
 })
-export class DemandeDevisRootComponent {
-  constructor(private devisService: DevisService) {}
+export class DemandeDevisRootComponent implements OnInit {
+  constructor(
+    private devisService: DevisService,
+    private messageService: MessageService
+  ) {}
+
+  motorisations$!: Observable<Motorisation[]>;
+  marques$!: Observable<Marque[]>;
+  loading = false;
 
   onSubmit(demandeDevis: DemandeDevisForm) {
     const data: DemandeDevis = {
       vehiculeId: demandeDevis.vehiculeId,
       vehicule: {
-        id: demandeDevis.vehiculeId.toString(),
         marque: demandeDevis.marque,
         modele: demandeDevis.modele,
         annee: demandeDevis.annee,
-        kilometrage: demandeDevis.kilometrage,
         motorisation: demandeDevis.motorisation,
       },
+      kilometrage: demandeDevis.kilometrage,
       description: demandeDevis.description,
-      saveVehicle: demandeDevis.saveVehicule,
+      saveVehicule: demandeDevis.saveVehicule,
     };
-    this.devisService.createDemandeDevis(data).subscribe((res) => {
-      console.log(res);
+    this.loading = true;
+    this.devisService
+      .createDemandeDevis(data)
+      .pipe(
+        finalize(() => {
+          this.loading = false;
+        }),
+        catchError((error: HttpErrorResponse) => {
+          return error.message;
+        })
+      )
+      .subscribe((value: any) => {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: value.message,
+        });
+        console.log(value);
+      });
+    // console.log(data);
+  }
+
+  show() {
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Success',
+      detail: undefined,
     });
+  }
+
+  ngOnInit(): void {
+    this.motorisations$ = this.devisService.findAllMotorisation();
+    this.marques$ = this.devisService.findAllMarque();
   }
 }

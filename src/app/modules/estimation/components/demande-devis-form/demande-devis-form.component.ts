@@ -1,16 +1,18 @@
+import { CommonModule } from '@angular/common';
 import {
   Component,
   ElementRef,
   EventEmitter,
+  Input,
   OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
 import {
   FormBuilder,
-  FormControl,
   FormGroup,
   ReactiveFormsModule,
+  Validators,
 } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -18,7 +20,13 @@ import { DatePickerModule } from 'primeng/datepicker';
 import { InputTextModule } from 'primeng/inputtext';
 import { SelectModule } from 'primeng/select';
 import { TextareaModule } from 'primeng/textarea';
+import { Observable } from 'rxjs';
+import { LoaderComponent } from '../../../../shared/components/loader/loader.component';
+import { ValidationErrorComponent } from '../../../../shared/components/validation-error/validation-error.component';
 import { DemandeDevisForm } from '../../../../shared/types/DemandeDevis';
+import { Marque } from '../../../../shared/types/Marque';
+import { Motorisation } from '../../../../shared/types/Motorisation';
+import { markFormAsTouchedAndDirty } from '../../../../shared/utils/form.utils';
 
 @Component({
   selector: 'app-demande-devis-form',
@@ -30,6 +38,9 @@ import { DemandeDevisForm } from '../../../../shared/types/DemandeDevis';
     ReactiveFormsModule,
     ButtonModule,
     CheckboxModule,
+    ValidationErrorComponent,
+    LoaderComponent,
+    CommonModule,
   ],
   templateUrl: './demande-devis-form.component.html',
   styleUrl: './demande-devis-form.component.scss',
@@ -41,6 +52,9 @@ export class DemandeDevisFormComponent implements OnInit {
     new EventEmitter<DemandeDevisForm>();
 
   disableSave = false;
+  @Input() motorisations$!: Observable<Motorisation[]>;
+  @Input() marques$!: Observable<Marque[]>;
+  @Input() loading = false;
 
   constructor(private formBuilder: FormBuilder) {}
 
@@ -55,30 +69,15 @@ export class DemandeDevisFormComponent implements OnInit {
     },
   ];
 
-  motorisations: any[] = [
-    {
-      id: 0,
-      name: 'Essence',
-    },
-    {
-      id: 1,
-      name: 'Diesel',
-    },
-    {
-      id: 1,
-      name: 'Electrique',
-    },
-  ];
-
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      vehiculeId: 0,
-      marque: new FormControl('', {}),
-      modele: [''],
-      annee: [''],
-      motorisation: [''],
+      vehiculeId: [0, Validators.required],
+      marque: ['', Validators.required],
+      modele: ['', Validators.required],
+      annee: ['', Validators.required],
+      motorisation: ['', Validators.required],
       kilometrage: [''],
-      description: [''],
+      description: ['', Validators.required],
       saveVehicule: [false],
     });
 
@@ -100,13 +99,23 @@ export class DemandeDevisFormComponent implements OnInit {
         this.form.get('modele')?.enable();
         this.form.get('annee')?.enable();
         this.form.get('motorisation')?.enable();
-        this.form.get('saveVehicule')?.enable();
+        this.form.get('kilometrage')?.enable();
       }
     });
   }
 
+  showErrors() {
+    markFormAsTouchedAndDirty(this.form);
+  }
+
   onFormSubmit() {
-    this.onSubmit.emit(this.form.value);
+    if (this.form.invalid) {
+      this.showErrors();
+      return;
+    } else {
+      this.onSubmit.emit(this.form.value);
+      console.log('value', this.form.value);
+    }
   }
   onSaveVehiculeChange(event: any) {
     if (event.checked.length > 0) {

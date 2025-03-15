@@ -6,7 +6,14 @@ export function requestInterceptor(
   req: HttpRequest<unknown>,
   next: HttpHandlerFn
 ): Observable<HttpEvent<unknown>> {
-  console.log(req.url);
+  // const messageService = inject(MessageService);
+  // console.log('messageService', messageService);
+
+  // messageService.add({
+  //   severity: 'info',
+  //   summary: 'Request',
+  //   detail: req.url,
+  // });
   const newReq = req.clone({
     url: `${environment.apiBaseUrl}${req.url}`,
   });
