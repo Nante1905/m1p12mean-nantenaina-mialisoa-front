@@ -3,4 +3,12 @@
   Remplissez le formulaire ci-dessous pour demander un devis pour votre
   véhicule.
 </p>
-<app-demande-devis-form (onSubmit)="onSubmit($event)" />
+<app-demande-devis-form
+  (onSubmit)="onSubmit($event)"
+  [motorisations$]="motorisations$"
+  [marques$]="marques$"
+  [loading]="loading"
+/>
+
+<p-toast></p-toast>
+<!-- <button (click)="show()">toast</button> -->

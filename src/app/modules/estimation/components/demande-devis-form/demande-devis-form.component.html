@@ -4,62 +4,128 @@
     class="flex gap-5 justify-between"
     (submit)="onFormSubmit()"
   >
-    <div class="vehicule-info m-2 flex flex-col gap-5 w-[40%]">
+    <div class="vehicule-info m-2 flex flex-col gap-2 w-[40%]">
       <p class="font-semibold underline underline-offset-4">
         Information du véhicule
       </p>
-      <p-select
-        formControlName="vehicule"
-        [options]="vehicules"
-        optionLabel="name"
-        optionValue="id"
-        placeholder="Choisir un vehicule"
-      >
-      </p-select>
-      <p-select
-        formControlName="marque"
-        [options]="vehicules"
-        optionLabel="name"
-        optionValue="id"
-        placeholder="Choisir une marque"
-      >
-      </p-select>
+      <div>
+        <p-select
+          formControlName="vehiculeId"
+          [options]="vehicules"
+          optionLabel="name"
+          optionValue="id"
+          class="w-full"
+          placeholder="Choisir un vehicule"
+        >
+        </p-select>
+        <app-validation-error
+          [control]="form.controls['vehiculeId']"
+        ></app-validation-error>
+      </div>
+      <div>
+        <p-select
+          formControlName="marque"
+          [options]="(marques$ | async) || []"
+          optionLabel="nom"
+          optionValue="_id"
+          placeholder="Choisir une marque"
+          class="w-full"
+        >
+        </p-select
+        ><app-validation-error
+          [control]="form.controls['marque']"
+        ></app-validation-error>
+      </div>
 
-      <input
-        pInputText
-        type="text"
-        class=""
-        formControlName="modele"
-        placeholder="Entre le modele"
-      />
-      <p-datepicker
-        [iconDisplay]="'input'"
-        [showIcon]="true"
-        inputId="icondisplay"
-        view="year"
-        dateFormat="yy"
-        formControlName="annee"
-        placeholder="Choisir l'année"
-      />
-      <p-select
-        formControlName="motorisation"
-        [options]="motorisations"
-        optionLabel="name"
-        optionValue="id"
-        placeholder="Choisir un type de moteur"
-      />
-      <p-button label="Soumettre la demande" type="submit"></p-button>
+      <div>
+        <input
+          pInputText
+          type="text"
+          class="w-full"
+          formControlName="modele"
+          placeholder="Entre le modele"
+        />
+        <app-validation-error
+          [control]="form.controls['modele']"
+        ></app-validation-error>
+      </div>
+      <div class="flex gap-3">
+        <div class="w-[50%]">
+          <p-datepicker
+            [iconDisplay]="'input'"
+            [showIcon]="true"
+            inputId="icondisplay"
+            view="year"
+            dateFormat="yy"
+            formControlName="annee"
+            placeholder="Choisir l'année"
+            class="w-full"
+          />
+          <app-validation-error
+            [control]="form.controls['annee']"
+          ></app-validation-error>
+        </div>
+        <div class="w-[50%]">
+          <app-loader
+            ><p-select
+              formControlName="motorisation"
+              [options]="(motorisations$ | async) || []"
+              optionLabel="nom"
+              optionValue="_id"
+              placeholder="Choisir un type de moteur"
+              class="w-full" />
+            <app-validation-error
+              [control]="form.controls['motorisation']"
+            ></app-validation-error
+          ></app-loader>
+        </div>
+      </div>
+      <div>
+        <input
+          pInputText
+          type="number"
+          class=""
+          formControlName="kilometrage"
+          placeholder="Entre le kilometrage"
+        />
+        <app-validation-error
+          [control]="form.controls['kilometrage']"
+        ></app-validation-error>
+      </div>
+      <div>
+        <div>
+          <p-checkbox
+            inputId="ny"
+            value="true"
+            (onChange)="onSaveVehiculeChange($event)"
+            [disabled]="disableSave"
+          />
+          <label for="ny" class="ml-2"> Sauvegarder le vehicule </label>
+        </div>
+        <app-validation-error
+          [control]="form.controls['saveVehicule']"
+        ></app-validation-error>
+      </div>
+      <p-button type="submit">
+        <app-loader [loading]="loading"> Soumettre la demande </app-loader>
+      </p-button>
     </div>
     <div class="demande-description flex flex-col gap-5 w-[40%]">
       <p class="font-semibold underline underline-offset-4">
         Decrivez nous votre demande
       </p>
-      <textarea
-        rows="5"
-        cols="30"
-        pTextarea
-        formControlName="description"
-      ></textarea>
+      <div>
+        <textarea
+          rows="5"
+          cols="30"
+          pTextarea
+          formControlName="description"
+          placeholder="Decrivez votre demande"
+        ></textarea>
+        <app-validation-error
+          [control]="form.controls['description']"
+        ></app-validation-error>
+      </div>
     </div>
   </form>
 </section>

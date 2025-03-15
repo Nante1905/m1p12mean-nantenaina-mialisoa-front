@@ -1,0 +1,21 @@
+<div
+  class="error-content"
+  [style.visibility]="
+    control && control.errors && control.dirty && control.touched
+      ? 'visible'
+      : 'hidden'
+  "
+>
+  @for (controlError of control.errors | keyvalue; track controlError.key) { @if
+  ( errorLabels[controlError.key] || (customErrorLabels &&
+  customErrorLabels[controlError.key]) ) {
+  <div class="text-wrapper text-red-500">
+    <small>
+      {{
+        (customErrorLabels && customErrorLabels[controlError.key]) ||
+          errorLabels[controlError.key]
+      }}
+    </small>
+  </div>
+  } }
+</div>
