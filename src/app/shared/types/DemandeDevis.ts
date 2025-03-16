@@ -1,3 +1,4 @@
+import { Utilisateur } from './Utilisateur';
 import { Vehicule } from './Vehicule';
 
 export interface DemandeDevisForm {
@@ -13,9 +14,14 @@ export interface DemandeDevisForm {
 }
 
 export interface DemandeDevis {
-  vehiculeId: number;
+  _id: string;
+  vehiculeId?: number;
   vehicule: Vehicule;
-  saveVehicule: boolean;
+  saveVehicule?: boolean;
   description: string;
   kilometrage: number;
+  dateDemande?: string;
+  utilisateur?: Utilisateur;
+  status?: number;
+  statusLabel?: string;
 }

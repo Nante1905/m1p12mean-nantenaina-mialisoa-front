@@ -6,41 +6,58 @@
       <div class="flex items-center gap-4">
         <p-tag
           class="status-filter cursor-pointer !bg-white !text-black border-2 border-secondary"
-          (click)="setStatusFilter(null)"
+          (click)="updateFilter({ status: null })"
           [styleClass]="filter.status == null ? 'selected-filter' : ''"
-          >Tous : Total</p-tag
+          >Tous : {{ data()?.totalItems }}</p-tag
         >
-        @for (item of (statusCount); track item) {
+        @for (item of data()?.stats; track item) {
         <p-tag
           class="status-filter cursor-pointer !bg-white !text-black border-2 border-secondary"
-          (click)="setStatusFilter(item.code)"
-          [styleClass]="filter.status == item.code ? 'selected-filter' : ''"
+          (click)="updateFilter({ status: item.value })"
+          [styleClass]="filter.status == item.value ? 'selected-filter' : ''"
           >{{ item.label }} : {{ item.count }}</p-tag
         >
         }
       </div>
-      <input pInputText type="text" class="" placeholder="N° immatriculation" />
+      <div class="flex items-center gap-1">
+        <input
+          pInputText
+          type="text"
+          class=""
+          placeholder="N° immatriculation"
+          [(ngModel)]="filter.immatriculation"
+        />
+        <p-button
+          variant="outlined"
+          severity="help"
+          type="submit"
+          (onClick)="updateFilter({ immatriculation: filter.immatriculation })"
+        >
+          <span class="material-icons">search</span>
+        </p-button>
+      </div>
     </div>
-
-    @for (item of demandesDevis; track item) {
-    <app-demande-devis-item
-      [demande]="item"
-      (onSelectDemande)="onSelectDemande(item)"
-      [isSelected]="selectedDemande?.id == item.id"
-    />
-    }
-    <div class="card flex justify-center">
-      <p-paginator
-        (onPageChange)="onPageChange($event)"
-        [first]="first"
-        [rows]="rows"
-        [totalRecords]="120"
-        [showCurrentPageReport]="true"
-        [showPageLinks]="false"
-        [showJumpToPageDropdown]="false"
-        currentPageReportTemplate="Page {first} à {last} de {totalRecords}"
+    <app-loader [loading]="!data()" class="flex-1">
+      @for (item of data()?.items; track item) {
+      <app-demande-devis-item
+        [demande]="item"
+        (onSelectDemande)="onSelectDemande(item)"
+        [isSelected]="selectedDemande?._id == item._id"
       />
-    </div>
+      }
+      <div class="card flex justify-center">
+        <p-paginator
+          (onPageChange)="onPageChange($event)"
+          [first]="first"
+          [rows]="rows"
+          [totalRecords]="data()?.totalItems || 1"
+          [showCurrentPageReport]="true"
+          [showPageLinks]="false"
+          [showJumpToPageDropdown]="false"
+          currentPageReportTemplate="Lignes {first} à {last} de {totalRecords}"
+        />
+      </div>
+    </app-loader>
   </div>
 
   @if (selectedDemande) {

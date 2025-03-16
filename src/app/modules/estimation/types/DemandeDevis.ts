@@ -1,19 +1,31 @@
-export interface DemandeDevis {
-  vehicule: number;
-  marque: string;
-  modele: string;
-  annee: string;
-  motorisation: string;
-  description: string;
-}
+import { DemandeDevis } from '../../../shared/types/DemandeDevis';
+import { Vehicule } from '../../../shared/types/Vehicule';
 
 export type RequiredDemandeDevisType = {
-  id: string;
-
-  matricule: string;
-  modele: string;
-  date: string;
+  _id: string;
+  vehicule: Vehicule;
+  kilometrage: number;
   description: string;
-  status: number;
+  status?: number;
   statusLabel?: string;
 };
+
+export interface DemandeDevisDataResponse {
+  items: DemandeDevis[];
+  page: number;
+  limit: number;
+  totalPage: number;
+  totalItems: number;
+  stats: {
+    value: number;
+    count: number;
+    label: string;
+  }[];
+}
+
+export interface DemandeDevisFilter {
+  status: number | null | string;
+  page: number;
+  immatriculation: string;
+  nom: string;
+}
