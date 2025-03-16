@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
@@ -15,7 +16,7 @@ import { DevisService } from '../../services/devis.service';
 
 @Component({
   selector: 'app-demande-devis-root',
-  imports: [DemandeDevisFormComponent, ToastModule],
+  imports: [DemandeDevisFormComponent, ToastModule, CommonModule],
   providers: [DevisService, MessageService],
   templateUrl: './demande-devis-root.component.html',
   styleUrl: './demande-devis-root.component.scss',

@@ -20,7 +20,6 @@ import { DatePickerModule } from 'primeng/datepicker';
 import { InputTextModule } from 'primeng/inputtext';
 import { SelectModule } from 'primeng/select';
 import { TextareaModule } from 'primeng/textarea';
-import { Observable } from 'rxjs';
 import { LoaderComponent } from '../../../../shared/components/loader/loader.component';
 import { ValidationErrorComponent } from '../../../../shared/components/validation-error/validation-error.component';
 import { DemandeDevisForm } from '../../../../shared/types/DemandeDevis';
@@ -53,9 +52,9 @@ export class DemandeDevisFormComponent implements OnInit {
     new EventEmitter<DemandeDevisForm>();
 
   disableSave = false;
-  @Input() motorisations$!: Observable<Motorisation[]>;
-  @Input() marques$!: Observable<Marque[]>;
-  @Input() vehicules$!: Observable<Vehicule[]>;
+  @Input() motorisations!: Motorisation[];
+  @Input() marques!: Marque[];
+  @Input() vehicules!: Vehicule[];
   @Input() loading = false;
 
   constructor(private formBuilder: FormBuilder) {}

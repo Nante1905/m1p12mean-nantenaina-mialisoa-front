@@ -5,9 +5,9 @@
 </p>
 <app-demande-devis-form
   (onSubmit)="onSubmit($event)"
-  [motorisations$]="motorisations$"
-  [marques$]="marques$"
-  [vehicules$]="vehicules$"
+  [motorisations]="(motorisations$ | async) || []"
+  [marques]="(marques$ | async) || []"
+  [vehicules]="(vehicules$ | async) || []"
   [loading]="loading"
 />
 

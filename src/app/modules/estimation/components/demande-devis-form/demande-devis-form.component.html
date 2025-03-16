@@ -11,7 +11,7 @@
       <div>
         <p-select
           formControlName="vehiculeId"
-          [options]="(vehicules$ | async) || []"
+          [options]="vehicules || []"
           optionLabel="immatriculation"
           optionValue="_id"
           class="w-full"
@@ -25,7 +25,7 @@
       <div>
         <p-select
           formControlName="marque"
-          [options]="(marques$ | async) || []"
+          [options]="marques || []"
           optionLabel="nom"
           optionValue="_id"
           placeholder="Choisir une marque"
@@ -81,7 +81,7 @@
           <app-loader
             ><p-select
               formControlName="motorisation"
-              [options]="(motorisations$ | async) || []"
+              [options]="motorisations || []"
               optionLabel="nom"
               optionValue="_id"
               placeholder="Choisir un type de moteur"
