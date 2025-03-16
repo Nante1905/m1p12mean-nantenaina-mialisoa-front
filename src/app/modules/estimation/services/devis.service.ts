@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { DemandeDevis } from '../../../shared/types/DemandeDevis';
 import { Marque } from '../../../shared/types/Marque';
 import { Motorisation } from '../../../shared/types/Motorisation';
+import { Vehicule } from '../../../shared/types/Vehicule';
 
 @Injectable({
   providedIn: 'root',
@@ -20,5 +21,9 @@ export class DevisService {
 
   findAllMarque() {
     return this.http.get<Marque[]>('/marques');
+  }
+
+  findAllVehicule() {
+    return this.http.get<Vehicule[]>('/vehicules');
   }
 }

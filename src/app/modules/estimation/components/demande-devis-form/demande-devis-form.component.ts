@@ -26,6 +26,7 @@ import { ValidationErrorComponent } from '../../../../shared/components/validati
 import { DemandeDevisForm } from '../../../../shared/types/DemandeDevis';
 import { Marque } from '../../../../shared/types/Marque';
 import { Motorisation } from '../../../../shared/types/Motorisation';
+import { Vehicule } from '../../../../shared/types/Vehicule';
 import { markFormAsTouchedAndDirty } from '../../../../shared/utils/form.utils';
 
 @Component({
@@ -54,24 +55,14 @@ export class DemandeDevisFormComponent implements OnInit {
   disableSave = false;
   @Input() motorisations$!: Observable<Motorisation[]>;
   @Input() marques$!: Observable<Marque[]>;
+  @Input() vehicules$!: Observable<Vehicule[]>;
   @Input() loading = false;
 
   constructor(private formBuilder: FormBuilder) {}
 
-  vehicules: any[] = [
-    {
-      id: 0,
-      name: 'Nouveau vehicule',
-    },
-    {
-      id: 1,
-      name: 'Toyota Yaris',
-    },
-  ];
-
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      vehiculeId: [0, Validators.required],
+      vehiculeId: ['', Validators.required],
       marque: ['', Validators.required],
       modele: ['', Validators.required],
       annee: ['', Validators.required],
@@ -79,6 +70,7 @@ export class DemandeDevisFormComponent implements OnInit {
       kilometrage: [''],
       description: ['', Validators.required],
       saveVehicule: [false],
+      immatriculation: ['', Validators.required],
     });
 
     this.disableSaveVehiculeListener();
@@ -88,18 +80,21 @@ export class DemandeDevisFormComponent implements OnInit {
     });
 
     this.form.get('vehiculeId')?.valueChanges.subscribe((value) => {
-      if (value !== 0 || value === '') {
+      if (value != 0 || value === '') {
         this.form.get('marque')?.disable();
         this.form.get('modele')?.disable();
         this.form.get('annee')?.disable();
         this.form.get('motorisation')?.disable();
         this.form.get('saveVehicule')?.disable();
+        this.form.get('immatriculation')?.disable();
       } else {
         this.form.get('marque')?.enable();
         this.form.get('modele')?.enable();
         this.form.get('annee')?.enable();
         this.form.get('motorisation')?.enable();
         this.form.get('kilometrage')?.enable();
+        this.form.get('saveVehicule')?.enable();
+        this.form.get('immatriculation')?.enable();
       }
     });
   }

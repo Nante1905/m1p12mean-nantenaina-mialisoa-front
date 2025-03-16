@@ -9,6 +9,7 @@ export interface DemandeDevisForm {
   kilometrage: number;
   description: string;
   saveVehicule: boolean;
+  immatriculation: string;
 }
 
 export interface DemandeDevis {

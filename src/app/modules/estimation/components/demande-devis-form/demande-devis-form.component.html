@@ -11,9 +11,9 @@
       <div>
         <p-select
           formControlName="vehiculeId"
-          [options]="vehicules"
-          optionLabel="name"
-          optionValue="id"
+          [options]="(vehicules$ | async) || []"
+          optionLabel="immatriculation"
+          optionValue="_id"
           class="w-full"
           placeholder="Choisir un vehicule"
         >
@@ -47,6 +47,18 @@
         />
         <app-validation-error
           [control]="form.controls['modele']"
+        ></app-validation-error>
+      </div>
+      <div>
+        <input
+          pInputText
+          type="text"
+          class="w-full"
+          formControlName="immatriculation"
+          placeholder="Entrez le numero d'immatriculation"
+        />
+        <app-validation-error
+          [control]="form.controls['immatriculation']"
         ></app-validation-error>
       </div>
       <div class="flex gap-3">
