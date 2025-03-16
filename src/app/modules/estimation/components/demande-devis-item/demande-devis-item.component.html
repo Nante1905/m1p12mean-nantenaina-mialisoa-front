@@ -1,0 +1,30 @@
+<div class="cursor-pointer" [class.selected]="isSelected()">
+  <div class="devis-header flex items-start justify-between flex-wrap-reverse">
+    <div class="devis-title flex items-center justify-center gap-4">
+      <h6
+        class="text-lg cursor-pointer hover:underline"
+        [class.item-hover]="isHovered"
+      >
+        {{ demande().modele }} {{ demande().matricule }}
+      </h6>
+      <p-tag
+        class="status-tag !text-white !rounded-full"
+        [styleClass]="getStatusClassname(demande().status)"
+      >
+        <small>{{ demande().statusLabel }}</small>
+      </p-tag>
+    </div>
+    <p>
+      <small class="capitalize">{{ demande().date }}</small>
+    </p>
+  </div>
+  <div class="devis-body">
+    <p class="line-clamp-2">
+      {{ demande().description }}
+      Lorem ipsum dolor sit amet consectetureeeee adipisicing elit. Eveniet
+      beatae maiores vel reiciendis natus delectus repellendus quos ullam a
+      accusamus!
+    </p>
+  </div>
+  <p-divider />
+</div>

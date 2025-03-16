@@ -6,3 +6,14 @@ export interface DemandeDevis {
   motorisation: string;
   description: string;
 }
+
+export type RequiredDemandeDevisType = {
+  id: string;
+
+  matricule: string;
+  modele: string;
+  date: string;
+  description: string;
+  status: number;
+  statusLabel?: string;
+};

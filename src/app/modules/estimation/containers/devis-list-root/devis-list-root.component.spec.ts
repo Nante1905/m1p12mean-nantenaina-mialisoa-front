@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EstimationListComponent } from './estimation-list.component';
+import { DevisListRootComponent } from './devis-list-root.component';
 
-describe('EstimationListComponent', () => {
-  let component: EstimationListComponent;
-  let fixture: ComponentFixture<EstimationListComponent>;
+describe('DevisListRootComponent', () => {
+  let component: DevisListRootComponent;
+  let fixture: ComponentFixture<DevisListRootComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [EstimationListComponent]
+      imports: [DevisListRootComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(EstimationListComponent);
+    fixture = TestBed.createComponent(DevisListRootComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

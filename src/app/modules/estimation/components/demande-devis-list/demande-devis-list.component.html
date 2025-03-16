@@ -1,0 +1,59 @@
+<section class="demande-container">
+  <div class="demande-list" [class.shortened]="selectedDemande">
+    <div
+      class="w-full py-8 demande-filter flex items-center justify-between flex-wrap gap-y-4"
+    >
+      <div class="flex items-center gap-4">
+        <p-tag
+          class="status-filter cursor-pointer !bg-white !text-black border-2 border-secondary"
+          (click)="setStatusFilter(null)"
+          [styleClass]="filter.status == null ? 'selected-filter' : ''"
+          >Tous : Total</p-tag
+        >
+        @for (item of (statusCount); track item) {
+        <p-tag
+          class="status-filter cursor-pointer !bg-white !text-black border-2 border-secondary"
+          (click)="setStatusFilter(item.code)"
+          [styleClass]="filter.status == item.code ? 'selected-filter' : ''"
+          >{{ item.label }} : {{ item.count }}</p-tag
+        >
+        }
+      </div>
+      <input pInputText type="text" class="" placeholder="N° immatriculation" />
+    </div>
+
+    @for (item of demandesDevis; track item) {
+    <app-demande-devis-item
+      [demande]="item"
+      (onSelectDemande)="onSelectDemande(item)"
+      [isSelected]="selectedDemande?.id == item.id"
+    />
+    }
+    <div class="card flex justify-center">
+      <p-paginator
+        (onPageChange)="onPageChange($event)"
+        [first]="first"
+        [rows]="rows"
+        [totalRecords]="120"
+        [showCurrentPageReport]="true"
+        [showPageLinks]="false"
+        [showJumpToPageDropdown]="false"
+        currentPageReportTemplate="Page {first} à {last} de {totalRecords}"
+      />
+    </div>
+  </div>
+
+  @if (selectedDemande) {
+  <div class="details-devis" [@detailsAnimation]>
+    <p-card>
+      <div class="flex justify-end">
+        <button (click)="onSelectDemande(null)" class="cursor-pointer">
+          <span class="material-icons"> close </span>
+        </button>
+      </div>
+      <p-divider />
+      <app-demande-devis-apercu [demande]="selectedDemande" />
+    </p-card>
+  </div>
+  }
+</section>

@@ -1,0 +1,13 @@
+@import "./themes/colors.scss";
+
+%status-tag {
+  &.demande-attente {
+    background-color: #6b728078 !important;
+  }
+  &.demande-dispo {
+    background-color: $success !important;
+  }
+  &.demande-rdv {
+    background-color: $secondary !important;
+  }
+}
