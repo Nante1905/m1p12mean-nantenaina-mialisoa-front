@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { DemandeDevisRootComponent } from './modules/estimation/containers/demande-devis-root/demande-devis-root.component';
-import { EstimationListRoot } from './modules/estimation/containers/estimation-list-root/estimation-list.root';
+import { DevisListRootComponent } from './modules/estimation/containers/devis-list-root/devis-list-root.component';
 import { TestComponentComponent } from './test/components/test-component/test-component.component';
 
 export const routes: Routes = [
@@ -15,7 +15,7 @@ export const routes: Routes = [
   },
   {
     path: 'devis',
-    component: EstimationListRoot,
+    component: DevisListRootComponent,
   },
   {
     path: 'demande-devis',

@@ -1,0 +1,27 @@
+<section id="apercu-demande-devis" class="flex flex-col gap-y-4 items-start">
+  <div class="w-full flex items-center justify-between flex-wrap">
+    <p-tag
+      class="status-tag !text-white !rounded-full"
+      [styleClass]="getStatusClassname(demande().status)"
+    >
+      <small>{{ demande().statusLabel }}</small>
+    </p-tag>
+    <p>
+      <small class="capitalize">{{ demande().date }}</small>
+    </p>
+  </div>
+  <div>
+    <h5 class="underline">Info voiture</h5>
+    <p>Marque voiture - {{ demande().modele }}</p>
+    <p>{{ demande().matricule }}</p>
+  </div>
+  <div>
+    <p>
+      {{ demande().description }}
+      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magni inventore
+      nihil doloremque voluptates? Doloribus repellat ratione dignissimos magni
+      neque unde laudantium accusamus, deleniti eum cumque, aliquid suscipit?
+      Suscipit, possimus reiciendis?
+    </p>
+  </div>
+</section>
