@@ -78,18 +78,19 @@
           ></app-validation-error>
         </div>
         <div class="w-[50%]">
-          <app-loader
-            ><p-select
+          <app-loader>
+            <p-select
               formControlName="motorisation"
               [options]="motorisations || []"
               optionLabel="nom"
               optionValue="_id"
               placeholder="Choisir un type de moteur"
-              class="w-full" />
+              class="w-full"
+            />
             <app-validation-error
               [control]="form.controls['motorisation']"
-            ></app-validation-error
-          ></app-loader>
+            ></app-validation-error>
+          </app-loader>
         </div>
       </div>
       <div>

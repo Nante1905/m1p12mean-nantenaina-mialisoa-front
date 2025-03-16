@@ -1,54 +1,83 @@
-export interface DemandeDevis {
-  id: string;
-  matricule: string;
-  modele: string;
-  date: string; // Format ISO avec date et heure
-  description: string;
-  status: number;
-  statusLabel?: string;
-}
+import { DemandeDevis } from '../../../shared/types/DemandeDevis';
 
 export const DEMANDES_DEVIS: DemandeDevis[] = [
   {
-    id: '1',
-    matricule: 'AB-123-CD',
-    modele: 'Toyota Corolla',
-    date: '2023-10-01T10:30:00Z',
-    description: 'Changement des plaquettes de frein et révision générale.',
+    _id: '67d6ca20c4ebb198c6e43d48',
+    vehicule: {
+      _id: '67d672dd52f6296c789cacca',
+      marque: {
+        _id: '67d5c016fcc1f5ed54a9e096',
+        nom: 'BMW',
+      },
+      modele: 'M3 competition',
+      annee: 2012,
+      motorisation: {
+        _id: '67d5aebafcc1f5ed54a9e08b',
+        nom: 'Essence',
+      },
+      immatriculation: '2901TAA',
+    },
+    description: 'Maneno be foana lay vitesse',
+    kilometrage: 520,
     status: 0,
+    dateDemande: '2025-03-16T12:54:56.355Z',
+    utilisateur: {
+      id: '67d6c7d3c34d5a3c68c2f570',
+      nom: 'Rakoto',
+      prenom: 'Hervé',
+    },
   },
   {
-    id: 'er6',
-    matricule: 'EF-456-GH',
-    modele: 'Renault Clio',
-    date: '2023-10-02T14:45:00Z',
-    description: 'Réparation du pare-chocs avant et remplacement des phares.',
+    _id: '67d6da34fa1ed23c7c1815df',
+    vehicule: {
+      _id: '67d672dd52f6296c789cacca',
+      marque: {
+        _id: '67d5c016fcc1f5ed54a9e096',
+        nom: 'BMW',
+      },
+      modele: 'M3 competition',
+      annee: 2012,
+      motorisation: {
+        _id: '67d5aebafcc1f5ed54a9e08b',
+        nom: 'Essence',
+      },
+      immatriculation: '2901TAA',
+    },
+    description: 'Tsy mandeha frein. Nefa vao avy nosoloina vao haingana',
+    kilometrage: 520,
+    status: 5,
+    dateDemande: '2025-03-16T14:03:32.410Z',
+    utilisateur: {
+      id: '67d6c7d3c34d5a3c68c2f570',
+      nom: 'Rakoto',
+      prenom: 'Hervé',
+    },
+  },
+  {
+    _id: '67d6e271fa1ed23c7c1815e5',
+    vehicule: {
+      _id: '67d672dd52f6296c789cacca',
+      marque: {
+        _id: '67d5c016fcc1f5ed54a9e096',
+        nom: 'BMW',
+      },
+      modele: 'M3 competition',
+      annee: 2012,
+      motorisation: {
+        _id: '67d5aebafcc1f5ed54a9e08b',
+        nom: 'Essence',
+      },
+      immatriculation: '2901TAA',
+    },
+    description: 'Soloina pneu',
+    kilometrage: 520,
     status: 0,
-  },
-  {
-    id: '2e',
-    matricule: 'IJ-789-KL',
-    modele: 'Peugeot 208',
-    date: '2023-10-03T09:15:00Z',
-    description: 'Vidange moteur et remplacement du filtre à huile.',
-    status: 5,
-  },
-  {
-    id: '578',
-    matricule: 'MN-012-OP',
-    modele: 'Ford Fiesta',
-    date: '2023-10-04T11:00:00Z',
-    description: 'Réparation de la climatisation et contrôle des pneus.',
-    status: 10,
-  },
-  {
-    id: '2e3z',
-    matricule: 'QR-345-ST',
-    modele: 'Volkswagen Golf',
-    date: '2023-10-05T16:30:00Z',
-    description:
-      'Remplacement de la batterie et vérification du système électrique.',
-    status: 5,
+    dateDemande: '2025-03-16T14:38:41.352Z',
+    utilisateur: {
+      id: '67d6c7d3c34d5a3c68c2f570',
+      nom: 'Rakoto',
+      prenom: 'Hervé',
+    },
   },
 ];
 

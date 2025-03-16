@@ -5,18 +5,22 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
-import { Component } from '@angular/core';
+import { Component, input, output } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DividerModule } from 'primeng/divider';
 import { InputTextModule } from 'primeng/inputtext';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { TagModule } from 'primeng/tag';
 import { ToggleButtonModule } from 'primeng/togglebutton';
+import { LoaderComponent } from '../../../../shared/components/loader/loader.component';
+import { DemandeDevis } from '../../../../shared/types/DemandeDevis';
+import { DEMANDES_DEVIS_STATUS_CLIENT } from '../../constants/devis';
 import {
-  DemandeDevis,
-  DEMANDES_DEVIS,
-  DEMANDES_DEVIS_STATUS_CLIENT,
-} from '../../constants/devis';
+  DemandeDevisDataResponse,
+  DemandeDevisFilter,
+} from '../../types/DemandeDevis';
 import { DemandeDevisApercuComponent } from '../demande-devis-apercu/demande-devis-apercu.component';
 import { DemandeDevisItemComponent } from '../demande-devis-item/demande-devis-item.component';
 
@@ -31,6 +35,9 @@ import { DemandeDevisItemComponent } from '../demande-devis-item/demande-devis-i
     DemandeDevisApercuComponent,
     CardModule,
     DividerModule,
+    FormsModule,
+    LoaderComponent,
+    ButtonModule,
   ],
   templateUrl: './demande-devis-list.component.html',
   styleUrl: './demande-devis-list.component.scss',
@@ -56,21 +63,15 @@ import { DemandeDevisItemComponent } from '../demande-devis-item/demande-devis-i
   ],
 })
 export class DemandeDevisListComponent {
-  demandesDevis: DemandeDevis[] = [];
-  count: { [key: number]: number } = {
-    0: 10,
-    5: 2,
-    10: 3,
-  };
+  data = input.required<DemandeDevisDataResponse | null>();
   statusLabels = DEMANDES_DEVIS_STATUS_CLIENT;
-  statusCount: { code: number; label: string; count: number }[] = [];
+  onFilterChange = output<DemandeDevisFilter>();
 
-  filter: {
-    status: number | null;
-    page: number;
-  } = {
+  filter: DemandeDevisFilter = {
     status: null,
     page: 1,
+    immatriculation: '',
+    nom: '',
   };
 
   // PAgination
@@ -79,28 +80,11 @@ export class DemandeDevisListComponent {
 
   selectedDemande: DemandeDevis | null = null;
 
-  ngOnInit(): void {
-    this.demandesDevis = [...DEMANDES_DEVIS, ...DEMANDES_DEVIS];
-    this.statusCount = Object.keys(this.count)
-      .map((c) => parseInt(c))
-      .map((c) => ({
-        code: c,
-        label: this.statusLabels[c],
-        count: this.count[c],
-      }));
-  }
-
-  setStatusFilter = (status: number | null) => {
-    console.log('select', status);
-
-    this.filter = {
-      status,
-      page: 1,
-    };
-  };
+  ngOnInit(): void {}
 
   onPageChange = (event: PaginatorState) => {
     this.filter.page = (event.page ?? 0) + 1;
+    this.updateFilter({ page: (event.page ?? 0) + 1 });
   };
 
   onSelectDemande = (demande: DemandeDevis | null) => {
@@ -110,5 +94,17 @@ export class DemandeDevisListComponent {
     // setTimeout(() => {
     //   this.selectedDemande = demande;
     // }, 300);
+  };
+
+  test = () => {
+    console.log(this.filter.immatriculation);
+  };
+
+  updateFilter = (filter: Partial<DemandeDevisFilter>) => {
+    this.filter = {
+      ...this.filter,
+      ...filter,
+    };
+    this.onFilterChange.emit({ ...this.filter, ...filter });
   };
 }

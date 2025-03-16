@@ -3,10 +3,9 @@ import { DividerModule } from 'primeng/divider';
 import { TagModule } from 'primeng/tag';
 import { formatDateToReadable } from '../../../../shared/helpers/date';
 import { getDemandeDevisStatusClassname } from '../../../../shared/helpers/devis';
-import {
-  DemandeDevis,
-  DEMANDES_DEVIS_STATUS_CLIENT,
-} from '../../constants/devis';
+import { DemandeDevis } from '../../../../shared/types/DemandeDevis';
+import { Marque } from '../../../../shared/types/Marque';
+import { DEMANDES_DEVIS_STATUS_CLIENT } from '../../constants/devis';
 import { RequiredDemandeDevisType } from '../../types/DemandeDevis';
 
 @Component({
@@ -19,8 +18,9 @@ export class DemandeDevisItemComponent {
   demande = input.required<DemandeDevis, RequiredDemandeDevisType>({
     transform: (props: DemandeDevis) => ({
       ...props,
-      date: formatDateToReadable(new Date(props.date)),
-      statusLabel: DEMANDES_DEVIS_STATUS_CLIENT[props.status],
+      dateDemande: formatDateToReadable(new Date(props.dateDemande as string)),
+      statusLabel: DEMANDES_DEVIS_STATUS_CLIENT[props.status as number],
+      marque: props.vehicule.marque as Marque,
     }),
   });
   isSelected = input<boolean>(false);
@@ -28,6 +28,12 @@ export class DemandeDevisItemComponent {
   getStatusClassname = getDemandeDevisStatusClassname;
   isHovered: boolean = false;
   onSelectDemande = output<DemandeDevis>();
+
+  getMarqueName(): string {
+    return typeof this.demande().vehicule.marque === 'string'
+      ? (this.demande().vehicule.marque as string)
+      : (this.demande().vehicule.marque as Marque).nom;
+  }
 
   @HostListener('mouseenter')
   onMouseEnter() {
@@ -42,10 +48,5 @@ export class DemandeDevisItemComponent {
   @HostListener('click')
   onClick() {
     this.onSelectDemande.emit(this.demande());
-  }
-
-  @HostListener('blur')
-  onBlur() {
-    console.log('lose focus', this.demande().matricule);
   }
 }

@@ -7,13 +7,13 @@
       <small>{{ demande().statusLabel }}</small>
     </p-tag>
     <p>
-      <small class="capitalize">{{ demande().date }}</small>
+      <small class="capitalize">{{ demande().dateDemande }}</small>
     </p>
   </div>
   <div>
     <h5 class="underline">Info voiture</h5>
-    <p>Marque voiture - {{ demande().modele }}</p>
-    <p>{{ demande().matricule }}</p>
+    <p>Marque voiture - {{ demande().vehicule.modele }}</p>
+    <p>{{ demande().vehicule.immatriculation }}</p>
   </div>
   <div>
     <p>

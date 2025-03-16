@@ -34,6 +34,7 @@ export class DemandeDevisRootComponent implements OnInit {
 
   onSubmit(demandeDevis: DemandeDevisForm) {
     const data: DemandeDevis = {
+      _id: '',
       vehiculeId: demandeDevis.vehiculeId,
       vehicule: {
         marque: demandeDevis.marque,

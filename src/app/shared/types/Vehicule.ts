@@ -5,7 +5,7 @@ export interface Vehicule {
   _id?: string;
   marque: string | Marque;
   modele: string;
-  annee: string;
+  annee: string | number;
   motorisation: string | Motorisation;
   immatriculation: string;
 }

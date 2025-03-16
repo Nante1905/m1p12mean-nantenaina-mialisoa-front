@@ -5,7 +5,7 @@
         class="text-lg cursor-pointer hover:underline"
         [class.item-hover]="isHovered"
       >
-        {{ demande().modele }} {{ demande().matricule }}
+        {{ getMarqueName() }} {{ demande().vehicule.immatriculation }}
       </h6>
       <p-tag
         class="status-tag !text-white !rounded-full"
@@ -15,15 +15,12 @@
       </p-tag>
     </div>
     <p>
-      <small class="capitalize">{{ demande().date }}</small>
+      <small class="capitalize">{{ demande().dateDemande }}</small>
     </p>
   </div>
   <div class="devis-body">
     <p class="line-clamp-2">
       {{ demande().description }}
-      Lorem ipsum dolor sit amet consectetureeeee adipisicing elit. Eveniet
-      beatae maiores vel reiciendis natus delectus repellendus quos ullam a
-      accusamus!
     </p>
   </div>
   <p-divider />
