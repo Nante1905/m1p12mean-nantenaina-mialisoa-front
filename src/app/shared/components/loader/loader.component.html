@@ -1,0 +1,7 @@
+@if((data$ | async) || loading) {
+<div class="loader">
+  <div class="loader__spinner">Chargement</div>
+</div>
+} @else {
+<ng-content></ng-content>
+}

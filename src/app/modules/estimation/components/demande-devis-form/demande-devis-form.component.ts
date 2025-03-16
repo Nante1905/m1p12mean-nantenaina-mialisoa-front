@@ -1,23 +1,33 @@
+import { CommonModule } from '@angular/common';
 import {
   Component,
   ElementRef,
   EventEmitter,
+  Input,
   OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
 import {
   FormBuilder,
-  FormControl,
   FormGroup,
   ReactiveFormsModule,
+  Validators,
 } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
+import { CheckboxModule } from 'primeng/checkbox';
 import { DatePickerModule } from 'primeng/datepicker';
 import { InputTextModule } from 'primeng/inputtext';
 import { SelectModule } from 'primeng/select';
 import { TextareaModule } from 'primeng/textarea';
-import { DemandeDevis } from '../../types/DemandeDevis';
+import { Observable } from 'rxjs';
+import { LoaderComponent } from '../../../../shared/components/loader/loader.component';
+import { ValidationErrorComponent } from '../../../../shared/components/validation-error/validation-error.component';
+import { DemandeDevisForm } from '../../../../shared/types/DemandeDevis';
+import { Marque } from '../../../../shared/types/Marque';
+import { Motorisation } from '../../../../shared/types/Motorisation';
+import { Vehicule } from '../../../../shared/types/Vehicule';
+import { markFormAsTouchedAndDirty } from '../../../../shared/utils/form.utils';
 
 @Component({
   selector: 'app-demande-devis-form',
@@ -28,6 +38,10 @@ import { DemandeDevis } from '../../types/DemandeDevis';
     DatePickerModule,
     ReactiveFormsModule,
     ButtonModule,
+    CheckboxModule,
+    ValidationErrorComponent,
+    LoaderComponent,
+    CommonModule,
   ],
   templateUrl: './demande-devis-form.component.html',
   styleUrl: './demande-devis-form.component.scss',
@@ -35,65 +49,83 @@ import { DemandeDevis } from '../../types/DemandeDevis';
 export class DemandeDevisFormComponent implements OnInit {
   form!: FormGroup;
   @ViewChild('datepicker') datepicker!: ElementRef;
-  @Output() onSubmit: EventEmitter<DemandeDevis> =
-    new EventEmitter<DemandeDevis>();
+  @Output() onSubmit: EventEmitter<DemandeDevisForm> =
+    new EventEmitter<DemandeDevisForm>();
+
+  disableSave = false;
+  @Input() motorisations$!: Observable<Motorisation[]>;
+  @Input() marques$!: Observable<Marque[]>;
+  @Input() vehicules$!: Observable<Vehicule[]>;
+  @Input() loading = false;
 
   constructor(private formBuilder: FormBuilder) {}
 
-  vehicules: any[] = [
-    {
-      id: 0,
-      name: 'Nouveau vehicule',
-    },
-    {
-      id: 1,
-      name: 'Toyota Yaris',
-    },
-  ];
-
-  motorisations: any[] = [
-    {
-      id: 0,
-      name: 'Essence',
-    },
-    {
-      id: 1,
-      name: 'Diesel',
-    },
-    {
-      id: 1,
-      name: 'Electrique',
-    },
-  ];
-
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      vehicule: 0,
-      marque: new FormControl('', {}),
-      modele: [''],
-      annee: [''],
-      motorisation: [''],
-      description: [''],
+      vehiculeId: ['', Validators.required],
+      marque: ['', Validators.required],
+      modele: ['', Validators.required],
+      annee: ['', Validators.required],
+      motorisation: ['', Validators.required],
+      kilometrage: [''],
+      description: ['', Validators.required],
+      saveVehicule: [false],
+      immatriculation: ['', Validators.required],
     });
 
-    console.log(this.form);
+    this.disableSaveVehiculeListener();
 
-    this.form.get('vehicule')?.valueChanges.subscribe((value) => {
-      if (value !== 0 || value === '') {
+    this.form.valueChanges.subscribe((value) => {
+      console.log(value);
+    });
+
+    this.form.get('vehiculeId')?.valueChanges.subscribe((value) => {
+      if (value != 0 || value === '') {
         this.form.get('marque')?.disable();
         this.form.get('modele')?.disable();
         this.form.get('annee')?.disable();
         this.form.get('motorisation')?.disable();
+        this.form.get('saveVehicule')?.disable();
+        this.form.get('immatriculation')?.disable();
       } else {
         this.form.get('marque')?.enable();
         this.form.get('modele')?.enable();
         this.form.get('annee')?.enable();
         this.form.get('motorisation')?.enable();
+        this.form.get('kilometrage')?.enable();
+        this.form.get('saveVehicule')?.enable();
+        this.form.get('immatriculation')?.enable();
       }
     });
   }
 
+  showErrors() {
+    markFormAsTouchedAndDirty(this.form);
+  }
+
   onFormSubmit() {
-    this.onSubmit.emit(this.form.value);
+    if (this.form.invalid) {
+      this.showErrors();
+      return;
+    } else {
+      this.onSubmit.emit(this.form.value);
+      console.log('value', this.form.value);
+    }
+  }
+  onSaveVehiculeChange(event: any) {
+    if (event.checked.length > 0) {
+      this.form.get('saveVehicule')?.setValue(true);
+    } else {
+      this.form.get('saveVehicule')?.setValue(false);
+    }
+  }
+  disableSaveVehiculeListener() {
+    this.form.get('vehiculeId')?.valueChanges.subscribe((value) => {
+      if (value !== 0 || value === '') {
+        this.disableSave = true;
+      } else {
+        this.disableSave = false;
+      }
+    });
   }
 }
