@@ -27,6 +27,7 @@ import { Marque } from '../../../../shared/types/Marque';
 import { Motorisation } from '../../../../shared/types/Motorisation';
 import { Vehicule } from '../../../../shared/types/Vehicule';
 import { markFormAsTouchedAndDirty } from '../../../../shared/utils/form.utils';
+import { DevisVehiculeFormComponent } from '../devis-vehicule-form/devis-vehicule-form.component';
 
 @Component({
   selector: 'app-demande-devis-form',
@@ -41,6 +42,7 @@ import { markFormAsTouchedAndDirty } from '../../../../shared/utils/form.utils';
     ValidationErrorComponent,
     LoaderComponent,
     CommonModule,
+    DevisVehiculeFormComponent,
   ],
   templateUrl: './demande-devis-form.component.html',
   styleUrl: './demande-devis-form.component.scss',
