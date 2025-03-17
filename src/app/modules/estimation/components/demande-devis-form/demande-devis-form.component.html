@@ -22,88 +22,11 @@
           [control]="form.controls['vehiculeId']"
         ></app-validation-error>
       </div>
-      <div>
-        <p-select
-          formControlName="marque"
-          [options]="marques || []"
-          optionLabel="nom"
-          optionValue="_id"
-          placeholder="Choisir une marque"
-          class="w-full"
-        >
-        </p-select
-        ><app-validation-error
-          [control]="form.controls['marque']"
-        ></app-validation-error>
-      </div>
-
-      <div>
-        <input
-          pInputText
-          type="text"
-          class="w-full"
-          formControlName="modele"
-          placeholder="Entre le modele"
-        />
-        <app-validation-error
-          [control]="form.controls['modele']"
-        ></app-validation-error>
-      </div>
-      <div>
-        <input
-          pInputText
-          type="text"
-          class="w-full"
-          formControlName="immatriculation"
-          placeholder="Entrez le numero d'immatriculation"
-        />
-        <app-validation-error
-          [control]="form.controls['immatriculation']"
-        ></app-validation-error>
-      </div>
-      <div class="flex gap-3">
-        <div class="w-[50%]">
-          <p-datepicker
-            [iconDisplay]="'input'"
-            [showIcon]="true"
-            inputId="icondisplay"
-            view="year"
-            dateFormat="yy"
-            formControlName="annee"
-            placeholder="Choisir l'année"
-            class="w-full"
-          />
-          <app-validation-error
-            [control]="form.controls['annee']"
-          ></app-validation-error>
-        </div>
-        <div class="w-[50%]">
-          <app-loader
-            ><p-select
-              formControlName="motorisation"
-              [options]="motorisations || []"
-              optionLabel="nom"
-              optionValue="_id"
-              placeholder="Choisir un type de moteur"
-              class="w-full" />
-            <app-validation-error
-              [control]="form.controls['motorisation']"
-            ></app-validation-error
-          ></app-loader>
-        </div>
-      </div>
-      <div>
-        <input
-          pInputText
-          type="number"
-          class=""
-          formControlName="kilometrage"
-          placeholder="Entre le kilometrage"
-        />
-        <app-validation-error
-          [control]="form.controls['kilometrage']"
-        ></app-validation-error>
-      </div>
+      <app-devis-vehicule-form
+        [motorisations]="motorisations"
+        [marques]="marques"
+        [formVehicule]="form"
+      ></app-devis-vehicule-form>
       <div>
         <div>
           <p-checkbox

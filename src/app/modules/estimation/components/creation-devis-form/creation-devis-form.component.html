@@ -1,37 +1,95 @@
-<div class="card">
-  <p-table [value]="products" [tableStyle]="{ 'min-width': '60rem' }">
-    <ng-template #caption>
-      <div class="flex items-center justify-between">
-        <span class="text-xl font-bold">Products</span>
-        <p-button icon="pi pi-refresh" rounded raised />
-      </div>
-    </ng-template>
-    <ng-template #header>
-      <tr>
-        <th>Name</th>
-        <th>Price</th>
-      </tr>
-    </ng-template>
-    <ng-template #body let-product>
-      <tr>
-        <td [pEditableColumn]="product.name" pEditableColumnField="name">
-          <p-cellEditor>
-            <ng-template #input>
-              <input
-                pInputText
-                type="text"
-                [(ngModel)]="product.name"
-                required
-              />
-            </ng-template>
-            <ng-template #output>
-              {{ product.name }}
-            </ng-template>
-          </p-cellEditor>
-        </td>
-
-        <td>{{ product.price | currency : "USD" }}</td>
-      </tr>
-    </ng-template>
-  </p-table>
-</div>
+<section class="devis-form flex gap-10">
+  <section class="service-table w-[60%] bg-[#fff] px-10 py-5 rounded-2xl">
+    <p class="py-5">Choisissez les services</p>
+    <p-table
+      [value]="servicesForm"
+      styleClass="p-datatable-gridlines"
+      showGridlines
+    >
+      <ng-template #header>
+        <tr>
+          <th class="p-3!">Service</th>
+          <th class="p-3!">Prix</th>
+          <th class="p-3!">Heures</th>
+          <th class="p-3!">Actions</th>
+        </tr>
+      </ng-template>
+      <ng-template #body let-service let-index="rowIndex">
+        <!-- @for(service of servicesForm; track $index; let index = $index) { -->
+        <tr>
+          <td
+            [pEditableColumn]="service.idService"
+            pEditableColumnField="service"
+            class="max-w-3"
+          >
+            <p-cellEditor>
+              <ng-template #input>
+                <p-select
+                  [options]="services || []"
+                  optionLabel="nom"
+                  optionValue="_id"
+                  placeholder="Choisir un service"
+                  class="w-full"
+                  appendTo="body"
+                  [(ngModel)]="service.idService"
+                  (onChange)="handleServiceChange(service, index)"
+                ></p-select>
+              </ng-template>
+              <ng-template #output>
+                {{ service.nom }}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td class="max-w-3">
+            {{ service.prix | currency : "MGA" }}
+          </td>
+          <td
+            [pEditableColumn]="service.heures"
+            pEditableColumnField="service"
+            class="max-w-3"
+          >
+            <p-cellEditor>
+              <ng-template #input>
+                <input
+                  pInputText
+                  type="number"
+                  [(ngModel)]="service.heures"
+                  required
+                  class="w-full"
+                />
+              </ng-template>
+              <ng-template #output>
+                {{ service.heures }}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td>
+            <p-button
+              class="suppr-btn"
+              size="small"
+              severity="danger"
+              (onClick)="handeDeleteService(index)"
+            >
+              Supprimer
+            </p-button>
+          </td>
+        </tr>
+        <!-- } -->
+      </ng-template>
+    </p-table>
+    <!-- <ng-template #footer> -->
+    <div class="flex items-center justify-between my-3">
+      <p-button size="small" (onClick)="handleAddService()">Ajouter</p-button>
+    </div>
+    <!-- </ng-template> -->
+  </section>
+  <section class="vehicule-info max-w-[30%] bg-[#fff] py-5 px-10 rounded-2xl">
+    <p class="py-5">Informations du vehicule</p>
+    <app-devis-vehicule-form
+      [formVehicule]="formVehicule"
+      [marques]="marques || []"
+      [motorisations]="motorisations || []"
+    ></app-devis-vehicule-form>
+    <p-button (onClick)="handleSubmit()">Confirmer</p-button>
+  </section>
+</section>
