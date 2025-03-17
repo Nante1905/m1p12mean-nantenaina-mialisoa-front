@@ -14,6 +14,7 @@ import { RatingModule } from 'primeng/rating';
 import { SelectModule } from 'primeng/select';
 import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
+import { ClientFormComponent } from '../client-form/client-form.component';
 import { DevisVehiculeFormComponent } from '../devis-vehicule-form/devis-vehicule-form.component';
 @Component({
   selector: 'app-creation-devis-form',
@@ -29,15 +30,16 @@ import { DevisVehiculeFormComponent } from '../devis-vehicule-form/devis-vehicul
     DatePickerModule,
     ReactiveFormsModule,
     DevisVehiculeFormComponent,
+    ClientFormComponent,
   ],
   providers: [ReactiveFormsModule],
   templateUrl: './creation-devis-form.component.html',
   styleUrl: './creation-devis-form.component.scss',
 })
 export class CreationDevisFormComponent implements OnInit {
+  constructor(private formBuilder: FormBuilder) {}
   marques: any[] | undefined;
   motorisations: any[] | undefined;
-  constructor(private formBuilder: FormBuilder) {}
   services: any[] = [
     {
       _id: '1',
@@ -74,6 +76,7 @@ export class CreationDevisFormComponent implements OnInit {
   ];
 
   formVehicule!: FormGroup;
+  formClient!: FormGroup;
 
   ngOnInit(): void {
     this.formVehicule = this.formBuilder.group({
@@ -83,6 +86,13 @@ export class CreationDevisFormComponent implements OnInit {
       motorisation: ['', Validators.required],
       kilometrage: [''],
       immatriculation: ['', Validators.required],
+    });
+
+    this.formClient = this.formBuilder.group({
+      nom: ['', Validators.required],
+      prenom: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      telephone: ['', Validators.required, Validators.pattern('^[0-9]*$')],
     });
   }
 
@@ -105,14 +115,23 @@ export class CreationDevisFormComponent implements OnInit {
     const changeIndex = this.services.findIndex(
       (s) => s._id == service.idService
     );
-    this.servicesForm[index] = this.services[changeIndex];
+    console.log(changeIndex);
+    // this.servicesForm[index] = this.services[changeIndex];
     this.servicesForm[index].idService = this.services[changeIndex]._id;
     this.servicesForm[index].nom = this.services[changeIndex].nom;
+    this.servicesForm[index].prix = this.services[changeIndex].prix;
   }
 
   handleSubmit() {
-    console.log(this.servicesForm);
-    console.log(this.formVehicule.value);
+    console.log({
+      services: this.servicesForm,
+      vehicule: this.formVehicule.value,
+      client: this.formClient.value,
+    });
+  }
+
+  getServiceFormTotal() {
+    return this.servicesForm.reduce((acc, s) => acc + s.prix * s.heures, 0);
   }
 }
 

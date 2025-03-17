@@ -1,6 +1,20 @@
-<section class="devis-form flex gap-10">
-  <section class="service-table w-[60%] bg-[#fff] px-10 py-5 rounded-2xl">
-    <p class="py-5">Choisissez les services</p>
+<section class="devis-form flex gap-10 flex-col">
+  <section class="flex justify-between gap-5">
+    <section class="client-info w-[50%] py-5 px-10 rounded-2xl bg-[#fff]">
+      <p class="py-5 font-bold">Informations du client</p>
+      <app-client-form [formClient]="formClient"></app-client-form>
+    </section>
+    <section class="vehicule-info max-w-[50%] bg-[#fff] py-5 px-10 rounded-2xl">
+      <p class="py-5 font-bold">Informations du vehicule</p>
+      <app-devis-vehicule-form
+        [formVehicule]="formVehicule"
+        [marques]="marques || []"
+        [motorisations]="motorisations || []"
+      ></app-devis-vehicule-form>
+    </section>
+  </section>
+  <section class="service-table w-full bg-[#fff] px-10 py-5 rounded-2xl">
+    <p class="py-5 font-bold">Choisissez les services</p>
     <p-table
       [value]="servicesForm"
       styleClass="p-datatable-gridlines"
@@ -11,6 +25,7 @@
           <th class="p-3!">Service</th>
           <th class="p-3!">Prix</th>
           <th class="p-3!">Heures</th>
+          <th class="p-3!">Total</th>
           <th class="p-3!">Actions</th>
         </tr>
       </ng-template>
@@ -40,13 +55,13 @@
               </ng-template>
             </p-cellEditor>
           </td>
-          <td class="max-w-3">
+          <td class="max-w-3 text-right!">
             {{ service.prix | currency : "MGA" }}
           </td>
           <td
             [pEditableColumn]="service.heures"
             pEditableColumnField="service"
-            class="max-w-3"
+            class="max-w-3 text-right!"
           >
             <p-cellEditor>
               <ng-template #input>
@@ -59,9 +74,12 @@
                 />
               </ng-template>
               <ng-template #output>
-                {{ service.heures }}
+                {{ service.heures | number : "1.0-2" }}
               </ng-template>
             </p-cellEditor>
+          </td>
+          <td class="text-right! max-w-3!">
+            {{ service.heures * service.prix | currency : "MGA" }}
           </td>
           <td>
             <p-button
@@ -70,11 +88,20 @@
               severity="danger"
               (onClick)="handeDeleteService(index)"
             >
-              Supprimer
+              <span class="material-icons">delete</span>
             </p-button>
           </td>
         </tr>
         <!-- } -->
+      </ng-template>
+      <ng-template #footer
+        ><tr>
+          <td colspan="3" class="font-bold">Total general</td>
+          <td class="text-right!">
+            {{ getServiceFormTotal() | currency : "MGA" }}
+          </td>
+          <td></td>
+        </tr>
       </ng-template>
     </p-table>
     <!-- <ng-template #footer> -->
@@ -82,14 +109,8 @@
       <p-button size="small" (onClick)="handleAddService()">Ajouter</p-button>
     </div>
     <!-- </ng-template> -->
-  </section>
-  <section class="vehicule-info max-w-[30%] bg-[#fff] py-5 px-10 rounded-2xl">
-    <p class="py-5">Informations du vehicule</p>
-    <app-devis-vehicule-form
-      [formVehicule]="formVehicule"
-      [marques]="marques || []"
-      [motorisations]="motorisations || []"
-    ></app-devis-vehicule-form>
-    <p-button (onClick)="handleSubmit()">Confirmer</p-button>
+    <div class="text-right">
+      <p-button (onClick)="handleSubmit()">Confirmer</p-button>
+    </div>
   </section>
 </section>
