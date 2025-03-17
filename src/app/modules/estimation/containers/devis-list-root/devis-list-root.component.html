@@ -1,6 +1,8 @@
 <header>
-  <h1>Vos devis</h1>
-  <div class="w-full flex justify-end">
+  <p-card>
+    <h1>Vos devis</h1>
+  </p-card>
+  <div class="w-full flex justify-end my-4">
     <a
       href="demande-devis"
       class="button text-white p-2 px-3 bg-primary rounded-md"
@@ -16,7 +18,10 @@
     </p-tablist>
     <p-tabpanels>
       <p-tabpanel value="0">
-        <app-demande-devis-list />
+        <app-demande-devis-list
+          [data]="demandeDevis$ | async"
+          (onFilterChange)="filterData($event)"
+        />
       </p-tabpanel>
       <p-tabpanel value="1">
         <p class="m-0">

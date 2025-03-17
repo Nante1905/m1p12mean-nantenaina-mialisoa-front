@@ -1,9 +1,13 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { DemandeDevis } from '../../../shared/types/DemandeDevis';
 import { Marque } from '../../../shared/types/Marque';
 import { Motorisation } from '../../../shared/types/Motorisation';
 import { Vehicule } from '../../../shared/types/Vehicule';
+import {
+  DemandeDevisDataResponse,
+  DemandeDevisFilter,
+} from '../types/DemandeDevis';
 
 @Injectable({
   providedIn: 'root',
@@ -25,5 +29,30 @@ export class DevisService {
 
   findAllVehicule() {
     return this.http.get<Vehicule[]>('/vehicules');
+  }
+
+  filterToHttpParams(filter: DemandeDevisFilter): HttpParams {
+    let params = new HttpParams();
+
+    Object.keys(filter).forEach((key) => {
+      const value = (filter as any)[key];
+      if (value !== null && value !== undefined && value !== '') {
+        params = params.set(key, value.toString());
+      }
+    });
+
+    return params;
+  }
+
+  findAllDemandeDevis(filter?: DemandeDevisFilter) {
+    console.log('fetch demande');
+
+    return this.http.get<{
+      isError: boolean;
+      message: string;
+      data: DemandeDevisDataResponse;
+    }>('/devis/demandes', {
+      params: filter ? this.filterToHttpParams(filter) : {},
+    });
   }
 }

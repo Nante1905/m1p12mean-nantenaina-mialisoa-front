@@ -1,6 +1,7 @@
 import { HttpEvent, HttpHandlerFn, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
+import { authToken } from './mock';
 
 export function requestInterceptor(
   req: HttpRequest<unknown>,
@@ -16,6 +17,9 @@ export function requestInterceptor(
   // });
   const newReq = req.clone({
     url: `${environment.apiBaseUrl}${req.url}`,
+    setHeaders: {
+      Authorization: `Bearer ${authToken}`,
+    },
   });
   return next(newReq);
 }
