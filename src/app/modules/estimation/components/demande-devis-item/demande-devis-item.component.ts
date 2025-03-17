@@ -1,4 +1,5 @@
 import { Component, HostListener, input, output } from '@angular/core';
+import dayjs from 'dayjs';
 import { DividerModule } from 'primeng/divider';
 import { TagModule } from 'primeng/tag';
 import { formatDateToReadable } from '../../../../shared/helpers/date';
@@ -18,7 +19,9 @@ export class DemandeDevisItemComponent {
   demande = input.required<DemandeDevis, RequiredDemandeDevisType>({
     transform: (props: DemandeDevis) => ({
       ...props,
-      dateDemande: formatDateToReadable(new Date(props.dateDemande as string)),
+      dateDemande: formatDateToReadable(
+        dayjs(props.dateDemande as string).toDate()
+      ),
       statusLabel: DEMANDES_DEVIS_STATUS_CLIENT[props.status as number],
       marque: props.vehicule.marque as Marque,
     }),

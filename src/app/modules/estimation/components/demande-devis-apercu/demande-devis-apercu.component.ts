@@ -16,7 +16,7 @@ export class DemandeDevisApercuComponent {
   demande = input.required<DemandeDevis, RequiredDemandeDevisType>({
     transform: (props: DemandeDevis) => ({
       ...props,
-      date: formatDateToReadable(new Date(props.dateDemande as string)),
+      dateDemande: formatDateToReadable(new Date(props.dateDemande as string)),
       statusLabel: DEMANDES_DEVIS_STATUS_CLIENT[props.status as number],
     }),
   });
