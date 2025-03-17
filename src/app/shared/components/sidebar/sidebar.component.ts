@@ -44,6 +44,11 @@ export class SidebarComponent {
       icon: 'request_quote',
       route: 'devis',
     },
+    {
+      label: 'Creer Devis',
+      icon: 'request_quote',
+      route: 'creation-devis',
+    },
     // { label: 'Utilisateurs', icon: 'people', route: 'users' },
     // { label: 'Projets', icon: 'work', route: 'projects' },
     // { label: 'Rapports', icon: 'bar_chart', route: 'reports' },

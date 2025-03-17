@@ -1,0 +1,12 @@
+.suppr-btn {
+  button {
+    background-color: red !important;
+  }
+}
+
+td {
+  padding-block: 0.5rem !important;
+}
+tr:last-child {
+  border-width: 0 0 1px 1px !important;
+}

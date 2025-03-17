@@ -20,7 +20,6 @@ import { DatePickerModule } from 'primeng/datepicker';
 import { InputTextModule } from 'primeng/inputtext';
 import { SelectModule } from 'primeng/select';
 import { TextareaModule } from 'primeng/textarea';
-import { Observable } from 'rxjs';
 import { LoaderComponent } from '../../../../shared/components/loader/loader.component';
 import { ValidationErrorComponent } from '../../../../shared/components/validation-error/validation-error.component';
 import { DemandeDevisForm } from '../../../../shared/types/DemandeDevis';
@@ -28,6 +27,7 @@ import { Marque } from '../../../../shared/types/Marque';
 import { Motorisation } from '../../../../shared/types/Motorisation';
 import { Vehicule } from '../../../../shared/types/Vehicule';
 import { markFormAsTouchedAndDirty } from '../../../../shared/utils/form.utils';
+import { DevisVehiculeFormComponent } from '../devis-vehicule-form/devis-vehicule-form.component';
 
 @Component({
   selector: 'app-demande-devis-form',
@@ -42,6 +42,7 @@ import { markFormAsTouchedAndDirty } from '../../../../shared/utils/form.utils';
     ValidationErrorComponent,
     LoaderComponent,
     CommonModule,
+    DevisVehiculeFormComponent,
   ],
   templateUrl: './demande-devis-form.component.html',
   styleUrl: './demande-devis-form.component.scss',
@@ -53,9 +54,9 @@ export class DemandeDevisFormComponent implements OnInit {
     new EventEmitter<DemandeDevisForm>();
 
   disableSave = false;
-  @Input() motorisations$!: Observable<Motorisation[]>;
-  @Input() marques$!: Observable<Marque[]>;
-  @Input() vehicules$!: Observable<Vehicule[]>;
+  @Input() motorisations!: Motorisation[];
+  @Input() marques!: Marque[];
+  @Input() vehicules!: Vehicule[];
   @Input() loading = false;
 
   constructor(private formBuilder: FormBuilder) {}
