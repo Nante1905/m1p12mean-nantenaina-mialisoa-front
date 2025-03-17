@@ -1,0 +1,45 @@
+<section id="apercu-devis-devis" class="flex flex-col gap-y-4 items-start">
+  <div class="w-full flex items-center justify-between flex-wrap">
+    @if (devis().status > 0) {
+    <p-tag
+      class="status-tag !text-white !rounded-full"
+      [styleClass]="getStatusClassname(devis().status)"
+    >
+      <small>{{ devis().statusLabel }}</small>
+    </p-tag>
+    } @else {
+    <p></p>
+    }
+    <p>
+      <small class="capitalize">{{ devis().date }}</small>
+    </p>
+  </div>
+  <div class="w-full">
+    <h5 class="underline">Info sur le véhicule</h5>
+    <p>{{ devis().vehicule.modele }}</p>
+    <p>{{ devis().vehicule.immatriculation }}</p>
+  </div>
+  <div class="w-full">
+    <h5 class="underline">Service(s) proposé(s)</h5>
+    <ul class="list-disc pl-8">
+      @for (service of devis().services; track service) {
+      <li>{{ service.nom }}</li>
+      }
+    </ul>
+    <p class="text-right my-4">
+      <strong>Total: {{ devis().total.toLocaleString("fr") }} MGA</strong>
+    </p>
+  </div>
+  <p-divider />
+  <a href="devis/idDevis" class="text-accent hover:underline"
+    >Plus de détails</a
+  >
+  <div class="w-full flex items-center justify-between flex-wrap gap-y-6">
+    @if(devis().status == 0) {
+    <p-button severity="primary" size="small">Prendre rendez-vous</p-button>
+    } @else {
+    <p></p>
+    }
+    <p-button severity="danger" size="small">Supprimer</p-button>
+  </div>
+</section>

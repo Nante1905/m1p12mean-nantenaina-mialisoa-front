@@ -1,0 +1,27 @@
+<div class="cursor-pointer" [class.selected]="isSelected()">
+  <div class="devis-header flex items-start justify-between flex-wrap-reverse">
+    <div class="devis-title flex items-center justify-center gap-4">
+      <h6
+        class="text-lg cursor-pointer hover:underline"
+        [class.item-hover]="isHovered"
+      >
+        Devis n°{{ devis().ref }} - {{ devis().vehicule.immatriculation }}
+      </h6>
+      @if(devis().status > 0) {
+      <p-tag
+        class="status-tag !text-white !rounded-full"
+        [styleClass]="getStatusClassname(devis().status)"
+      >
+        <small>{{ devis().statusLabel }}</small>
+      </p-tag>
+      }
+    </div>
+    <p>
+      <small class="capitalize">{{ devis().date }}</small>
+    </p>
+  </div>
+  <div class="devis-body">
+    <p class="line-clamp-2">{{ devis().services.length }} services proposés</p>
+  </div>
+  <p-divider />
+</div>

@@ -1,0 +1,75 @@
+<section class="devis-container">
+  <div class="devis-list" [class.shortened]="false">
+    <div
+      class="w-full py-8 devis-filter flex items-center justify-between flex-wrap gap-y-4"
+    >
+      <div class="flex items-center gap-4">
+        <p-tag
+          class="status-filter cursor-pointer !bg-white !text-black border-2 border-secondary"
+          (click)="updateFilter({ status: null })"
+          [styleClass]="filter.status == null ? 'selected-filter' : ''"
+          >Tous : 5</p-tag
+        >
+        <p-tag
+          class="status-filter cursor-pointer !bg-white !text-black border-2 border-secondary"
+          (click)="updateFilter({ status: 0 })"
+          [styleClass]="filter.status == 0 ? 'selected-filter' : ''"
+          >Abouti en RDV : 2</p-tag
+        >
+      </div>
+      <div class="flex items-center gap-1">
+        <input
+          pInputText
+          type="text"
+          class=""
+          placeholder="N° immatriculation"
+          [(ngModel)]="filter.immatriculation"
+        />
+        <p-button
+          variant="outlined"
+          severity="help"
+          type="submit"
+          (onClick)="updateFilter({ immatriculation: filter.immatriculation })"
+        >
+          <span class="material-icons">search</span>
+        </p-button>
+      </div>
+    </div>
+    <app-loader [loading]="!devis()" class="flex-1">
+      @for (item of devis(); track item) {
+
+      <app-devis-item
+        [devis]="item"
+        (onSelectDevis)="onSelectDevis(item)"
+        [isSelected]="selectedDevis?._id == item._id"
+      />
+      }
+      <div class="card flex justify-center">
+        <p-paginator
+          (onPageChange)="onPageChange($event)"
+          [first]="first"
+          [rows]="rows"
+          [totalRecords]="devis().length || 1"
+          [showCurrentPageReport]="true"
+          [showPageLinks]="false"
+          [showJumpToPageDropdown]="false"
+          currentPageReportTemplate="Lignes {first} à {last} de {totalRecords}"
+        />
+      </div>
+    </app-loader>
+  </div>
+
+  @if (selectedDevis) {
+  <div class="details-devis" [@detailsAnimation]>
+    <p-card>
+      <div class="flex justify-end">
+        <button (click)="onSelectDevis(null)" class="cursor-pointer">
+          <span class="material-icons"> close </span>
+        </button>
+      </div>
+      <p-divider />
+      <app-devis-apercu [devis]="selectedDevis" />
+    </p-card>
+  </div>
+  }
+</section>

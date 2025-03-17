@@ -1,0 +1,13 @@
+@use "badge-devis.scss";
+@import "../../../../styles/themes/colors.scss";
+
+.status-tag {
+  @extend %status-tag;
+}
+.item-hover {
+  text-decoration: underline;
+}
+.selected {
+  border-right: 3px solid $error-color;
+  padding-right: 1rem;
+}

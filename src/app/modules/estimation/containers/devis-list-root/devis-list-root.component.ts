@@ -3,8 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { TabsModule } from 'primeng/tabs';
-import { BehaviorSubject, map, Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
+import { Devis } from '../../../../shared/types/Devis';
 import { DemandeDevisListComponent } from '../../components/demande-devis-list/demande-devis-list.component';
+import { DevisListComponent } from '../../components/devis-list/devis-list.component';
 import { DevisService } from '../../services/devis.service';
 import {
   DemandeDevisDataResponse,
@@ -19,6 +21,7 @@ import {
     DemandeDevisListComponent,
     CommonModule,
     CardModule,
+    DevisListComponent,
   ],
   templateUrl: './devis-list-root.component.html',
   styleUrl: './devis-list-root.component.scss',
@@ -27,14 +30,14 @@ export class DevisListRootComponent implements OnInit {
   constructor(private devisService: DevisService) {}
 
   demandeDevis$!: Observable<DemandeDevisDataResponse>;
-  loading$ = new BehaviorSubject<boolean>(true);
+  listDevis: Devis[] = [];
 
   ngOnInit(): void {
-    console.log('rendu root');
-
     this.demandeDevis$ = this.devisService
       .findAllDemandeDevis()
       .pipe(map((res) => res.data));
+
+    this.listDevis = this.devisService.findAllDevis();
   }
 
   filterData = (filter: DemandeDevisFilter) => {

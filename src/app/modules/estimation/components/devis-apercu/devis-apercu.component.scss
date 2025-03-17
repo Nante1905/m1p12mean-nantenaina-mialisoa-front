@@ -1,0 +1,5 @@
+@use "badge-devis.scss";
+
+.status-tag {
+  @extend %status-tag;
+}
