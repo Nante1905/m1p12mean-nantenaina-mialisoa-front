@@ -4,7 +4,7 @@
       <p class="py-5 font-bold">Informations du client</p>
       <app-client-form [formClient]="formClient"></app-client-form>
     </section>
-    <section class="vehicule-info max-w-[50%] bg-[#fff] py-5 px-10 rounded-2xl">
+    <section class="vehicule-info min-w-[50%] bg-[#fff] py-5 px-10 rounded-2xl">
       <p class="py-5 font-bold">Informations du vehicule</p>
       <app-devis-vehicule-form
         [formVehicule]="formVehicule"
@@ -110,7 +110,10 @@
     </div>
     <!-- </ng-template> -->
     <div class="text-right">
-      <p-button (onClick)="handleSubmit()">Confirmer</p-button>
+      <p-button (onClick)="handleSubmit()" [loading]="loading"
+        >Confirmer</p-button
+      >
     </div>
   </section>
 </section>
+<p-toast></p-toast>
