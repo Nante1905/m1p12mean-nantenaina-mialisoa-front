@@ -1,4 +1,4 @@
-import { Service } from './Service';
+import { Service } from './Services';
 import { Utilisateur } from './Utilisateur';
 import { Vehicule } from './Vehicule';
 
@@ -9,7 +9,14 @@ export interface Devis {
   client: Utilisateur;
   services: Service[];
   vehicule: Vehicule;
-  total: number;
   status: number;
   statusLabel?: string;
+  numero: string;
+  total: number;
+}
+
+export interface StatutStat {
+  value: number;
+  count: number;
+  label: string;
 }

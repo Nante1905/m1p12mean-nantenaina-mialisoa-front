@@ -33,7 +33,7 @@ export class CreationDevisFormRootComponent implements OnInit {
   ngOnInit(): void {
     this.services$ = this.devisService
       .findAllServices()
-      .pipe(map((res) => res.items));
+      .pipe(map((res) => res.data));
     this.marques$ = this.devisService.findAllMarque();
     this.motorisations$ = this.devisService.findAllMotorisation();
   }

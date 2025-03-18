@@ -95,10 +95,6 @@ export class DemandeDevisListComponent {
     // }, 300);
   };
 
-  test = () => {
-    console.log(this.filter.immatriculation);
-  };
-
   updateFilter = (filter: Partial<DemandeDevisFilter>) => {
     this.filter = {
       ...this.filter,

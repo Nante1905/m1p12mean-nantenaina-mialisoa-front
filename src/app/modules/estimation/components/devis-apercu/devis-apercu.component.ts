@@ -6,7 +6,11 @@ import { TagModule } from 'primeng/tag';
 import { formatDateToReadable } from '../../../../shared/helpers/date';
 import { getDevisStatusClassname } from '../../../../shared/helpers/devis';
 import { Devis } from '../../../../shared/types/Devis';
-import { DEVIS_STATUS_LABEL } from '../../constants/devis';
+import {
+  CREATED_DEVIS_STATUS,
+  DELETED_DEVIS_STATUS,
+  DEVIS_STATUS_LABEL,
+} from '../../constants/devis';
 import { RequiredDevisType } from '../../types/Devis';
 
 @Component({
@@ -16,6 +20,8 @@ import { RequiredDevisType } from '../../types/Devis';
   styleUrl: './devis-apercu.component.scss',
 })
 export class DevisApercuComponent {
+  CREATED = CREATED_DEVIS_STATUS;
+  DELETED = DELETED_DEVIS_STATUS;
   devis = input.required<Devis, RequiredDevisType>({
     transform: (props: Devis) => ({
       ...props,

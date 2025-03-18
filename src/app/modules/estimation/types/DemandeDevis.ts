@@ -1,4 +1,5 @@
 import { DemandeDevis } from '../../../shared/types/DemandeDevis';
+import { StatutStat } from '../../../shared/types/Devis';
 import { Vehicule } from '../../../shared/types/Vehicule';
 
 export type RequiredDemandeDevisType = {
@@ -16,11 +17,7 @@ export interface DemandeDevisDataResponse {
   limit: number;
   totalPage: number;
   totalItems: number;
-  stats: {
-    value: number;
-    count: number;
-    label: string;
-  }[];
+  stats: StatutStat[];
 }
 
 export interface DemandeDevisFilter {
