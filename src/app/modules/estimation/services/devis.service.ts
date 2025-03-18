@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApiResponse } from '../../../shared/types/ApiResponse';
 import { DemandeDevis } from '../../../shared/types/DemandeDevis';
+import { Devis } from '../../../shared/types/Devis';
 import { Marque } from '../../../shared/types/Marque';
 import { Motorisation } from '../../../shared/types/Motorisation';
 import { Service } from '../../../shared/types/Services';
@@ -70,5 +71,9 @@ export class DevisService {
 
   createDevis(data: DevisCreationType) {
     return this.http.post<ApiResponse<any>>('/devis', data);
+  }
+
+  findDevisById(id: string) {
+    return this.http.get<ApiResponse<Devis>>(`/devis/${id}`);
   }
 }

@@ -8,4 +8,5 @@ export interface Vehicule {
   annee: string | number;
   motorisation: string | Motorisation;
   immatriculation: string;
+  kilometrage?: number;
 }

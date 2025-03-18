@@ -1,0 +1,3 @@
+<app-loader [loading]="!(devis$ | async)">
+  <app-details-devis [devis]="(devis$ | async) || undefined" />
+</app-loader>

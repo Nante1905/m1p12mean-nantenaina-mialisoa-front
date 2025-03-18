@@ -1,0 +1,99 @@
+<div class="lg:w-[70vw] mx-auto">
+  <p-card class="w-full">
+    <div class="px-8">
+      <h1 class="text-center">Devis de réparation</h1>
+      <div
+        class="devis-header flex items-start justify-between flew-wrap gap-y-4"
+      >
+        <div>
+          <h5>Nom du Garage</h5>
+          <p>Adresse</p>
+          <p>Telephone - Email</p>
+        </div>
+        <ul>
+          <li><strong>Numéro: </strong> {{ devis()?.numero }}</li>
+          <li><strong>Date: </strong> {{ devis()?.date }}</li>
+        </ul>
+      </div>
+      <p-divider />
+      <div class="py-4">
+        <ul>
+          <li>
+            <strong>Client: </strong> {{ devis()?.client?.nom }}
+            {{ devis()?.client?.prenom }}
+          </li>
+          <li><strong>Email: </strong> {{ devis()?.client?.email }}</li>
+          <li><strong>Téléphone: </strong> {{ devis()?.client?.telephone }}</li>
+        </ul>
+      </div>
+      <p-divider />
+      <div class="py-4">
+        <h3 class="mb-4">Véhicule</h3>
+        <ul>
+          <li>
+            <strong>Marque: </strong> {{ getMarqueName() }} -
+            {{ devis()?.vehicule?.modele }}
+          </li>
+          <li>
+            <strong>Immatriculation: </strong>
+            {{ devis()?.vehicule?.immatriculation }}
+          </li>
+          <li><strong>Moteur: </strong> {{ getMotorisationName() }}</li>
+          <li>
+            <strong>Année de mise en circulation: </strong>
+            {{ devis()?.vehicule?.annee }}
+          </li>
+          <li>
+            <strong>Kilométrage: </strong>
+            {{
+              currencyFormatter(
+                devis()?.vehicule?.kilometrage || 0,
+                "fr",
+                ""
+              ).split(",")[0]
+            }}
+            km
+          </li>
+        </ul>
+      </div>
+      <p-divider />
+      <div class="py-4">
+        <h3 class="mb-4">Interventions</h3>
+        <p-table
+          [value]="devis()?.services || []"
+          showGridlines
+          [tableStyle]="{ 'min-width': '50rem' }"
+        >
+          <ng-template #header>
+            <tr>
+              <th>Service</th>
+              <th>Taux horaire</th>
+              <th>Estimation (h)</th>
+              <th>Total</th>
+            </tr>
+          </ng-template>
+          <ng-template #body let-item>
+            <tr>
+              <td>{{ item.nom }}</td>
+              <td class="align-number">
+                {{ currencyFormatter(item.prix, "fr", "MGA") }}
+              </td>
+              <td class="align-number">{{ item.heures }}</td>
+              <td class="align-number">
+                {{ currencyFormatter(item.total, "fr", "MGA") }}
+              </td>
+            </tr>
+          </ng-template>
+          <ng-template #footer>
+            <tr>
+              <td colspan="3" class="font-bold">Total général</td>
+              <td class="text-right!">
+                {{ currencyFormatter(devis()?.total || 0, "fr", "MGA") }}
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+  </p-card>
+</div>

@@ -4,7 +4,6 @@
 @use "./app/styles/themes/colors.scss" as themeColors;
 @import url("https://fonts.googleapis.com/css?family=Inter:700|Mona%20Sans:400");
 @import "./import-tailwind.css";
-// @import "~@ng-select/ng-select/themes/default.theme.css";
 
 html,
 body {
@@ -26,11 +25,11 @@ h6 {
 }
 
 h1 {
-  font-size: 2rem; /* 48.8px */
+  font-size: 2.442rem; /* 48.8px */
 }
 
 h2 {
-  font-size: 2.442rem; /* 39.04px */
+  font-size: 2rem; /* 39.04px */
 }
 
 h3 {
@@ -47,4 +46,8 @@ h5 {
 
 small {
   font-size: 0.8rem; /* 12.8px */
+}
+
+.align-number {
+  text-align: right !important;
 }
