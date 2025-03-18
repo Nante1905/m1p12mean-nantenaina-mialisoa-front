@@ -87,6 +87,7 @@ export class DevisService {
       status: 0,
     };
     return [mockDevis, { ...mockDevis, status: 5 }, mockDevis];
+  }
   findAllServices() {
     return this.http.get<ApiResponse<Service>>('/services');
   }
