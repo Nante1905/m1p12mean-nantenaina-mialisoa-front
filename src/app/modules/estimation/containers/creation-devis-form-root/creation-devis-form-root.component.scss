@@ -1,0 +1,5 @@
+@use "glass.scss";
+
+header {
+  @extend %glass;
+}
