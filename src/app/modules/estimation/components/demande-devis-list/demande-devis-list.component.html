@@ -39,19 +39,19 @@
         [isSelected]="selectedDemande?._id == item._id"
       />
       }
-      <div class="card flex justify-center">
-        <p-paginator
-          (onPageChange)="onPageChange($event)"
-          [first]="first"
-          [rows]="rows"
-          [totalRecords]="data()?.totalItems || 1"
-          [showCurrentPageReport]="true"
-          [showPageLinks]="false"
-          [showJumpToPageDropdown]="false"
-          currentPageReportTemplate="Lignes {first} à {last} de {totalRecords}"
-        />
-      </div>
     </app-loader>
+    <div class="card flex justify-center">
+      <p-paginator
+        (onPageChange)="onPageChange($event)"
+        [first]="first"
+        [rows]="rows"
+        [totalRecords]="data()?.totalItems || 1"
+        [showCurrentPageReport]="true"
+        [showPageLinks]="false"
+        [showJumpToPageDropdown]="false"
+        currentPageReportTemplate="Lignes {first} à {last} de {totalRecords}"
+      />
+    </div>
   </div>
 
   @if (selectedDemande) {
