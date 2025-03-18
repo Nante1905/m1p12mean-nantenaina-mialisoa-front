@@ -1,6 +1,10 @@
+@use "glass.scss";
+
 .suppr-btn {
   button {
     background-color: red !important;
+    width: 30px !important;
+    height: 30px !important;
   }
 }
 
@@ -9,4 +13,10 @@ td {
 }
 tr:last-child {
   border-width: 0 0 1px 1px !important;
+}
+
+.client-info,
+.vehicule-info,
+.service-table {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }

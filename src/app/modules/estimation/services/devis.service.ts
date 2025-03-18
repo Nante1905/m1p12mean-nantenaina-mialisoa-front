@@ -1,14 +1,17 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ApiResponse } from '../../../shared/types/ApiResponse';
 import { DemandeDevis } from '../../../shared/types/DemandeDevis';
 import { Devis } from '../../../shared/types/Devis';
 import { Marque } from '../../../shared/types/Marque';
 import { Motorisation } from '../../../shared/types/Motorisation';
+import { Service } from '../../../shared/types/Services';
 import { Vehicule } from '../../../shared/types/Vehicule';
 import {
   DemandeDevisDataResponse,
   DemandeDevisFilter,
 } from '../types/DemandeDevis';
+import { DevisCreationType } from '../types/DevisCreationType';
 
 @Injectable({
   providedIn: 'root',
@@ -84,5 +87,11 @@ export class DevisService {
       status: 0,
     };
     return [mockDevis, { ...mockDevis, status: 5 }, mockDevis];
+  findAllServices() {
+    return this.http.get<ApiResponse<Service>>('/services');
+  }
+
+  createDevis(data: DevisCreationType) {
+    return this.http.post<ApiResponse<any>>('/devis', data);
   }
 }

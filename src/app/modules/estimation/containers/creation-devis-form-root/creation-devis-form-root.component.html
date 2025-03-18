@@ -3,6 +3,14 @@
     <h1>Creer un devis</h1>
   </header>
   <div>
-    <app-creation-devis-form></app-creation-devis-form>
+    <app-creation-devis-form
+      [marques]="(marques$ | async) || []"
+      [motorisations]="(motorisations$ | async) || []"
+      [services]="(services$ | async) || []"
+      [loading]="loading"
+      (onSubmit)="handleSubmit($event)"
+    ></app-creation-devis-form>
   </div>
+  <div></div>
 </section>
+<p-toast></p-toast>
