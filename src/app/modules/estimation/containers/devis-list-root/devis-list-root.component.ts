@@ -4,9 +4,11 @@ import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { TabsModule } from 'primeng/tabs';
+import { Devis } from '../../../../shared/types/Devis';
 import { ToastModule } from 'primeng/toast';
 import { BehaviorSubject, catchError, map, Observable, of } from 'rxjs';
 import { DemandeDevisListComponent } from '../../components/demande-devis-list/demande-devis-list.component';
+import { DevisListComponent } from '../../components/devis-list/devis-list.component';
 import { DevisService } from '../../services/devis.service';
 import {
   DemandeDevisDataResponse,
@@ -21,6 +23,7 @@ import {
     DemandeDevisListComponent,
     CommonModule,
     CardModule,
+    DevisListComponent,
     ToastModule,
   ],
   providers: [MessageService],
@@ -34,7 +37,7 @@ export class DevisListRootComponent implements OnInit {
   ) {}
 
   demandeDevis$!: Observable<DemandeDevisDataResponse>;
-  loading$ = new BehaviorSubject<boolean>(true);
+  listDevis: Devis[] = [];
 
   ngOnInit(): void {
     console.log('rendu root');

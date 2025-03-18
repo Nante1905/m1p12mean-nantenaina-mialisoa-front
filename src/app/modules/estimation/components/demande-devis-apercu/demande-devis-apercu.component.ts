@@ -3,6 +3,7 @@ import { TagModule } from 'primeng/tag';
 import { formatDateToReadable } from '../../../../shared/helpers/date';
 import { getDemandeDevisStatusClassname } from '../../../../shared/helpers/devis';
 import { DemandeDevis } from '../../../../shared/types/DemandeDevis';
+import { Marque } from '../../../../shared/types/Marque';
 import { DEMANDES_DEVIS_STATUS_CLIENT } from '../../constants/devis';
 import { RequiredDemandeDevisType } from '../../types/DemandeDevis';
 
@@ -21,4 +22,10 @@ export class DemandeDevisApercuComponent {
     }),
   });
   getStatusClassname = getDemandeDevisStatusClassname;
+
+  getMarqueName(): string {
+    return typeof this.demande().vehicule.marque === 'string'
+      ? (this.demande().vehicule.marque as string)
+      : (this.demande().vehicule.marque as Marque).nom;
+  }
 }

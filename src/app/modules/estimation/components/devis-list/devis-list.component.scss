@@ -1,0 +1,27 @@
+.status-filter {
+  transition: all 0.3s ease-in-out;
+}
+.selected-filter {
+  transform: translateY(-10px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  font-weight: 700 !important;
+}
+.devis-container {
+  display: flex;
+  transition: all 0.5s ease-in-out;
+  overflow-x: hidden;
+
+  .devis-list {
+    transition: all 0.5s ease-in-out;
+    flex: 1;
+    &.shortened {
+      transition: all 0.8s ease-in-out;
+    }
+  }
+
+  .details-devis {
+    flex: 0.4;
+    transition: all 0.8s ease;
+    padding: 2rem;
+  }
+}

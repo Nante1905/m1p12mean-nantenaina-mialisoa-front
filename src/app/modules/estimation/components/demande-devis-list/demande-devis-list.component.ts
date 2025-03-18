@@ -79,7 +79,6 @@ export class DemandeDevisListComponent {
   rows: number = 10;
 
   selectedDemande: DemandeDevis | null = null;
-
   ngOnInit(): void {}
 
   onPageChange = (event: PaginatorState) => {

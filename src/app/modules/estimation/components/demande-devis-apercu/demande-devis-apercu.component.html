@@ -12,16 +12,15 @@
   </div>
   <div>
     <h5 class="underline">Info voiture</h5>
-    <p>Marque voiture - {{ demande().vehicule.modele }}</p>
-    <p>{{ demande().vehicule.immatriculation }}</p>
+    <p>
+      <strong>Marque:</strong> {{ getMarqueName() }} -
+      {{ demande().vehicule.modele }}
+    </p>
+    <p><strong>N°:</strong> {{ demande().vehicule.immatriculation }}</p>
   </div>
   <div>
     <p>
       {{ demande().description }}
-      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magni inventore
-      nihil doloremque voluptates? Doloribus repellat ratione dignissimos magni
-      neque unde laudantium accusamus, deleniti eum cumque, aliquid suscipit?
-      Suscipit, possimus reiciendis?
     </p>
   </div>
 </section>
