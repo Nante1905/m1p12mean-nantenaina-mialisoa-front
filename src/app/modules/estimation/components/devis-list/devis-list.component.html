@@ -32,7 +32,7 @@
       </div>
     </div>
     <app-loader [loading]="!devis()" class="flex-1">
-      @for (item of devis()?.items; track item) {
+      @for (item of devis()?.items; track $index) {
 
       <app-devis-item
         [devis]="item"
@@ -64,7 +64,11 @@
         </button>
       </div>
       <p-divider />
-      <app-devis-apercu [devis]="selectedDevis" />
+      <app-devis-apercu
+        [devis]="selectedDevis"
+        (onTakeRdv)="handleTakeRdv()"
+        [takeRdvLoading]="takeRdvLoading"
+      />
     </p-card>
   </div>
   }

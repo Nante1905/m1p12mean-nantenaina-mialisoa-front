@@ -5,7 +5,14 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
-import { Component, input, output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  input,
+  output,
+  Output,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -16,6 +23,7 @@ import { TagModule } from 'primeng/tag';
 import { LoaderComponent } from '../../../../shared/components/loader/loader.component';
 import { Devis } from '../../../../shared/types/Devis';
 import { DevisDataResponse, DevisListFilter } from '../../types/Devis';
+import { TakeRdvEventPayload } from '../../types/TakeRdvEventPayload';
 import { DevisApercuComponent } from '../devis-apercu/devis-apercu.component';
 import { DevisItemComponent } from '../devis-item/devis-item.component';
 
@@ -60,6 +68,10 @@ export class DevisListComponent {
   devis = input.required<DevisDataResponse | null>();
   selectedDevis: Devis | null = null;
   onFilterChange = output<DevisListFilter>();
+  @Input() takeRdvLoading!: boolean;
+
+  @Output() onTakeRdv: EventEmitter<TakeRdvEventPayload> =
+    new EventEmitter<TakeRdvEventPayload>();
 
   filter: DevisListFilter = {
     status: null,
@@ -83,5 +95,12 @@ export class DevisListComponent {
 
   onSelectDevis = (devis: Devis | null) => {
     this.selectedDevis = devis;
+  };
+
+  handleTakeRdv = () => {
+    this.onTakeRdv.emit({
+      devis: this.selectedDevis as Devis,
+      callback: this.onSelectDevis,
+    });
   };
 }

@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, EventEmitter, Input, input, Output } from '@angular/core';
 import dayjs from 'dayjs';
 import { ButtonModule } from 'primeng/button';
 import { DividerModule } from 'primeng/divider';
@@ -22,6 +22,10 @@ import { RequiredDevisType } from '../../types/Devis';
 export class DevisApercuComponent {
   CREATED = CREATED_DEVIS_STATUS;
   DELETED = DELETED_DEVIS_STATUS;
+  @Output() onTakeRdv: EventEmitter<void> = new EventEmitter<void>();
+
+  @Input() takeRdvLoading = false;
+
   devis = input.required<Devis, RequiredDevisType>({
     transform: (props: Devis) => ({
       ...props,
@@ -31,4 +35,8 @@ export class DevisApercuComponent {
   });
 
   getStatusClassname = getDevisStatusClassname;
+
+  handleTakeRdv(): void {
+    this.onTakeRdv.emit();
+  }
 }

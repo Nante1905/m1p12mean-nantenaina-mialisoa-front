@@ -5,7 +5,11 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { TabsModule } from 'primeng/tabs';
 import { ToastModule } from 'primeng/toast';
-import { catchError, map, Observable, of } from 'rxjs';
+import { catchError, finalize, map, Observable, of, tap } from 'rxjs';
+import {
+  showToastError,
+  showToastSuccess,
+} from '../../../../shared/utils/form.utils';
 import { DemandeDevisListComponent } from '../../components/demande-devis-list/demande-devis-list.component';
 import { DevisListComponent } from '../../components/devis-list/devis-list.component';
 import { DevisService } from '../../services/devis.service';
@@ -14,6 +18,7 @@ import {
   DemandeDevisFilter,
 } from '../../types/DemandeDevis';
 import { DevisDataResponse, DevisListFilter } from '../../types/Devis';
+import { TakeRdvEventPayload } from '../../types/TakeRdvEventPayload';
 
 @Component({
   selector: 'app-devis-list-root',
@@ -38,6 +43,7 @@ export class DevisListRootComponent implements OnInit {
 
   demandeDevis$!: Observable<DemandeDevisDataResponse>;
   listDevis$!: Observable<DevisDataResponse>;
+  takeRdvLoading = false;
 
   ngOnInit(): void {
     this.fetchDataDemandes();
@@ -90,5 +96,27 @@ export class DevisListRootComponent implements OnInit {
         return of(devis);
       })
     );
+  };
+
+  handleTakeRdv = (event: TakeRdvEventPayload) => {
+    this.takeRdvLoading = true;
+    this.devisService
+      .takeRdv(event.devis._id)
+      .pipe(
+        tap((value) => {
+          showToastSuccess(value.message, this.messageService);
+          this.fetchDataDevis();
+        }),
+        catchError((err) => {
+          console.log(err);
+          showToastError(err.error.message, this.messageService);
+          return of(err);
+        }),
+        finalize(() => {
+          this.takeRdvLoading = false;
+          event.callback(null);
+        })
+      )
+      .subscribe();
   };
 }
