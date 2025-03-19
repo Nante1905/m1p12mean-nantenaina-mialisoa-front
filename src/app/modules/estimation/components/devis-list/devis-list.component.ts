@@ -15,6 +15,7 @@ import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { TagModule } from 'primeng/tag';
 import { LoaderComponent } from '../../../../shared/components/loader/loader.component';
 import { Devis } from '../../../../shared/types/Devis';
+import { DevisService } from '../../services/devis.service';
 import { DevisDataResponse, DevisListFilter } from '../../types/Devis';
 import { DevisApercuComponent } from '../devis-apercu/devis-apercu.component';
 import { DevisItemComponent } from '../devis-item/devis-item.component';
@@ -69,6 +70,10 @@ export class DevisListComponent {
   first = 0;
   rows = 10;
 
+  loadingPdf = false;
+
+  constructor(private devisService: DevisService) {}
+
   updateFilter = (newFilter: Partial<DevisListFilter>) => {
     this.filter = {
       ...this.filter,
@@ -83,5 +88,21 @@ export class DevisListComponent {
 
   onSelectDevis = (devis: Devis | null) => {
     this.selectedDevis = devis;
+  };
+
+  onDownloadPdf = (devis: Devis) => {
+    this.loadingPdf = true;
+    this.devisService.downloadDevisPdf(devis._id).subscribe((res) => {
+      const url = URL.createObjectURL(res);
+
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `DEVIS-${devis.vehicule.immatriculation}-${devis.numero}.pdf`;
+      a.click();
+
+      URL.revokeObjectURL(url);
+
+      this.loadingPdf = false;
+    });
   };
 }

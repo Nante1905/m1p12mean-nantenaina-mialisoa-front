@@ -76,4 +76,10 @@ export class DevisService {
   findDevisById(id: string) {
     return this.http.get<ApiResponse<Devis>>(`/devis/${id}`);
   }
+
+  downloadDevisPdf(id: string) {
+    return this.http.get(`/devis/${id}/pdf`, {
+      responseType: 'blob',
+    });
+  }
 }

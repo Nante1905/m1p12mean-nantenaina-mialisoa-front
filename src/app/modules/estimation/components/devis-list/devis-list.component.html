@@ -58,7 +58,17 @@
   @if (selectedDevis) {
   <div class="details-devis" [@detailsAnimation]>
     <p-card>
-      <div class="flex justify-end">
+      <div class="flex items-center justify-between">
+        <p-button
+          class="flex items-center pdf_btn"
+          size="small"
+          rounded
+          severity="help"
+          [loading]="loadingPdf"
+          (onClick)="onDownloadPdf(selectedDevis)"
+        >
+          <span class="material-icons">picture_as_pdf</span>
+        </p-button>
         <button (click)="onSelectDevis(null)" class="cursor-pointer">
           <span class="material-icons"> close </span>
         </button>

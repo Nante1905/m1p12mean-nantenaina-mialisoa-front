@@ -7,6 +7,7 @@ import { TableModule } from 'primeng/table';
 import { Devis } from '../../../../shared/types/Devis';
 import { Marque } from '../../../../shared/types/Marque';
 import { Motorisation } from '../../../../shared/types/Motorisation';
+import { DEVIS_STATUS_LABEL } from '../../constants/devis';
 
 type RequiredDevis = Pick<
   Devis,
@@ -31,12 +32,11 @@ type RequiredDevis = Pick<
 export class DetailsDevisComponent {
   devis = input(undefined, {
     transform: (d: Devis | undefined) => {
-      console.log(d);
-
       if (d) {
         return {
           ...d,
           date: dayjs(d?.date).format('DD MMMM YYYY'),
+          statusLabel: DEVIS_STATUS_LABEL[d?.status as number],
         };
       }
       return undefined;

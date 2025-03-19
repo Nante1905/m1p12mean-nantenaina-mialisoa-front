@@ -5,14 +5,20 @@
       <div
         class="devis-header flex items-start justify-between flew-wrap gap-y-4"
       >
-        <div>
+        <!-- <div>
           <h5>Nom du Garage</h5>
           <p>Adresse</p>
           <p>Telephone - Email</p>
-        </div>
+        </div> -->
         <ul>
           <li><strong>Numéro: </strong> {{ devis()?.numero }}</li>
           <li><strong>Date: </strong> {{ devis()?.date }}</li>
+          <li>
+            <strong
+              >Statut:
+              <span class="capitalize">{{ devis()?.statusLabel }}</span>
+            </strong>
+          </li>
         </ul>
       </div>
       <p-divider />
