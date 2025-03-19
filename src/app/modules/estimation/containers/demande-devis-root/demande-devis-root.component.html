@@ -1,8 +1,10 @@
-<h1 class="text-sm">Demander un devis</h1>
-<p class="font-light my-6">
-  Remplissez le formulaire ci-dessous pour demander un devis pour votre
-  véhicule.
-</p>
+<div class="bg-[#fff] p-4 rounded-2xl mb-5">
+  <h1 class="text-sm">Demander un devis</h1>
+  <p class="font-light my-6">
+    Remplissez le formulaire ci-dessous pour demander un devis pour votre
+    véhicule.
+  </p>
+</div>
 <app-demande-devis-form
   (onSubmit)="onSubmit($event)"
   [motorisations]="(motorisations$ | async) || []"
