@@ -3,8 +3,6 @@ import 'dayjs/locale/fr';
 dayjs.locale('fr');
 
 export const formatDateToReadable = (value: string | Date, format?: string) => {
-  console.log(value);
-
   const parsed = typeof value == 'object' ? dayjs(value) : dayjs(value, format);
 
   const now = dayjs();

@@ -4,12 +4,6 @@
       class="w-full py-8 demande-filter flex items-center justify-between flex-wrap gap-y-4"
     >
       <div class="flex items-center gap-4">
-        <p-tag
-          class="status-filter cursor-pointer !bg-white !text-black border-2 border-secondary"
-          (click)="updateFilter({ status: null })"
-          [styleClass]="filter.status == null ? 'selected-filter' : ''"
-          >Tous : {{ data()?.totalItems }}</p-tag
-        >
         @for (item of data()?.stats; track item) {
         <p-tag
           class="status-filter cursor-pointer !bg-white !text-black border-2 border-secondary"
@@ -45,19 +39,19 @@
         [isSelected]="selectedDemande?._id == item._id"
       />
       }
-      <div class="card flex justify-center">
-        <p-paginator
-          (onPageChange)="onPageChange($event)"
-          [first]="first"
-          [rows]="rows"
-          [totalRecords]="data()?.totalItems || 1"
-          [showCurrentPageReport]="true"
-          [showPageLinks]="false"
-          [showJumpToPageDropdown]="false"
-          currentPageReportTemplate="Lignes {first} à {last} de {totalRecords}"
-        />
-      </div>
     </app-loader>
+    <div class="card flex justify-center">
+      <p-paginator
+        (onPageChange)="onPageChange($event)"
+        [first]="first"
+        [rows]="rows"
+        [totalRecords]="data()?.totalItems || 1"
+        [showCurrentPageReport]="true"
+        [showPageLinks]="false"
+        [showJumpToPageDropdown]="false"
+        currentPageReportTemplate="Lignes {first} à {last} de {totalRecords}"
+      />
+    </div>
   </div>
 
   @if (selectedDemande) {

@@ -5,7 +5,7 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -15,13 +15,9 @@ import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { TagModule } from 'primeng/tag';
 import { LoaderComponent } from '../../../../shared/components/loader/loader.component';
 import { Devis } from '../../../../shared/types/Devis';
+import { DevisDataResponse, DevisListFilter } from '../../types/Devis';
 import { DevisApercuComponent } from '../devis-apercu/devis-apercu.component';
 import { DevisItemComponent } from '../devis-item/devis-item.component';
-
-interface DevisListFilter {
-  status: number | null;
-  immatriculation: string;
-}
 
 @Component({
   selector: 'app-devis-list',
@@ -61,8 +57,9 @@ interface DevisListFilter {
   ],
 })
 export class DevisListComponent {
-  devis = input.required<Devis[]>();
+  devis = input.required<DevisDataResponse | null>();
   selectedDevis: Devis | null = null;
+  onFilterChange = output<DevisListFilter>();
 
   filter: DevisListFilter = {
     status: null,
@@ -77,6 +74,7 @@ export class DevisListComponent {
       ...this.filter,
       ...newFilter,
     };
+    this.onFilterChange.emit({ ...this.filter, ...newFilter });
   };
 
   onPageChange = (event: PaginatorState) => {

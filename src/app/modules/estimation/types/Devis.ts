@@ -1,5 +1,5 @@
-import { Devis } from '../../../shared/types/Devis';
-import { Service } from '../../../shared/types/Service';
+import { Devis, StatutStat } from '../../../shared/types/Devis';
+import { Service } from '../../../shared/types/Services';
 import { Vehicule } from '../../../shared/types/Vehicule';
 
 export type RequiredDevisType = Pick<
@@ -12,8 +12,24 @@ export type RequiredDevisType = Pick<
   | 'total'
   | 'client'
   | 'vehicule'
+  | 'total'
+  | 'numero'
 > & {
   services: Pick<Service, '_id' | 'nom'>[];
 } & {
   vehicule: Pick<Vehicule, 'immatriculation' | 'modele'>;
 };
+
+export interface DevisDataResponse {
+  items: Devis[];
+  page: number;
+  limit: number;
+  totalItems: number;
+  totalPage: number;
+  stats: StatutStat[];
+}
+
+export interface DevisListFilter {
+  status: number | null;
+  immatriculation: string;
+}

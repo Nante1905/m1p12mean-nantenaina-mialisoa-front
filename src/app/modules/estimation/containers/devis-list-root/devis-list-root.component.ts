@@ -6,7 +6,6 @@ import { CardModule } from 'primeng/card';
 import { TabsModule } from 'primeng/tabs';
 import { ToastModule } from 'primeng/toast';
 import { catchError, map, Observable, of } from 'rxjs';
-import { Devis } from '../../../../shared/types/Devis';
 import { DemandeDevisListComponent } from '../../components/demande-devis-list/demande-devis-list.component';
 import { DevisListComponent } from '../../components/devis-list/devis-list.component';
 import { DevisService } from '../../services/devis.service';
@@ -14,6 +13,7 @@ import {
   DemandeDevisDataResponse,
   DemandeDevisFilter,
 } from '../../types/DemandeDevis';
+import { DevisDataResponse, DevisListFilter } from '../../types/Devis';
 
 @Component({
   selector: 'app-devis-list-root',
@@ -37,12 +37,15 @@ export class DevisListRootComponent implements OnInit {
   ) {}
 
   demandeDevis$!: Observable<DemandeDevisDataResponse>;
-  listDevis: Devis[] = [];
+  listDevis$!: Observable<DevisDataResponse>;
 
   ngOnInit(): void {
-    console.log('rendu root');
+    this.fetchDataDemandes();
+    this.fetchDataDevis();
+  }
 
-    this.demandeDevis$ = this.devisService.findAllDemandeDevis().pipe(
+  fetchDataDemandes = (filter?: DemandeDevisFilter) => {
+    this.demandeDevis$ = this.devisService.findAllDemandeDevis(filter).pipe(
       map((res) => res.data),
       catchError((err) => {
         console.log(err);
@@ -63,13 +66,29 @@ export class DevisListRootComponent implements OnInit {
         return of(demandeDevis);
       })
     );
-    this.listDevis = this.devisService.findAllDevis();
-  }
+  };
 
-  filterData = (filter: DemandeDevisFilter) => {
-    console.log(filter);
-    this.demandeDevis$ = this.devisService
-      .findAllDemandeDevis(filter)
-      .pipe(map((res) => res.data));
+  fetchDataDevis = (filter?: DevisListFilter) => {
+    this.listDevis$ = this.devisService.findAllDevis(filter).pipe(
+      map((res) => res.data),
+      catchError((err) => {
+        console.log(err);
+
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Erreur',
+          detail: err.error.message,
+        });
+        const devis: DevisDataResponse = {
+          items: [],
+          page: 0,
+          limit: 0,
+          totalPage: 0,
+          totalItems: 0,
+          stats: [],
+        };
+        return of(devis);
+      })
+    );
   };
 }

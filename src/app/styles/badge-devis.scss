@@ -1,7 +1,8 @@
 @import "./themes/colors.scss";
 
 %status-tag {
-  &.demande-attente {
+  &.demande-attente,
+  &.devis-attente-rdv {
     background-color: #6b728078 !important;
   }
   &.demande-dispo {
@@ -12,5 +13,8 @@
   }
   &.devis-abouti-en-rdv {
     background-color: $success !important;
+  }
+  &.devis-supprime {
+    background-color: $error-color !important;
   }
 }
