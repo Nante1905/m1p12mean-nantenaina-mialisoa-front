@@ -72,7 +72,7 @@
         >
           <ng-template #header>
             <tr>
-              <th>Service</th>
+              <th pFrozenColumn [frozen]="true">Service</th>
               <th>Taux horaire</th>
               <th>Estimation (h)</th>
               <th>Total</th>
@@ -80,7 +80,7 @@
           </ng-template>
           <ng-template #body let-item>
             <tr>
-              <td>{{ item.nom }}</td>
+              <td pFrozenColumn [frozen]="true">{{ item.nom }}</td>
               <td class="align-number">
                 {{ currencyFormatter(item.prix, "fr", "MGA") }}
               </td>

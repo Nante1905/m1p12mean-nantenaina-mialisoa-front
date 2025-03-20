@@ -57,7 +57,16 @@
   @if (selectedDemande) {
   <div class="details-devis" [@detailsAnimation]>
     <p-card>
-      <div class="flex justify-end">
+      <div class="flex justify-between items-center flex-wrap-reverse">
+        @if(selectedDemande.idDevis) {
+        <a [href]="'/devis/' + selectedDemande.idDevis">
+          <p-button size="small" rounded severity="help"
+            >Voir la réponse</p-button
+          >
+        </a>
+        } @else {
+        <p></p>
+        }
         <button (click)="onSelectDemande(null)" class="cursor-pointer">
           <span class="material-icons"> close </span>
         </button>

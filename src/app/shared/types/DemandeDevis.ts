@@ -24,4 +24,5 @@ export interface DemandeDevis {
   utilisateur?: Utilisateur;
   status?: number;
   statusLabel?: string;
+  idDevis?: string;
 }
