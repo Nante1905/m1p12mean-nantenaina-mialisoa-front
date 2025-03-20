@@ -1,10 +1,15 @@
-import { Component, input } from '@angular/core';
+import { Component, input, OnInit } from '@angular/core';
 import { TagModule } from 'primeng/tag';
 import { formatDateToReadable } from '../../../../shared/helpers/date';
-import { getDemandeDevisStatusClassname } from '../../../../shared/helpers/devis';
+import {
+  getDemandeDevisStatusClassname,
+  getDemandeDevisStatusLabel,
+} from '../../../../shared/helpers/devis';
+import { AuthService } from '../../../../shared/services/auth/auth.service';
+import { RoleType } from '../../../../shared/types/Auth';
 import { DemandeDevis } from '../../../../shared/types/DemandeDevis';
 import { Marque } from '../../../../shared/types/Marque';
-import { DEMANDES_DEVIS_STATUS_CLIENT } from '../../constants/devis';
+import { DISPO_DEMANDE_DEVIS_STATUS } from '../../constants/devis';
 import { RequiredDemandeDevisType } from '../../types/DemandeDevis';
 
 @Component({
@@ -13,15 +18,34 @@ import { RequiredDemandeDevisType } from '../../types/DemandeDevis';
   templateUrl: './demande-devis-apercu.component.html',
   styleUrl: './demande-devis-apercu.component.scss',
 })
-export class DemandeDevisApercuComponent {
+export class DemandeDevisApercuComponent implements OnInit {
   demande = input.required<DemandeDevis, RequiredDemandeDevisType>({
     transform: (props: DemandeDevis) => ({
       ...props,
       dateDemande: formatDateToReadable(new Date(props.dateDemande as string)),
-      statusLabel: DEMANDES_DEVIS_STATUS_CLIENT[props.status as number],
     }),
   });
-  getStatusClassname = getDemandeDevisStatusClassname;
+
+  ROLES = RoleType;
+  DISPO_STATUS = DISPO_DEMANDE_DEVIS_STATUS;
+  role?: RoleType;
+  statusLabel: string = '';
+  statusClassname: string = '';
+
+  constructor(private authService: AuthService) {}
+
+  ngOnInit(): void {
+    const role = this.authService.getCurrentUser()?.role;
+    this.role = role;
+    if (role) {
+      this.statusLabel =
+        getDemandeDevisStatusLabel(role)[this.demande().status as number];
+      this.statusClassname = getDemandeDevisStatusClassname(
+        role,
+        this.demande().status as number
+      );
+    }
+  }
 
   getMarqueName(): string {
     return typeof this.demande().vehicule.marque === 'string'

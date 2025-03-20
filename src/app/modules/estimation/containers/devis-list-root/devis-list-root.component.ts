@@ -40,12 +40,12 @@ export class DevisListRootComponent implements OnInit {
   listDevis$!: Observable<DevisDataResponse>;
 
   ngOnInit(): void {
-    this.fetchDataDemandes();
-    this.fetchDataDevis();
+    this.demandeDevis$ = this.fetchDataDemandes();
+    this.listDevis$ = this.fetchDataDevis();
   }
 
   fetchDataDemandes = (filter?: DemandeDevisFilter) => {
-    this.demandeDevis$ = this.devisService.findAllDemandeDevis(filter).pipe(
+    return this.devisService.findAllDemandeDevis(filter).pipe(
       map((res) => res.data),
       catchError((err) => {
         console.log(err);
@@ -69,7 +69,7 @@ export class DevisListRootComponent implements OnInit {
   };
 
   fetchDataDevis = (filter?: DevisListFilter) => {
-    this.listDevis$ = this.devisService.findAllDevis(filter).pipe(
+    return this.devisService.findAllDevis(filter).pipe(
       map((res) => res.data),
       catchError((err) => {
         console.log(err);
@@ -90,5 +90,13 @@ export class DevisListRootComponent implements OnInit {
         return of(devis);
       })
     );
+  };
+
+  onFilterDemandeChange = (filter: DemandeDevisFilter) => {
+    this.demandeDevis$ = this.fetchDataDemandes(filter);
+  };
+
+  onFilterDevisChange = (filter: DevisListFilter) => {
+    this.listDevis$ = this.fetchDataDevis(filter);
   };
 }

@@ -21,6 +21,14 @@
           placeholder="N° immatriculation"
           [(ngModel)]="filter.immatriculation"
         />
+        <input
+          pInputText
+          type="text"
+          class=""
+          placeholder="Client"
+          [(ngModel)]="filter.nom"
+          *hasRole="[ROLES.MANAGER]"
+        />
         <p-button
           variant="outlined"
           severity="help"
@@ -65,7 +73,15 @@
           >
         </a>
         } @else {
-        <p></p>
+        <div>
+          @if(selectedDemande.status == CREATED_DEVIS_STATUS) {
+          <a [href]="'/creation-devis'" *hasRole="[ROLES.MANAGER]">
+            <p-button size="small" rounded severity="contrast"
+              >Répondre</p-button
+            >
+          </a>
+          }
+        </div>
         }
         <button (click)="onSelectDemande(null)" class="cursor-pointer">
           <span class="material-icons"> close </span>

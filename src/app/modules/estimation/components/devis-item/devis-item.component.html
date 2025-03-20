@@ -10,9 +10,9 @@
       @if(devis().status > 0) {
       <p-tag
         class="status-tag !text-white !rounded-full"
-        [styleClass]="getStatusClassname(devis().status)"
+        [styleClass]="statusClassname"
       >
-        <small>{{ devis().statusLabel }}</small>
+        <small>{{ statusLabel }}</small>
       </p-tag>
       }
     </div>

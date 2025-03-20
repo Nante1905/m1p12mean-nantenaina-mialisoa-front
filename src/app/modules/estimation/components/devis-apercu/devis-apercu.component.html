@@ -3,9 +3,9 @@
     @if (devis().status > 0) {
     <p-tag
       class="status-tag !text-white !rounded-full"
-      [styleClass]="getStatusClassname(devis().status)"
+      [styleClass]="statusClassname"
     >
-      <small>{{ devis().statusLabel }}</small>
+      <small>{{ statusLabel }}</small>
     </p-tag>
     } @else {
     <p></p>
@@ -36,8 +36,12 @@
   >
 
   <div class="w-full flex items-center justify-between flex-wrap gap-y-6">
-    @if(devis().status == CREATED) {
+    @if(devis().status == CREATED && userRole == ROLES.client) {
     <p-button severity="primary" size="small">Prendre rendez-vous</p-button>
+    } @else if(devis().status == WAITING_RDV && userRole == ROLES.manager) {
+    <a [href]="'rdv?check=' + devis()._id" class="text-accent hover:underline"
+      >Voir mon calendrier</a
+    >
     } @else {
     <p></p>
     }

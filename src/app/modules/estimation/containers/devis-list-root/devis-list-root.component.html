@@ -20,14 +20,14 @@
       <p-tabpanel value="0">
         <app-demande-devis-list
           [data]="demandeDevis$ | async"
-          (onFilterChange)="fetchDataDemandes($event)"
+          (onFilterChange)="onFilterDemandeChange($event)"
         />
       </p-tabpanel>
       <p-tabpanel value="1">
         <p class="m-0">
           <app-devis-list
             [devis]="listDevis$ | async"
-            (onFilterChange)="fetchDataDevis($event)"
+            (onFilterChange)="onFilterDevisChange($event)"
           />
         </p>
       </p-tabpanel>
