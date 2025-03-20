@@ -27,7 +27,7 @@ interface NavItem {
   styleUrls: ['./sidebar.component.scss'],
 })
 export class SidebarComponent {
-  @Input() collapsed: boolean = false;
+  @Input() collapsed: boolean = true;
   @Output() collapsedChange = new EventEmitter<boolean>();
 
   isMobile: boolean = false;
