@@ -1,4 +1,11 @@
 <section class="devis-form flex gap-10 flex-col">
+  <section class="demande-info py-5 px-10 rounded-2xl bg-[#fff]">
+    <p>
+      <u>Demande du</u> : {{ demandeDevisData?.dateDemande }}
+      <strong>!Fuseau horaire jerena!</strong>
+    </p>
+    <p><u>Description</u>: {{ demandeDevisData?.description }}</p>
+  </section>
   <section class="flex justify-between gap-5">
     <section class="client-info w-[50%] py-5 px-10 rounded-2xl bg-[#fff]">
       <p class="py-5 font-bold">Informations du client</p>

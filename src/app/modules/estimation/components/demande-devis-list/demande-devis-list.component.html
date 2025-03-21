@@ -75,7 +75,10 @@
         } @else {
         <div>
           @if(selectedDemande.status == CREATED_DEVIS_STATUS) {
-          <a [href]="'/creation-devis'" *hasRole="[ROLES.MANAGER]">
+          <a
+            [href]="'/creation-devis?from=' + selectedDemande._id"
+            *hasRole="[ROLES.MANAGER]"
+          >
             <p-button size="small" rounded severity="contrast"
               >Répondre</p-button
             >

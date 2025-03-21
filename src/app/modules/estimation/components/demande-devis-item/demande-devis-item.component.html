@@ -32,7 +32,10 @@
       </p>
     </div>
     @if(demande().status == CREATED_STATUS) {
-    <a href="creation-devis" *hasRole="[ROLES.MANAGER]">
+    <a
+      [href]="'creation-devis?from=' + demande()._id"
+      *hasRole="[ROLES.MANAGER]"
+    >
       <p-button variant="text" size="small" rounded severity="info">
         <span class="material-icons !text-[30px]">edit_note</span>
       </p-button>
