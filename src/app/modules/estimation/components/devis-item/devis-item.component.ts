@@ -1,11 +1,14 @@
-import { Component, HostListener, input, output } from '@angular/core';
+import { Component, HostListener, input, OnInit, output } from '@angular/core';
 import dayjs from 'dayjs';
 import { DividerModule } from 'primeng/divider';
 import { TagModule } from 'primeng/tag';
 import { formatDateToReadable } from '../../../../shared/helpers/date';
-import { getDevisStatusClassname } from '../../../../shared/helpers/devis';
+import {
+  getDevisStatusClassname,
+  getDevisStatusLabel,
+} from '../../../../shared/helpers/devis';
+import { AuthService } from '../../../../shared/services/auth/auth.service';
 import { Devis } from '../../../../shared/types/Devis';
-import { DEVIS_STATUS_LABEL } from '../../constants/devis';
 import { RequiredDevisType } from '../../types/Devis';
 
 @Component({
@@ -14,20 +17,31 @@ import { RequiredDevisType } from '../../types/Devis';
   templateUrl: './devis-item.component.html',
   styleUrl: './devis-item.component.scss',
 })
-export class DevisItemComponent {
+export class DevisItemComponent implements OnInit {
   devis = input.required<Devis, RequiredDevisType>({
     transform: (props: Devis) => ({
       ...props,
       date: formatDateToReadable(dayjs(props.date as string).toDate()),
-      statusLabel: DEVIS_STATUS_LABEL[props.status as number],
+      // statusLabel: DEVIS_STATUS_LABEL[props.status as number],
     }),
   });
+  statusLabel: string = '';
+  statusClassname: string = '';
 
   isSelected = input<boolean>(false);
   isHovered = false;
-  getStatusClassname = getDevisStatusClassname;
 
   onSelectDevis = output<Devis>();
+
+  constructor(private authService: AuthService) {}
+
+  ngOnInit(): void {
+    const role = this.authService.getCurrentUser()?.role;
+    if (role) {
+      this.statusLabel = getDevisStatusLabel(role)[this.devis().status];
+      this.statusClassname = getDevisStatusClassname(role, this.devis().status);
+    }
+  }
 
   @HostListener('mouseenter')
   onMouseEnter() {

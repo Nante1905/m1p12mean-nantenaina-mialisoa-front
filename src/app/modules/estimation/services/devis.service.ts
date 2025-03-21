@@ -82,4 +82,10 @@ export class DevisService {
       responseType: 'blob',
     });
   }
+
+  findDemandeDevisById(id: string) {
+    console.log('get demande');
+
+    return this.http.get<ApiResponse<DemandeDevis>>(`/devis/demandes/${id}`);
+  }
 }

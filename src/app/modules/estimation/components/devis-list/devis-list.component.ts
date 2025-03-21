@@ -14,6 +14,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { TagModule } from 'primeng/tag';
 import { LoaderComponent } from '../../../../shared/components/loader/loader.component';
+import { HasRoleDirective } from '../../../../shared/directives/has-role/has-role.directive';
+import { RoleType } from '../../../../shared/types/Auth';
 import { Devis } from '../../../../shared/types/Devis';
 import { DevisService } from '../../services/devis.service';
 import { DevisDataResponse, DevisListFilter } from '../../types/Devis';
@@ -33,6 +35,7 @@ import { DevisItemComponent } from '../devis-item/devis-item.component';
     DividerModule,
     DevisApercuComponent,
     InputTextModule,
+    HasRoleDirective,
   ],
   templateUrl: './devis-list.component.html',
   styleUrl: './devis-list.component.scss',
@@ -61,10 +64,12 @@ export class DevisListComponent {
   devis = input.required<DevisDataResponse | null>();
   selectedDevis: Devis | null = null;
   onFilterChange = output<DevisListFilter>();
+  ROLES = RoleType;
 
   filter: DevisListFilter = {
     status: null,
     immatriculation: '',
+    nom: '',
   };
 
   first = 0;
@@ -80,6 +85,7 @@ export class DevisListComponent {
       ...newFilter,
     };
     this.onFilterChange.emit({ ...this.filter, ...newFilter });
+    this.selectedDevis = null;
   };
 
   onPageChange = (event: PaginatorState) => {

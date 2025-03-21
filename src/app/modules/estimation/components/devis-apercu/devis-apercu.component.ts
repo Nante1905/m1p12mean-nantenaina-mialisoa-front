@@ -1,15 +1,21 @@
-import { Component, input } from '@angular/core';
+import { Component, input, OnInit } from '@angular/core';
 import dayjs from 'dayjs';
 import { ButtonModule } from 'primeng/button';
 import { DividerModule } from 'primeng/divider';
 import { TagModule } from 'primeng/tag';
+import { USER_ROLE } from '../../../../shared/constants/auth';
 import { formatDateToReadable } from '../../../../shared/helpers/date';
-import { getDevisStatusClassname } from '../../../../shared/helpers/devis';
+import {
+  getDevisStatusClassname,
+  getDevisStatusLabel,
+} from '../../../../shared/helpers/devis';
+import { AuthService } from '../../../../shared/services/auth/auth.service';
+import { RoleType } from '../../../../shared/types/Auth';
 import { Devis } from '../../../../shared/types/Devis';
 import {
   CREATED_DEVIS_STATUS,
   DELETED_DEVIS_STATUS,
-  DEVIS_STATUS_LABEL,
+  WAITING_RDV_DEVIS_STATUS,
 } from '../../constants/devis';
 import { RequiredDevisType } from '../../types/Devis';
 
@@ -19,16 +25,31 @@ import { RequiredDevisType } from '../../types/Devis';
   templateUrl: './devis-apercu.component.html',
   styleUrl: './devis-apercu.component.scss',
 })
-export class DevisApercuComponent {
+export class DevisApercuComponent implements OnInit {
   CREATED = CREATED_DEVIS_STATUS;
   DELETED = DELETED_DEVIS_STATUS;
+  WAITING_RDV = WAITING_RDV_DEVIS_STATUS;
+
   devis = input.required<Devis, RequiredDevisType>({
     transform: (props: Devis) => ({
       ...props,
       date: formatDateToReadable(dayjs(props.date as string).toDate()),
-      statusLabel: DEVIS_STATUS_LABEL[props.status as number],
     }),
   });
-
   getStatusClassname = getDevisStatusClassname;
+  statusLabel: string = '';
+  statusClassname: string = '';
+  userRole?: RoleType;
+  ROLES = USER_ROLE;
+
+  constructor(private authService: AuthService) {}
+
+  ngOnInit(): void {
+    const role = this.authService.getCurrentUser()?.role;
+    this.userRole = role;
+    if (role) {
+      this.statusLabel = getDevisStatusLabel(role)[this.devis().status];
+      this.statusClassname = getDevisStatusClassname(role, this.devis().status);
+    }
+  }
 }

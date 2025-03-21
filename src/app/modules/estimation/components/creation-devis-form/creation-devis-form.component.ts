@@ -7,6 +7,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import dayjs from 'dayjs';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
@@ -16,6 +17,8 @@ import { SelectModule } from 'primeng/select';
 import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { ToastModule } from 'primeng/toast';
+import { Observable } from 'rxjs';
+import { DemandeDevis } from '../../../../shared/types/DemandeDevis';
 import { Marque } from '../../../../shared/types/Marque';
 import { Motorisation } from '../../../../shared/types/Motorisation';
 import { Service } from '../../../../shared/types/Services';
@@ -57,6 +60,8 @@ export class CreationDevisFormComponent implements OnInit {
   @Input() services!: Service[];
   @Input() loading = false;
 
+  @Input() demandeDevis!: Observable<DemandeDevis | null>;
+
   @Output() onSubmit: EventEmitter<DevisCreationType> =
     new EventEmitter<DevisCreationType>();
 
@@ -65,21 +70,57 @@ export class CreationDevisFormComponent implements OnInit {
   formVehicule!: FormGroup;
   formClient!: FormGroup;
 
+  demandeDevisData: DemandeDevis | null = null;
+
   ngOnInit(): void {
+    console.log(this.marques);
+
     this.formVehicule = this.formBuilder.group({
       marque: ['', Validators.required],
       modele: ['', Validators.required],
       annee: ['', Validators.required],
-      motorisation: ['', Validators.required],
+      motorisation: ['67d5aebafcc1f5ed54a9e08b', Validators.required],
       kilometrage: [''],
       immatriculation: ['', Validators.required],
     });
 
     this.formClient = this.formBuilder.group({
+      id: '',
       email: ['', [Validators.required, Validators.email]],
       nom: ['', Validators.required],
       prenom: ['', Validators.required],
       telephone: ['', Validators.required],
+    });
+
+    this.demandeDevis.subscribe((demande) => {
+      if (demande) {
+        this.demandeDevisData = {
+          ...demande,
+          dateDemande: dayjs(demande.dateDemande).format(
+            'dddd DD MMMM YYYY HH:mm'
+          ),
+        };
+        this.formVehicule.setValue({
+          marque: (demande.vehicule.marque as Marque)._id || '',
+          modele: demande.vehicule.modele || '',
+          annee: `${demande.vehicule.annee || ''}`,
+          motorisation:
+            (demande.vehicule.motorisation as Motorisation)._id || '',
+          kilometrage: demande.kilometrage,
+          immatriculation: demande.vehicule.immatriculation || '',
+        });
+        this.formVehicule.disable();
+
+        // TODO: ilay id client
+        this.formClient.setValue({
+          id: demande.utilisateur?.id || '',
+          email: demande.utilisateur?.email || '',
+          nom: demande.utilisateur?.nom || '',
+          prenom: demande.utilisateur?.prenom || '',
+          telephone: demande.utilisateur?.telephone || '',
+        });
+        this.formClient.disable();
+      }
     });
   }
 

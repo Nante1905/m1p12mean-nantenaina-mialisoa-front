@@ -17,4 +17,8 @@
   &.devis-supprime {
     background-color: $error-color !important;
   }
+  &.devis-rdv-a-confirmer,
+  &.demande-attente-de-reponse {
+    background-color: $error-color !important;
+  }
 }

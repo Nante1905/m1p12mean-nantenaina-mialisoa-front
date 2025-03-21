@@ -1,11 +1,16 @@
 <section id="apercu-demande-devis" class="flex flex-col gap-y-4 items-start">
   <div class="w-full flex items-center justify-between flex-wrap">
+    @if (role == ROLES.CLIENT || (role === ROLES.MANAGER && demande().status !=
+    DISPO_STATUS)) {
     <p-tag
       class="status-tag !text-white !rounded-full"
-      [styleClass]="getStatusClassname(demande().status)"
+      [styleClass]="statusClassname"
     >
-      <small>{{ demande().statusLabel }}</small>
+      <small>{{ statusLabel }}</small>
     </p-tag>
+    } @else {
+    <p></p>
+    }
     <p>
       <small class="capitalize">{{ demande().dateDemande }}</small>
     </p>

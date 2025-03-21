@@ -32,4 +32,5 @@ export interface DevisDataResponse {
 export interface DevisListFilter {
   status: number | null;
   immatriculation: string;
+  nom: string;
 }

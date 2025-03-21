@@ -15,8 +15,10 @@ import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { TagModule } from 'primeng/tag';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { LoaderComponent } from '../../../../shared/components/loader/loader.component';
+import { HasRoleDirective } from '../../../../shared/directives/has-role/has-role.directive';
+import { RoleType } from '../../../../shared/types/Auth';
 import { DemandeDevis } from '../../../../shared/types/DemandeDevis';
-import { DEMANDES_DEVIS_STATUS_CLIENT } from '../../constants/devis';
+import { CREATED_DEMANDE_DEVIS_STATUS } from '../../constants/devis';
 import {
   DemandeDevisDataResponse,
   DemandeDevisFilter,
@@ -38,6 +40,7 @@ import { DemandeDevisItemComponent } from '../demande-devis-item/demande-devis-i
     FormsModule,
     LoaderComponent,
     ButtonModule,
+    HasRoleDirective,
   ],
   templateUrl: './demande-devis-list.component.html',
   styleUrl: './demande-devis-list.component.scss',
@@ -63,8 +66,10 @@ import { DemandeDevisItemComponent } from '../demande-devis-item/demande-devis-i
   ],
 })
 export class DemandeDevisListComponent {
+  ROLES = RoleType;
+  CREATED_DEVIS_STATUS = CREATED_DEMANDE_DEVIS_STATUS;
+
   data = input.required<DemandeDevisDataResponse | null>();
-  statusLabels = DEMANDES_DEVIS_STATUS_CLIENT;
   onFilterChange = output<DemandeDevisFilter>();
 
   filter: DemandeDevisFilter = {
@@ -88,14 +93,10 @@ export class DemandeDevisListComponent {
 
   onSelectDemande = (demande: DemandeDevis | null) => {
     this.selectedDemande = demande;
-
-    // this.selectedDemande = null;
-    // setTimeout(() => {
-    //   this.selectedDemande = demande;
-    // }, 300);
   };
 
   updateFilter = (filter: Partial<DemandeDevisFilter>) => {
+    this.selectedDemande = null;
     this.filter = {
       ...this.filter,
       ...filter,
