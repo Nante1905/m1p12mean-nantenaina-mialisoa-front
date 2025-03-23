@@ -54,6 +54,11 @@ export class SidebarComponent {
       icon: 'schedule',
       route: 'rdv',
     },
+    {
+      label: 'Les interventions',
+      icon: 'schedule',
+      route: 'interventions',
+    },
     // schedule
     // { label: 'Utilisateurs', icon: 'people', route: 'users' },
     // { label: 'Projets', icon: 'work', route: 'projects' },
