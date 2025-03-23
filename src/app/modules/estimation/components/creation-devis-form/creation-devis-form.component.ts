@@ -168,6 +168,7 @@ export class CreationDevisFormComponent implements OnInit {
       services: this.servicesForm,
       vehicule: this.formVehicule.value,
       client: this.formClient.value,
+      idDemande: this.demandeDevisData?._id,
     });
   }
 

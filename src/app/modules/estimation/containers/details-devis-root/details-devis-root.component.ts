@@ -4,9 +4,14 @@ import { ActivatedRoute } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
-import { catchError, first, map, Observable, of } from 'rxjs';
+import { catchError, finalize, first, map, Observable, of, tap } from 'rxjs';
 import { LoaderComponent } from '../../../../shared/components/loader/loader.component';
+import { ApiResponse } from '../../../../shared/types/ApiResponse';
 import { Devis } from '../../../../shared/types/Devis';
+import {
+  showToastError,
+  showToastSuccess,
+} from '../../../../shared/utils/form.utils';
 import { DetailsDevisComponent } from '../../components/details-devis/details-devis.component';
 import { CREATED_DEVIS_STATUS } from '../../constants/devis';
 import { DevisService } from '../../services/devis.service';
@@ -34,6 +39,7 @@ export class DetailsDevisRootComponent implements OnInit {
   CREATED_STATUS = CREATED_DEVIS_STATUS;
 
   loadingPdf = false;
+  loadingRdv = false;
 
   ngOnInit() {
     this.route.params.subscribe((params) => {
@@ -81,4 +87,22 @@ export class DetailsDevisRootComponent implements OnInit {
       }
     });
   };
+  handleTakeRdv() {
+    this.loadingRdv = true;
+    this.devisService
+      .takeRdv(this.id)
+      .pipe(
+        tap((res: ApiResponse<void>) => {
+          showToastSuccess('Rendez-vous pris avec succès', this.messageService);
+        }),
+        finalize(() => {
+          this.loadingRdv = false;
+        }),
+        catchError((err) => {
+          showToastError(err.error || err.error.message, this.messageService);
+          return [];
+        })
+      )
+      .subscribe();
+  }
 }

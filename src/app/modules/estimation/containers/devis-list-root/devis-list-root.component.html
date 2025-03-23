@@ -27,7 +27,7 @@
         <p class="m-0">
           <app-devis-list
             [devis]="listDevis$ | async"
-            (onFilterChange)="fetchDataDevis($event)"
+            (onFilterChange)="onFilterDevisChange($event)"
             (onTakeRdv)="handleTakeRdv($event)"
             [takeRdvLoading]="takeRdvLoading"
           />
