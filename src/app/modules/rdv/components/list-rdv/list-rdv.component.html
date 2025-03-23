@@ -16,6 +16,7 @@
         <th>Status</th>
         <th>Client</th>
         <th>Date de demande</th>
+        <th>Actions</th>
       </tr>
     </ng-template>
     <ng-template #body let-rdv let-expanded="expanded">
@@ -48,6 +49,16 @@
           {{ rdv.devis.client.tel || rdv.devis.client.email }}
         </td>
         <td>{{ rdv.dateCreation | date }}</td>
+        <td>
+          <p-button
+            title="Accepter"
+            type="button"
+            size="small"
+            (onClick)="showDialog(rdv._id)"
+          >
+            <span class="material-icons">check</span>
+          </p-button>
+        </td>
       </tr>
     </ng-template>
     <ng-template #expandedrow let-rdv>
@@ -70,4 +81,45 @@
       currentPageReportTemplate="Lignes {first} à {last} de {totalRecords}"
     />
   </div>
+
+  @if(visible) {
+  <div class="card flex justify-center">
+    <p-dialog
+      header="Accepter le RDV"
+      [modal]="true"
+      [(visible)]="visible"
+      [style]="{ width: '25rem' }"
+      (onHide)="closeDialog()"
+    >
+      <span class="p-text-secondary block mb-8"
+        >Choissir une date pour accepter le RDV.</span
+      >
+      <div class="flex items-start flex-col mb-6">
+        <label for="username" class="font-semibold w-24">Date</label>
+        <p-datepicker
+          id="username"
+          class="flex-auto w-full"
+          autocomplete="off"
+          appendTo="body"
+          [showTime]="true"
+          [(ngModel)]="dateRdv"
+          [dateFormat]="'dd/mm/yy'"
+        />
+      </div>
+      <div class="flex justify-end gap-2">
+        <p-button
+          label="Annuler"
+          severity="secondary"
+          (click)="closeDialog()"
+        />
+        <p-button
+          label="Accepter"
+          (click)="handleAcceptRdv()"
+          [loading]="loadingAcceptRdv"
+        />
+      </div>
+    </p-dialog>
+  </div>
+  }
 </section>
+<p-toast></p-toast>

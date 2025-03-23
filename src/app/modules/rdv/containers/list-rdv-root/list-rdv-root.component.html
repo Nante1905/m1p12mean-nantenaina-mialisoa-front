@@ -8,13 +8,17 @@
         [rdvs]="demandeRdv$ | async"
         (onPageChange)="handlePageChange($event)"
         [loadingRdv]="loadingDemandeRdv"
+        (onAcceptRdv)="handleAcceptRdv($event)"
+        [loadingAcceptRdv]="loadingAcceptedRdv"
       ></app-list-rdv>
     </section>
     <section class="calendar w-[40%]">
       <app-rdv-calendar
         [rdvs]="(acceptedRdv$ | async) || []"
         (onDateChange)="handleDateChange($event)"
+        #rdvCalendar
       ></app-rdv-calendar>
     </section>
   </section>
 </section>
+<p-toast></p-toast>

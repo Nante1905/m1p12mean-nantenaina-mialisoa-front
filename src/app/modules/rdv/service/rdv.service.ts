@@ -20,4 +20,10 @@ export class RdvService {
       `/rdv/accepted?startDate=${startDate}&endDate=${endDate}`
     );
   }
+
+  acceptRdv(id: string, date: Date | string) {
+    return this.http.post<ApiResponse<RendezVous>>(`/rdv/${id}/accept`, {
+      date,
+    });
+  }
 }
