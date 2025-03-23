@@ -27,7 +27,7 @@ interface NavItem {
   styleUrls: ['./sidebar.component.scss'],
 })
 export class SidebarComponent {
-  @Input() collapsed: boolean = false;
+  @Input() collapsed: boolean = true;
   @Output() collapsedChange = new EventEmitter<boolean>();
 
   isMobile: boolean = false;
@@ -49,6 +49,12 @@ export class SidebarComponent {
       icon: 'request_quote',
       route: 'creation-devis',
     },
+    {
+      label: 'Rendez-vous',
+      icon: 'schedule',
+      route: 'rdv',
+    },
+    // schedule
     // { label: 'Utilisateurs', icon: 'people', route: 'users' },
     // { label: 'Projets', icon: 'work', route: 'projects' },
     // { label: 'Rapports', icon: 'bar_chart', route: 'reports' },

@@ -5,7 +5,14 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
-import { Component, input, output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  input,
+  output,
+  Output,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -19,6 +26,7 @@ import { RoleType } from '../../../../shared/types/Auth';
 import { Devis } from '../../../../shared/types/Devis';
 import { DevisService } from '../../services/devis.service';
 import { DevisDataResponse, DevisListFilter } from '../../types/Devis';
+import { TakeRdvEventPayload } from '../../types/TakeRdvEventPayload';
 import { DevisApercuComponent } from '../devis-apercu/devis-apercu.component';
 import { DevisItemComponent } from '../devis-item/devis-item.component';
 
@@ -64,6 +72,10 @@ export class DevisListComponent {
   devis = input.required<DevisDataResponse | null>();
   selectedDevis: Devis | null = null;
   onFilterChange = output<DevisListFilter>();
+  @Input() takeRdvLoading!: boolean;
+
+  @Output() onTakeRdv: EventEmitter<TakeRdvEventPayload> =
+    new EventEmitter<TakeRdvEventPayload>();
   ROLES = RoleType;
 
   filter: DevisListFilter = {
@@ -96,6 +108,12 @@ export class DevisListComponent {
     this.selectedDevis = devis;
   };
 
+  handleTakeRdv = () => {
+    this.onTakeRdv.emit({
+      devis: this.selectedDevis as Devis,
+      callback: this.onSelectDevis,
+    });
+  };
   onDownloadPdf = (devis: Devis) => {
     this.loadingPdf = true;
     this.devisService.downloadDevisPdf(devis._id).subscribe((res) => {

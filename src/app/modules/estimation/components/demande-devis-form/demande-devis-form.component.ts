@@ -122,7 +122,7 @@ export class DemandeDevisFormComponent implements OnInit {
   }
   disableSaveVehiculeListener() {
     this.form.get('vehiculeId')?.valueChanges.subscribe((value) => {
-      if (value !== 0 || value === '') {
+      if (value !== '0' || value === '') {
         this.disableSave = true;
       } else {
         this.disableSave = false;

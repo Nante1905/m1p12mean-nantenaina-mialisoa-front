@@ -1,0 +1,24 @@
+<section class="rdv-root">
+  <header class="rdv-root__header mb-8 bg-[#fff] p-4 rounded-2xl shadow-md">
+    <h1 class="text-2xl">Rendez-vous</h1>
+  </header>
+  <section class="rdv-root__content flex justify-between gap-5">
+    <section class="list w-[60%]">
+      <app-list-rdv
+        [rdvs]="demandeRdv$ | async"
+        (onPageChange)="handlePageChange($event)"
+        [loadingRdv]="loadingDemandeRdv"
+        (onAcceptRdv)="handleAcceptRdv($event)"
+        [loadingAcceptRdv]="loadingAcceptedRdv"
+      ></app-list-rdv>
+    </section>
+    <section class="calendar w-[40%]">
+      <app-rdv-calendar
+        [rdvs]="(acceptedRdv$ | async) || []"
+        (onDateChange)="handleDateChange($event)"
+        #rdvCalendar
+      ></app-rdv-calendar>
+    </section>
+  </section>
+</section>
+<p-toast></p-toast>

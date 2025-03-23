@@ -77,6 +77,9 @@ export class DevisService {
     return this.http.get<ApiResponse<Devis>>(`/devis/${id}`);
   }
 
+  takeRdv(idDevis: string) {
+    return this.http.post<ApiResponse<any>>(`/rdv`, { idDevis });
+  }
   downloadDevisPdf(id: string) {
     return this.http.get(`/devis/${id}/pdf`, {
       responseType: 'blob',

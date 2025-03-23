@@ -25,6 +25,23 @@ export const appConfig: ApplicationConfig = {
     provideAnimationsAsync(),
     provideHttpClient(withInterceptors([requestInterceptor])),
     providePrimeNG({
+      translation: {
+        dayNamesMin: ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'],
+        monthNames: [
+          'Janvier',
+          'Février',
+          'Mars',
+          'Avril',
+          'Mai',
+          'Juin',
+          'Juillet',
+          'Aout',
+          'Septembre',
+          'Octobre',
+          'Novembre',
+          'Décembre',
+        ],
+      },
       theme: {
         preset: Aura,
       },

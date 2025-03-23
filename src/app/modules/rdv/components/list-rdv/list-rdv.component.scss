@@ -1,0 +1,12 @@
+.list-rdv {
+  th {
+    font-size: 1em;
+    font-weight: bold;
+  }
+  th,
+  td {
+    min-width: max-content;
+    word-break: keep-all;
+    white-space: nowrap;
+  }
+}

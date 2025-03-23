@@ -1,4 +1,11 @@
-import { Component, input, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import dayjs from 'dayjs';
 import { ButtonModule } from 'primeng/button';
 import { DividerModule } from 'primeng/divider';
@@ -28,6 +35,9 @@ import { RequiredDevisType } from '../../types/Devis';
 export class DevisApercuComponent implements OnInit {
   CREATED = CREATED_DEVIS_STATUS;
   DELETED = DELETED_DEVIS_STATUS;
+  @Output() onTakeRdv: EventEmitter<void> = new EventEmitter<void>();
+
+  @Input() takeRdvLoading = false;
   WAITING_RDV = WAITING_RDV_DEVIS_STATUS;
 
   devis = input.required<Devis, RequiredDevisType>({
@@ -37,6 +47,10 @@ export class DevisApercuComponent implements OnInit {
     }),
   });
   getStatusClassname = getDevisStatusClassname;
+
+  handleTakeRdv(): void {
+    this.onTakeRdv.emit();
+  }
   statusLabel: string = '';
   statusClassname: string = '';
   userRole?: RoleType;

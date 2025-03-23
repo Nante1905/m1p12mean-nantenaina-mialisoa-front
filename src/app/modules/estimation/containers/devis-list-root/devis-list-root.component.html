@@ -27,7 +27,9 @@
         <p class="m-0">
           <app-devis-list
             [devis]="listDevis$ | async"
-            (onFilterChange)="onFilterDevisChange($event)"
+            (onFilterChange)="fetchDataDevis($event)"
+            (onTakeRdv)="handleTakeRdv($event)"
+            [takeRdvLoading]="takeRdvLoading"
           />
         </p>
       </p-tabpanel>

@@ -3,6 +3,7 @@ import { CreationDevisFormRootComponent } from './modules/estimation/containers/
 import { DemandeDevisRootComponent } from './modules/estimation/containers/demande-devis-root/demande-devis-root.component';
 import { DetailsDevisRootComponent } from './modules/estimation/containers/details-devis-root/details-devis-root.component';
 import { DevisListRootComponent } from './modules/estimation/containers/devis-list-root/devis-list-root.component';
+import { ListRdvRootComponent } from './modules/rdv/containers/list-rdv-root/list-rdv-root.component';
 import { TestComponentComponent } from './test/components/test-component/test-component.component';
 
 export const routes: Routes = [
@@ -30,5 +31,9 @@ export const routes: Routes = [
   {
     path: 'devis/:id',
     component: DetailsDevisRootComponent,
+  },
+  {
+    path: 'rdv',
+    component: ListRdvRootComponent,
   },
 ];

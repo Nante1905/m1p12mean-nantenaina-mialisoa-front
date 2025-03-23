@@ -3,7 +3,8 @@
   height: 100vh;
   width: 100%;
   overflow: hidden;
-  background-color: rgba(203, 238, 255, 0.39);
+  // background-color: rgba(203, 238, 255, 0.39)
+  background-color: var(--color-white);
 }
 
 .main-content {
@@ -12,7 +13,7 @@
   padding: 30px;
   margin-left: 280px;
   transition: margin-left 0.3s;
-  background-color: rgba(203, 238, 255, 0.39);
+  // background-color: rgba(203, 238, 255, 0.39);
 
   &.expand {
     margin-left: 70px;
