@@ -23,6 +23,7 @@
     "@fullcalendar/core": "^6.1.15",
     "@fullcalendar/daygrid": "^6.1.15",
     "@fullcalendar/interaction": "^6.1.15",
+    "@auth0/angular-jwt": "^5.2.0",
     "@ng-select/ng-select": "^14.2.3",
     "@primeng/themes": "^19.0.9",
     "@tailwindcss/postcss": "^4.0.13",

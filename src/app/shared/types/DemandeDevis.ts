@@ -21,7 +21,8 @@ export interface DemandeDevis {
   description: string;
   kilometrage: number;
   dateDemande?: string;
-  utilisateur?: Utilisateur;
+  utilisateur?: Partial<Utilisateur>;
   status?: number;
   statusLabel?: string;
+  idDevis?: string;
 }

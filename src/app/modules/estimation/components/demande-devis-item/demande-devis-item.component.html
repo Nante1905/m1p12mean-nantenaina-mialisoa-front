@@ -7,21 +7,40 @@
       >
         {{ getMarqueName() }} {{ demande().vehicule.immatriculation }}
       </h6>
+      @if (role == ROLES.CLIENT || (role === ROLES.MANAGER && demande().status
+      != DISPO_STATUS)) {
       <p-tag
         class="status-tag !text-white !rounded-full"
-        [styleClass]="getStatusClassname(demande().status)"
+        [styleClass]="statusClassname"
       >
-        <small>{{ demande().statusLabel }}</small>
+        <small>{{ statusLabel }}</small>
       </p-tag>
+      }
     </div>
     <p>
       <small class="capitalize">{{ demande().dateDemande }}</small>
     </p>
   </div>
-  <div class="devis-body">
-    <p class="line-clamp-2">
-      {{ demande().description }}
-    </p>
+  <div class="devis-body flex items-center justify-between">
+    <div>
+      <small *hasRole="[ROLES.MANAGER]">
+        > De: {{ demande().utilisateur?.nom }}
+        {{ demande().utilisateur?.prenom }}
+      </small>
+      <p class="line-clamp-2">
+        {{ demande().description }}
+      </p>
+    </div>
+    @if(demande().status == CREATED_STATUS) {
+    <a
+      [href]="'creation-devis?from=' + demande()._id"
+      *hasRole="[ROLES.MANAGER]"
+    >
+      <p-button variant="text" size="small" rounded severity="info">
+        <span class="material-icons !text-[30px]">edit_note</span>
+      </p-button>
+    </a>
+    }
   </div>
   <p-divider />
 </div>

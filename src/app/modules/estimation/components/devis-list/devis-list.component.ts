@@ -21,7 +21,10 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { TagModule } from 'primeng/tag';
 import { LoaderComponent } from '../../../../shared/components/loader/loader.component';
+import { HasRoleDirective } from '../../../../shared/directives/has-role/has-role.directive';
+import { RoleType } from '../../../../shared/types/Auth';
 import { Devis } from '../../../../shared/types/Devis';
+import { DevisService } from '../../services/devis.service';
 import { DevisDataResponse, DevisListFilter } from '../../types/Devis';
 import { TakeRdvEventPayload } from '../../types/TakeRdvEventPayload';
 import { DevisApercuComponent } from '../devis-apercu/devis-apercu.component';
@@ -40,6 +43,7 @@ import { DevisItemComponent } from '../devis-item/devis-item.component';
     DividerModule,
     DevisApercuComponent,
     InputTextModule,
+    HasRoleDirective,
   ],
   templateUrl: './devis-list.component.html',
   styleUrl: './devis-list.component.scss',
@@ -72,14 +76,20 @@ export class DevisListComponent {
 
   @Output() onTakeRdv: EventEmitter<TakeRdvEventPayload> =
     new EventEmitter<TakeRdvEventPayload>();
+  ROLES = RoleType;
 
   filter: DevisListFilter = {
     status: null,
     immatriculation: '',
+    nom: '',
   };
 
   first = 0;
   rows = 10;
+
+  loadingPdf = false;
+
+  constructor(private devisService: DevisService) {}
 
   updateFilter = (newFilter: Partial<DevisListFilter>) => {
     this.filter = {
@@ -87,6 +97,7 @@ export class DevisListComponent {
       ...newFilter,
     };
     this.onFilterChange.emit({ ...this.filter, ...newFilter });
+    this.selectedDevis = null;
   };
 
   onPageChange = (event: PaginatorState) => {
@@ -101,6 +112,21 @@ export class DevisListComponent {
     this.onTakeRdv.emit({
       devis: this.selectedDevis as Devis,
       callback: this.onSelectDevis,
+    });
+  };
+  onDownloadPdf = (devis: Devis) => {
+    this.loadingPdf = true;
+    this.devisService.downloadDevisPdf(devis._id).subscribe((res) => {
+      const url = URL.createObjectURL(res);
+
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `DEVIS-${devis.vehicule.immatriculation}-${devis.numero}.pdf`;
+      a.click();
+
+      URL.revokeObjectURL(url);
+
+      this.loadingPdf = false;
     });
   };
 }

@@ -9,6 +9,7 @@
       [services]="(services$ | async) || []"
       [loading]="loading"
       (onSubmit)="handleSubmit($event)"
+      [demandeDevis]="demandeDevis$"
     ></app-creation-devis-form>
   </div>
   <div></div>

@@ -80,4 +80,15 @@ export class DevisService {
   takeRdv(idDevis: string) {
     return this.http.post<ApiResponse<any>>(`/rdv`, { idDevis });
   }
+  downloadDevisPdf(id: string) {
+    return this.http.get(`/devis/${id}/pdf`, {
+      responseType: 'blob',
+    });
+  }
+
+  findDemandeDevisById(id: string) {
+    console.log('get demande');
+
+    return this.http.get<ApiResponse<DemandeDevis>>(`/devis/demandes/${id}`);
+  }
 }

@@ -5,14 +5,14 @@
         class="text-lg cursor-pointer hover:underline"
         [class.item-hover]="isHovered"
       >
-        Devis n°{{ devis().ref }} - {{ devis().vehicule.immatriculation }}
+        Devis n°{{ devis().numero }} - {{ devis().vehicule.immatriculation }}
       </h6>
       @if(devis().status > 0) {
       <p-tag
         class="status-tag !text-white !rounded-full"
-        [styleClass]="getStatusClassname(devis().status)"
+        [styleClass]="statusClassname"
       >
-        <small>{{ devis().statusLabel }}</small>
+        <small>{{ statusLabel }}</small>
       </p-tag>
       }
     </div>
