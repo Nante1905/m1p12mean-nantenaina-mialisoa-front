@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TachesListRootComponent } from './taches-list-root.component';
+import { TableauTacheComponent } from './tableau-tache.component';
 
-describe('TachesListRootComponent', () => {
-  let component: TachesListRootComponent;
-  let fixture: ComponentFixture<TachesListRootComponent>;
+describe('TableauTacheComponent', () => {
+  let component: TableauTacheComponent;
+  let fixture: ComponentFixture<TableauTacheComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TachesListRootComponent]
+      imports: [TableauTacheComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(TachesListRootComponent);
+    fixture = TestBed.createComponent(TableauTacheComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
