@@ -1,0 +1,132 @@
+<div class="bg-[#fff] p-4 rounded-xl w-2xs hover:bg-[#10b9811f] cursor-pointer">
+  <div class="flex items-center justify-end">
+    <p-button
+      (onClick)="togglePopOver($event); $event.stopPropagation()"
+      size="small"
+      variant="outlined"
+      severity="secondary"
+    >
+      <span class="material-icons">clear_all</span>
+    </p-button>
+  </div>
+  <div class="py-2">
+    <p class="test">
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla, deleniti.
+    </p>
+  </div>
+  <div class="flex items-center justify-between flex-wrap">
+    <p class="flex items-center gap-1 my-2">
+      <span class="material-icons">schedule</span> <strong>2h</strong>
+    </p>
+    <div class="flex items-center">
+      <p-avatar-group class="justify-end" onclick="toggleUserPopover($event)">
+        <p-avatar
+          label="R"
+          shape="circle"
+          class="!bg-secondary"
+          pTooltip="Rakoto Jean"
+          tooltipPosition="bottom"
+        />
+        <p-avatar
+          label="R"
+          shape="circle"
+          class="!bg-secondary"
+          pTooltip="Rakoto Jean"
+          tooltipPosition="bottom"
+        />
+        <p-avatar
+          label="R"
+          shape="circle"
+          class="!bg-secondary"
+          pTooltip="Rakoto Jean"
+          tooltipPosition="bottom"
+        />
+        <p-avatar
+          label="R"
+          shape="circle"
+          class="!bg-secondary"
+          pTooltip="Rakoto Jean"
+          tooltipPosition="bottom"
+        />
+      </p-avatar-group>
+      <p-button
+        size="small"
+        [text]="true"
+        severity="warn"
+        [rounded]="true"
+        (onClick)="toggleUserPopover($event); $event.stopPropagation()"
+        ><span class="material-icons text-accent !text-[16px]"
+          >edit</span
+        ></p-button
+      >
+    </div>
+  </div>
+</div>
+<p-popover #popover>
+  <div class="flex flex-col gap-4">
+    <div>
+      <ul class="list-none p-0 m-0 flex flex-col">
+        <li class="px-2 py-3 hover:bg-sky-50 cursor-pointer rounded-border">
+          <p>Déplacer vers <strong class="text-primary">"En cours"</strong></p>
+        </li>
+        <li
+          class="px-2 py-3 hover:bg-red-50 hover:text-red-800 cursor-pointer rounded-border"
+        >
+          <p>Supprimer</p>
+        </li>
+      </ul>
+    </div>
+  </div>
+</p-popover>
+<p-popover #userPopover>
+  <div class="flex flex-col gap-4">
+    <p-autocomplete
+      [(ngModel)]="responsables"
+      inputId="reponsables"
+      multiple
+      fluid
+      optionLabel="nom"
+      [suggestions]="suggestions"
+      (completeMethod)="autoComplete($event)"
+      placeholder="Assigner responsable"
+      forceSelection="true"
+      translate="yes"
+      lang="fr"
+    >
+      <ng-template let-user #item>
+        <div class="flex items-center gap-2">
+          <p>{{ user.nom }} {{ user.prenom }}</p>
+        </div>
+      </ng-template>
+    </p-autocomplete>
+    <div>
+      <strong>Sélectionnés</strong>
+      <ul class="list-none p-0 m-0 flex flex-col">
+        @for (resp of responsables; track resp) {
+
+        <li class="flex items-center gap-2 px-2 py-3 rounded-border">
+          <p-avatar
+            [label]="resp.nom?.charAt(0)?.toUpperCase()"
+            shape="circle"
+            class="!bg-primary"
+          />
+          <div>
+            <span class="font-medium">{{ resp.nom }} {{ resp.prenom }}</span>
+            <div class="text-sm text-surface-500 dark:text-surface-400">
+              {{ resp.email }}
+            </div>
+          </div>
+        </li>
+        }
+      </ul>
+    </div>
+    <div class="flex justify-end">
+      <p-button
+        size="small"
+        severity="contrast"
+        [disabled]="responsables.length == 0 && hasResponsableChanged()"
+        >Enregistrer</p-button
+      >
+    </div>
+  </div>
+</p-popover>

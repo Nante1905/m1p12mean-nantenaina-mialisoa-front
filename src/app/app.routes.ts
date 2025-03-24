@@ -4,6 +4,7 @@ import { DemandeDevisRootComponent } from './modules/estimation/containers/deman
 import { DetailsDevisRootComponent } from './modules/estimation/containers/details-devis-root/details-devis-root.component';
 import { DevisListRootComponent } from './modules/estimation/containers/devis-list-root/devis-list-root.component';
 import { InterventionListRootComponent } from './modules/intervention/containers/intervention-list-root/intervention-list-root.component';
+import { TableauTacheComponent } from './modules/intervention/containers/tableau-tache/tableau-tache.component';
 import { ListRdvRootComponent } from './modules/rdv/containers/list-rdv-root/list-rdv-root.component';
 import { TestComponentComponent } from './test/components/test-component/test-component.component';
 
@@ -40,5 +41,9 @@ export const routes: Routes = [
   {
     path: 'interventions',
     component: InterventionListRootComponent,
+  },
+  {
+    path: 'tableau-taches',
+    component: TableauTacheComponent,
   },
 ];
