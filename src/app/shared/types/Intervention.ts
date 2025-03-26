@@ -7,6 +7,7 @@ export interface Intervention {
   status: string;
   vehicule: Vehicule;
   client: Utilisateur;
+  taches?: Tache[];
 }
 
 export interface Tache {

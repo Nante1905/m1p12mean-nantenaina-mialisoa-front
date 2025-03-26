@@ -3,9 +3,12 @@
     [value]="interventions().items"
     [loading]="loading()"
     [scrollable]="true"
+    [expandedRowKeys]="expandedRows"
+    dataKey="_id"
   >
     <ng-template #header>
       <tr>
+        <th pFrozenColumn></th>
         <th>Date</th>
         <th>Véhicule</th>
         <th>Client</th>
@@ -13,8 +16,24 @@
         <th>Actions</th>
       </tr>
     </ng-template>
-    <ng-template #body let-intervention>
+    <ng-template #body let-intervention let-expanded="expanded">
       <tr>
+        <td pFrozenColumn>
+          <p-button
+            type="button"
+            pRipple
+            [pRowToggler]="intervention"
+            [text]="true"
+            [rounded]="true"
+            [plain]="true"
+          >
+            @if(expanded) {
+            <span class="material-icons"> keyboard_arrow_down </span>
+            } @else {
+            <span class="material-icons"> keyboard_arrow_right </span>
+            }
+          </p-button>
+        </td>
         <td>{{ intervention.date }}</td>
         <td>
           <p>
@@ -41,12 +60,33 @@
           <a
             href="/tableau-taches"
             class="flex items-center gap-0.5 text-primary"
+            *hasRole="[ROLES.MANAGER, ROLES.MECANICIEN]"
           >
             <span class="material-icons">table_chart</span>
             Tableau Kanban
           </a>
         </td>
       </tr>
+    </ng-template>
+    <ng-template #expandedrow let-intervention>
+      <tr class="">
+        <th colspan="4" class="text-left pt-8">Taches</th>
+        <th class="text-left pt-8">Status</th>
+        <th class="text-left pt-8">Responsables</th>
+      </tr>
+      @for(tache of intervention.taches; track $index) {
+      <tr>
+        <td colspan="4">{{ tache.nom }}</td>
+        <td>{{ tache.status }}</td>
+        <td>
+          <ul>
+            @for(resp of tache.responsables; track $index) {
+            <li>{{ resp.nom }} {{ resp.prenom }}</li>
+            }
+          </ul>
+        </td>
+      </tr>
+      }
     </ng-template>
   </p-table>
 

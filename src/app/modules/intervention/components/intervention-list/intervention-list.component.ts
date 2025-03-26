@@ -5,6 +5,7 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { TableModule } from 'primeng/table';
+import { HasRoleDirective } from '../../../../shared/directives/has-role/has-role.directive';
 import { RoleType } from '../../../../shared/types/Auth';
 import { Intervention } from '../../../../shared/types/Intervention';
 import { Paginated } from '../../../../shared/types/Paginated';
@@ -18,11 +19,14 @@ import { InterventionListFilter } from '../../types/intervention.type';
     ButtonModule,
     FormsModule,
     InputTextModule,
+    HasRoleDirective,
   ],
   templateUrl: './intervention-list.component.html',
   styleUrl: './intervention-list.component.scss',
 })
 export class InterventionListComponent {
+  ROLE = RoleType;
+  expandedRows = {};
   interventions = input.required<
     Paginated<Intervention>,
     Paginated<Intervention>
