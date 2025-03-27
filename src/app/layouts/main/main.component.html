@@ -1,8 +1,5 @@
 <div class="app-container">
-  <app-sidebar
-    [collapsed]="sidebarCollapsed"
-    (collapsedChange)="toggleSidebar($event)"
-  ></app-sidebar>
+  <app-sidebar (collapsedChange)="toggleSidebar($event)"></app-sidebar>
   <div class="main-content" [class.expand]="sidebarCollapsed">
     <router-outlet></router-outlet>
   </div>

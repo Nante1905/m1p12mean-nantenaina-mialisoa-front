@@ -27,7 +27,7 @@ export class SidebarComponent {
 
   constructor(private router: Router) {}
 
-  isMobile: boolean = false;
+  // isMobile: boolean = false;
   activeMenuItem: string | null = null;
 
   navItems: NavItem[] = [
@@ -68,12 +68,12 @@ export class SidebarComponent {
   //   this.checkScreenSize();
   // }
 
-  ngOnInit() {
-    this.checkScreenSize();
-  }
+  // ngOnInit() {
+  //   this.checkScreenSize();
+  // }
 
-  onclick(route: string) {
-    this.router.navigate([route]);
+  onclick(e: any) {
+    e.preventDefault();
   }
 
   toggleSidebar() {
@@ -81,11 +81,11 @@ export class SidebarComponent {
     this.collapsedChange.emit(this.collapsed);
   }
 
-  private checkScreenSize() {
-    this.isMobile = window.innerWidth < 768;
-    if (this.isMobile && !this.collapsed) {
-      this.collapsed = true;
-      this.collapsedChange.emit(this.collapsed);
-    }
-  }
+  // private checkScreenSize() {
+  //   this.isMobile = window.innerWidth < 768;
+  //   if (this.isMobile && !this.collapsed) {
+  //     this.collapsed = true;
+  //     this.collapsedChange.emit(this.collapsed);
+  //   }
+  // }
 }

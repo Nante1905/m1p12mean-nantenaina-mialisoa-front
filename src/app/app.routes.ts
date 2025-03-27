@@ -8,6 +8,7 @@ import { DevisListRootComponent } from './modules/estimation/containers/devis-li
 import { InterventionListRootComponent } from './modules/intervention/containers/intervention-list-root/intervention-list-root.component';
 import { TableauTacheComponent } from './modules/intervention/containers/tableau-tache/tableau-tache.component';
 import { ListRdvRootComponent } from './modules/rdv/containers/list-rdv-root/list-rdv-root.component';
+import { authGuard } from './shared/guards/auth/auth.guard';
 import { roleGuard } from './shared/guards/auth/role.guard';
 import { RoleType } from './shared/types/Auth';
 import { TestComponentComponent } from './test/components/test-component/test-component.component';
@@ -19,9 +20,9 @@ export const routes: Routes = [
   //   pathMatch: 'full',
   // },
   {
-    path: '',
+    path: 'app',
     component: MainComponent,
-    // canActivate: [authGuard],
+    canActivate: [authGuard],
     children: [
       {
         path: '',

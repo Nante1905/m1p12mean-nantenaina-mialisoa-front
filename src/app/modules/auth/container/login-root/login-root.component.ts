@@ -41,9 +41,7 @@ export class LoginRootComponent {
       .subscribe((res: any) => {
         if (res.data.token) {
           localStorage.setItem('access', res.data.token);
-          this.router.navigate(['devis']).then(() => {
-            this.cdr.detectChanges();
-          });
+          window.location.href = '/app';
         }
       });
   }

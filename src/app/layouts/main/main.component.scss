@@ -11,12 +11,12 @@
   flex: 1;
   overflow-y: auto;
   padding: 30px;
-  margin-left: 280px;
+  margin-left: 70px;
   transition: margin-left 0.3s;
   // background-color: rgba(203, 238, 255, 0.39);
 
   &.expand {
-    margin-left: 70px;
+    margin-left: 280px;
   }
 }
 
