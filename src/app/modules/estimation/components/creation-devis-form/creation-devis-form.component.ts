@@ -76,6 +76,7 @@ export class CreationDevisFormComponent implements OnInit {
     console.log(this.marques);
 
     this.formVehicule = this.formBuilder.group({
+      _id: '',
       marque: ['', Validators.required],
       modele: ['', Validators.required],
       annee: ['', Validators.required],
@@ -85,7 +86,7 @@ export class CreationDevisFormComponent implements OnInit {
     });
 
     this.formClient = this.formBuilder.group({
-      id: '',
+      _id: '',
       email: ['', [Validators.required, Validators.email]],
       nom: ['', Validators.required],
       prenom: ['', Validators.required],
@@ -101,6 +102,7 @@ export class CreationDevisFormComponent implements OnInit {
           ),
         };
         this.formVehicule.setValue({
+          _id: demande.vehicule._id || '',
           marque: (demande.vehicule.marque as Marque)._id || '',
           modele: demande.vehicule.modele || '',
           annee: `${demande.vehicule.annee || ''}`,
@@ -113,7 +115,7 @@ export class CreationDevisFormComponent implements OnInit {
 
         // TODO: ilay id client
         this.formClient.setValue({
-          id: demande.utilisateur?.id || '',
+          _id: demande.utilisateur?._id || '',
           email: demande.utilisateur?.email || '',
           nom: demande.utilisateur?.nom || '',
           prenom: demande.utilisateur?.prenom || '',
@@ -168,8 +170,14 @@ export class CreationDevisFormComponent implements OnInit {
       services: this.servicesForm,
       vehicule: this.formVehicule.value,
       client: this.formClient.value,
-      idDemande: this.demandeDevisData?._id,
+      idDemande: this.demandeDevisData?._id || '',
     });
+
+    // console.log({
+    //   services: this.servicesForm,
+    //   vehicule: this.formVehicule.value,
+    //   client: this.formClient.value,
+    // });
   }
 
   getServiceFormTotal() {

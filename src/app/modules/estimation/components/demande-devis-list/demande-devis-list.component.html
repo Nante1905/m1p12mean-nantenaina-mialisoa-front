@@ -67,7 +67,7 @@
     <p-card>
       <div class="flex justify-between items-center flex-wrap-reverse">
         @if(selectedDemande.idDevis) {
-        <a [href]="'/devis/' + selectedDemande.idDevis">
+        <a [href]="'/app/devis/' + selectedDemande.idDevis">
           <p-button size="small" rounded severity="help"
             >Voir la réponse</p-button
           >
@@ -76,7 +76,7 @@
         <div>
           @if(selectedDemande.status == CREATED_DEVIS_STATUS) {
           <a
-            [href]="'/creation-devis?from=' + selectedDemande._id"
+            [href]="'/app/creation-devis?from=' + selectedDemande._id"
             *hasRole="[ROLES.MANAGER]"
           >
             <p-button size="small" rounded severity="contrast"

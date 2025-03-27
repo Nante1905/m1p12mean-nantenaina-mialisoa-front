@@ -1,7 +1,7 @@
 import { RoleType } from './Auth';
 
 export interface Utilisateur {
-  id?: string;
+  _id?: string;
   nom: string;
   prenom: string;
   email: string;

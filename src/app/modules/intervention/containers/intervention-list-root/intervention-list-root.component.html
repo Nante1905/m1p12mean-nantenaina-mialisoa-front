@@ -1,0 +1,35 @@
+<section id="intervention-list">
+  <header class="rdv-root__header mb-8 bg-[#fff] p-4 rounded-2xl shadow-md">
+    <h1 class="text-2xl">Les interventions</h1>
+  </header>
+  <section class="bg-[#fff] p-8 rounded-xl shadow-md">
+    <div class="flex justify-end">
+      <form class="flex items-center gap-1" (ngSubmit)="onSubmitFilter()">
+        <input
+          pInputText
+          type="text"
+          class=""
+          placeholder="N° immatriculation"
+          [(ngModel)]="filter.immatriculation"
+          name="filter.immatriculation"
+        />
+        <input
+          pInputText
+          type="text"
+          class=""
+          placeholder="Client"
+          [(ngModel)]="filter.nom"
+          name="filter.nom"
+        />
+        <p-button variant="outlined" severity="help" type="submit">
+          <span class="material-icons">search</span>
+        </p-button>
+      </form>
+    </div>
+    <app-intervention-list
+      [interventions]="(interventions$ | async) || defaultInterventions"
+      [loading]="loadingIntervention"
+      (onPageChange)="onPageChange($event)"
+    />
+  </section>
+</section>

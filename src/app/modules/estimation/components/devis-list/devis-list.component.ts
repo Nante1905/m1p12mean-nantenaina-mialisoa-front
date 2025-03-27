@@ -82,6 +82,8 @@ export class DevisListComponent {
     status: null,
     immatriculation: '',
     nom: '',
+    page: 1,
+    limit: 10,
   };
 
   first = 0;
@@ -101,7 +103,8 @@ export class DevisListComponent {
   };
 
   onPageChange = (event: PaginatorState) => {
-    console.log(event);
+    this.filter.page = (event.page ?? 0) + 1;
+    this.updateFilter({ page: (event.page ?? 0) + 1 });
   };
 
   onSelectDevis = (devis: Devis | null) => {

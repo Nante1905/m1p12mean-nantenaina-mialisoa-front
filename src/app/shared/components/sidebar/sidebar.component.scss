@@ -9,7 +9,7 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
-  width: 280px;
+  width: 80px;
   // background: linear-gradient(180deg, #2b2d42 0%, #1a1b2e 100%);
   color: #000;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
@@ -24,7 +24,7 @@
 
   @extend %glass;
   &.collapsed {
-    width: 80px;
+    width: 280px;
   }
 }
 
