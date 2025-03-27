@@ -33,7 +33,7 @@
     </div>
     @if(demande().status == CREATED_STATUS) {
     <a
-      [href]="'creation-devis?from=' + demande()._id"
+      [href]="'/app/creation-devis?from=' + demande()._id"
       *hasRole="[ROLES.MANAGER]"
     >
       <p-button variant="text" size="small" rounded severity="info">

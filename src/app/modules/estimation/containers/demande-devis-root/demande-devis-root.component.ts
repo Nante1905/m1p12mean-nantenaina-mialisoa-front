@@ -3,7 +3,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
-import { catchError, finalize, map, Observable } from 'rxjs';
+import { catchError, finalize, map, Observable, tap } from 'rxjs';
 import {
   DemandeDevis,
   DemandeDevisForm,
@@ -11,6 +11,10 @@ import {
 import { Marque } from '../../../../shared/types/Marque';
 import { Motorisation } from '../../../../shared/types/Motorisation';
 import { Vehicule } from '../../../../shared/types/Vehicule';
+import {
+  showToastError,
+  showToastSuccess,
+} from '../../../../shared/utils/form.utils';
 import { DemandeDevisFormComponent } from '../../components/demande-devis-form/demande-devis-form.component';
 import { DevisService } from '../../services/devis.service';
 
@@ -33,8 +37,7 @@ export class DemandeDevisRootComponent implements OnInit {
   loading = false;
 
   onSubmit(demandeDevis: DemandeDevisForm) {
-    const data: DemandeDevis = {
-      _id: '',
+    const data: Partial<DemandeDevis> = {
       vehiculeId: demandeDevis.vehiculeId,
       vehicule: {
         marque: demandeDevis.marque,
@@ -49,32 +52,22 @@ export class DemandeDevisRootComponent implements OnInit {
     };
     this.loading = true;
     this.devisService
-      .createDemandeDevis(data)
+      .createDemandeDevis(data as DemandeDevis)
       .pipe(
+        tap((res: any) => {
+          showToastSuccess(res.message, this.messageService);
+          console.log(res);
+        }),
         finalize(() => {
           this.loading = false;
         }),
         catchError((error: HttpErrorResponse) => {
+          showToastError(error.message, this.messageService);
           return error.message;
         })
       )
-      .subscribe((value: any) => {
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Success',
-          detail: value.message,
-        });
-        console.log(value);
-      });
+      .subscribe();
     // console.log(data);
-  }
-
-  show() {
-    this.messageService.add({
-      severity: 'success',
-      summary: 'Success',
-      detail: undefined,
-    });
   }
 
   ngOnInit(): void {

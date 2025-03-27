@@ -14,11 +14,11 @@ import { RoleType } from './shared/types/Auth';
 import { TestComponentComponent } from './test/components/test-component/test-component.component';
 
 export const routes: Routes = [
-  // {
-  //   redirectTo: 'test',
-  //   path: '',
-  //   pathMatch: 'full',
-  // },
+  {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: 'app',
+  },
   {
     path: 'app',
     component: MainComponent,
