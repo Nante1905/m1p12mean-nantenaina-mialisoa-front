@@ -1,4 +1,4 @@
-<aside class="sidebar" [class.collapsed]="collapsed">
+<aside class="sidebar" [class.collapsed]="!collapsed">
   <div class="sidebar-header">
     <div class="logo-container">
       <h2>CarMaster Garage</h2>
@@ -13,16 +13,19 @@
   <div class="sidebar-content">
     <nav class="sidebar-nav">
       <ul class="nav-list">
-        <li *ngFor="let item of navItems" class="nav-item">
+        <li class="nav-item">
+          @for(item of navItems; track $index) {
           <a
             [routerLink]="item.route"
             routerLinkActive="active"
             class="nav-link"
             [title]="collapsed ? item.label : ''"
+            (click)="onclick($event)"
           >
             <span class="material-icons nav-icon">{{ item.icon }}</span>
             <span *ngIf="!collapsed" class="nav-text">{{ item.label }}</span>
           </a>
+          }
         </li>
       </ul>
     </nav>

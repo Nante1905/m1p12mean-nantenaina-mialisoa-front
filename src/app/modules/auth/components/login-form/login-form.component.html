@@ -1,0 +1,56 @@
+<div class="login-container">
+  <div class="login-card">
+    <h2 class="login-title">Connexion</h2>
+    <form [formGroup]="loginForm" (ngSubmit)="handleSubmit()">
+      <div class="field">
+        <label for="email">Email</label>
+        <span class="p-input-icon-left w-full">
+          <i class="pi pi-envelope"></i>
+          <input
+            id="email"
+            type="text"
+            pInputText
+            formControlName="email"
+            placeholder="Adresse email"
+            class="w-full"
+          />
+        </span>
+        <app-validation-error
+          [control]="loginForm.controls['email']"
+        ></app-validation-error>
+      </div>
+
+      <div class="field">
+        <label for="password">Mot de passe</label>
+        <span class="p-input-icon-left w-full">
+          <i class="pi pi-lock"></i>
+          <p-password
+            id="password"
+            formControlName="password"
+            [toggleMask]="true"
+            [feedback]="false"
+            placeholder="Mot de passe"
+            styleClass="w-full"
+            [style]="{ width: '100%' }"
+            inputStyleClass="w-full"
+          >
+          </p-password>
+        </span>
+        <app-validation-error
+          [control]="loginForm.controls['password']"
+        ></app-validation-error>
+      </div>
+
+      <div class="action-buttons">
+        <p-button
+          type="submit"
+          label="Se connecter"
+          [loading]="loading"
+          styleClass="w-full"
+          [disabled]="loginForm.invalid"
+        >
+        </p-button>
+      </div>
+    </form>
+  </div>
+</div>

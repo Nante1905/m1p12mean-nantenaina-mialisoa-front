@@ -1,12 +1,6 @@
 import { CommonModule } from '@angular/common';
-import {
-  Component,
-  EventEmitter,
-  HostListener,
-  Input,
-  Output,
-} from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 
 interface NavItem {
   label: string;
@@ -23,6 +17,7 @@ interface NavItem {
   selector: 'app-sidebar',
   standalone: true,
   imports: [CommonModule, RouterLink, RouterLinkActive],
+  providers: [Router],
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],
 })
@@ -30,7 +25,9 @@ export class SidebarComponent {
   @Input() collapsed: boolean = true;
   @Output() collapsedChange = new EventEmitter<boolean>();
 
-  isMobile: boolean = false;
+  constructor(private router: Router) {}
+
+  // isMobile: boolean = false;
   activeMenuItem: string | null = null;
 
   navItems: NavItem[] = [
@@ -66,13 +63,17 @@ export class SidebarComponent {
     // { label: 'Paramètres', icon: 'settings', route: 'settings' },
   ];
 
-  @HostListener('window:resize', ['$event'])
-  onResize() {
-    this.checkScreenSize();
-  }
+  // @HostListener('window:resize', ['$event'])
+  // onResize() {
+  //   this.checkScreenSize();
+  // }
 
-  ngOnInit() {
-    this.checkScreenSize();
+  // ngOnInit() {
+  //   this.checkScreenSize();
+  // }
+
+  onclick(e: any) {
+    e.preventDefault();
   }
 
   toggleSidebar() {
@@ -80,11 +81,11 @@ export class SidebarComponent {
     this.collapsedChange.emit(this.collapsed);
   }
 
-  private checkScreenSize() {
-    this.isMobile = window.innerWidth < 768;
-    if (this.isMobile && !this.collapsed) {
-      this.collapsed = true;
-      this.collapsedChange.emit(this.collapsed);
-    }
-  }
+  // private checkScreenSize() {
+  //   this.isMobile = window.innerWidth < 768;
+  //   if (this.isMobile && !this.collapsed) {
+  //     this.collapsed = true;
+  //     this.collapsedChange.emit(this.collapsed);
+  //   }
+  // }
 }
