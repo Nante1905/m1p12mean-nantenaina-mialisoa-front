@@ -37,7 +37,13 @@
 
   <div class="w-full flex items-center justify-between flex-wrap gap-y-6">
     @if(devis().status == CREATED && userRole == ROLES.client) {
-    <p-button severity="primary" size="small">Prendre rendez-vous</p-button>
+    <p-button
+      severity="primary"
+      size="small"
+      (onClick)="handleTakeRdv()"
+      [loading]="takeRdvLoading"
+      >Prendre rendez-vous</p-button
+    >
     } @else if(devis().status == WAITING_RDV && userRole == ROLES.manager) {
     <a
       [href]="'/app/rdv?check=' + devis()._id"

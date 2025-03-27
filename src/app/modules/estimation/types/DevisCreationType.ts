@@ -10,7 +10,6 @@ export interface ServicesForm {
 }
 
 export interface DevisCreationType {
-  idDemande: string;
   services: ServicesForm[];
   vehicule: Vehicule;
   client: Utilisateur;
