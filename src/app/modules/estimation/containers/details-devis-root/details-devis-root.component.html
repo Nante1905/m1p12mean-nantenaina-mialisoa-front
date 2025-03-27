@@ -4,15 +4,16 @@
     class="lg:w-[70vw] mx-auto flex items-center justify-end gap-4 my-8 flex-wrap"
   >
     @if(((devis$ | async) || {}).status == CREATED_STATUS ) {
-    <p-button size="small" severity="info"
-      >Demander un rendez-vous
-      <span class="material-icons">event_available</span>
-    </p-button>
-    }
-    <p-button size="small" severity="info">
+    <p-button
+      size="small"
+      severity="info"
+      (onClick)="handleTakeRdv()"
+      [loading]="loadingRdv"
+    >
       Demander un rendez-vous
       <span class="material-icons">event_available</span>
     </p-button>
+    }
 
     <p-button size="small" [loading]="loadingPdf" (onClick)="onDownloadPdf()">
       Exporter
