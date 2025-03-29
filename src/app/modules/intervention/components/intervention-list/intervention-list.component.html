@@ -16,7 +16,12 @@
         <th>Actions</th>
       </tr>
     </ng-template>
-    <ng-template #body let-intervention let-expanded="expanded">
+    <ng-template
+      #body
+      let-intervention
+      let-expanded="expanded"
+      let-index="rowIndex"
+    >
       <tr>
         <td pFrozenColumn>
           <p-button
@@ -56,7 +61,7 @@
           </p>
         </td>
         <td>Statut ??</td>
-        <td class="">
+        <td class="flex gap-5">
           <a
             href="/app/tableau-taches"
             class="flex items-center gap-0.5 text-primary"
@@ -65,6 +70,19 @@
             <span class="material-icons">table_chart</span>
             Tableau Kanban
           </a>
+          <p-button
+            class="flex items-center gap-0.5"
+            severity="secondary"
+            size="small"
+            raised="true"
+            ariaLabel="Ajouter une tache"
+            title="Ajouter une tache"
+            (onClick)="openDialog(index)"
+            *hasRole="[ROLES.MANAGER, ROLES.MECANICIEN]"
+          >
+            <span class="material-icons">add</span>
+            <!-- Ajouter une taches -->
+          </p-button>
         </td>
       </tr>
     </ng-template>
@@ -101,4 +119,11 @@
       currentPageReportTemplate="Lignes {first} à {last} de {totalRecords}"
     />
   </div>
+  @if(visible) {
+  <app-add-task-form
+    [visible]="visible"
+    [idIntervention]="selectedIntervention?._id || ''"
+    (onClose)="closeDialog()"
+  ></app-add-task-form>
+  }
 </section>

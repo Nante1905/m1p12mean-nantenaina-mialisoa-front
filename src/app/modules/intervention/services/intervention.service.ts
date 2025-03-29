@@ -4,7 +4,10 @@ import { filterToHttpParams } from '../../../shared/helpers/filter';
 import { ApiResponse } from '../../../shared/types/ApiResponse';
 import { Intervention } from '../../../shared/types/Intervention';
 import { Paginated } from '../../../shared/types/Paginated';
-import { InterventionListFilter } from '../types/intervention.type';
+import {
+  AddTacheDto,
+  InterventionListFilter,
+} from '../types/intervention.type';
 
 @Injectable({
   providedIn: 'root',
@@ -18,6 +21,13 @@ export class InterventionService {
       {
         params: filter ? filterToHttpParams(filter) : {},
       }
+    );
+  }
+
+  addTache(idIntervention: string, data: AddTacheDto) {
+    return this.http.post<ApiResponse<Intervention>>(
+      `/interventions/${idIntervention}/taches`,
+      data
     );
   }
 }

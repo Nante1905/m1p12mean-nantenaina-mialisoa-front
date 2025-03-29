@@ -18,10 +18,8 @@ import { AbstractControl } from '@angular/forms';
 export const VALIDATION_ERROR_LABELS: Record<string, string> = {
   required: 'Ce champ est obligatoire',
   email: 'Veuillez entrer une adresse e-mail valide',
-  minlength: 'Ce champ doit comporter au moins {requiredLength} caractères',
-  maxlength: 'Ce champ ne doit pas dépasser {requiredLength} caractères',
-  min: 'La valeur ne peut pas être inférieure à {min}',
-  max: 'La valeur ne peut pas être supérieure à {max}',
+  min: 'La valeur ne peut pas être inférieure',
+  max: 'La valeur ne peut pas être supérieure',
   pattern: 'Format incorrect',
   passwordMismatch: 'Les mots de passe ne correspondent pas',
   usernameExists: "Ce nom d'utilisateur est déjà pris",

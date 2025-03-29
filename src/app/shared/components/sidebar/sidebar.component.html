@@ -31,21 +31,28 @@
     </nav>
   </div>
 
-  <!-- <div class="sidebar-footer"> -->
-  <!-- <div class="user-info" *ngIf="!collapsed" title="Profile">
-      <img src="assets/user-avatar.jpg" alt="User Avatar" class="user-avatar" />
+  <div class="sidebar-footer">
+    <div class="user-info" *ngIf="!collapsed" title="Profile">
+      <p-button class="user-avatar-small">
+        <span class="material-icons">logout</span>
+      </p-button>
       <div class="user-details">
-        <span class="user-name">Utilisateur</span>
-        <span class="user-role">Administrateur</span>
+        <span class="user-name"
+          >{{ utililsateur.nom }} {{ utililsateur.prenom }}</span
+        >
+        <span class="user-role">{{ utililsateur.role }}</span>
       </div>
     </div>
     <div class="user-icon" *ngIf="collapsed">
-      <img
+      <p-button class="user-avatar-small">
+        <span class="material-icons">logout</span>
+      </p-button>
+      <!-- <img
         src="assets/user-avatar.jpg"
         alt="User Avatar"
         class="user-avatar-small"
         title="Profile"
-      />
-    </div> -->
-  <!-- </div> -->
+      /> -->
+    </div>
+  </div>
 </aside>

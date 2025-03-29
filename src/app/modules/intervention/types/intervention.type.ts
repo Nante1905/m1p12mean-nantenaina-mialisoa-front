@@ -4,3 +4,9 @@ export interface InterventionListFilter {
   immatriculation?: string;
   nom?: string;
 }
+
+export interface AddTacheDto {
+  heure: number;
+  service: string;
+  responsables: any[];
+}
