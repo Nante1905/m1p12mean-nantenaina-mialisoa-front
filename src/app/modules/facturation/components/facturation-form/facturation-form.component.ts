@@ -33,7 +33,9 @@ import { FacturationServiceForm } from '../../types/facturation.type';
 })
 export class FacturationFormComponent {
   servicesForm: FacturationServiceForm[] = [];
+
   @Input() services!: Service[];
+  totalRemise = 0;
   loading = false;
 
   constructor(private cdr: ChangeDetectorRef) {}
@@ -53,7 +55,15 @@ export class FacturationFormComponent {
     this.servicesForm[index].prix = this.services[changeIndex].prix;
   }
   getServiceFormTotal() {
-    return this.servicesForm.reduce((acc, s) => acc + s.prix * s.heures, 0);
+    const total = this.servicesForm.reduce(
+      (acc, s) =>
+        acc + (s.prix * s.heures - (s.prix * s.heures * s.remise) / 100),
+      0
+    );
+
+    const totalWithRemise = total - (total * this.totalRemise) / 100;
+
+    return totalWithRemise;
   }
   getServiceTotal(prix: number, heure: number, remise: number) {
     if (remise > 0) {
@@ -86,23 +96,28 @@ export class FacturationFormComponent {
   }
 
   handleTotalChange(e: any, index: number) {
-    const input = Number(e);
+    const input = Number(e.target.value);
     const total =
       this.servicesForm[index].prix * this.servicesForm[index].heures;
     if (input < total) {
       const remis = total - input;
       const remise = (remis * 100) / total;
-      this.servicesForm[index].remise = remise;
+      this.servicesForm[index].remise = Number(remise.toFixed(2));
     } else {
       this.servicesForm[index].remise = 0;
     }
+    this.servicesForm[index].total = input;
+  }
+
+  handleChangeRemise(e: any, index: number) {
+    this.servicesForm[index].remise = Number(e.target.value);
   }
 
   handleChangeHeures(e: any, index: number) {
     const prix = Number(this.servicesForm[index].prix);
-    const heures = Number(e);
+    const heures = Number(e.target.value);
     const total = prix * heures;
-    this.servicesForm[index].total = total;
+    // this.servicesForm[index].total = total;
     console.log(e, index);
   }
 }
