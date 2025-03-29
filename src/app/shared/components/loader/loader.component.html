@@ -1,6 +1,13 @@
 @if((data$ | async) || loading) {
-<div class="loader">
-  <div class="loader__spinner">Chargement</div>
+<div class="loader block h-full">
+  <div class="loader__spinner flex items-center justify-center h-full">
+    <p-progress-spinner
+      strokeWidth="5"
+      fill="transparent"
+      animationDuration="2s"
+      [style]="{ width: '30px', height: '30px' }"
+    />
+  </div>
 </div>
 } @else {
 <ng-content></ng-content>

@@ -1,0 +1,19 @@
+<p-dialog
+  [visible]="visible()"
+  [header]="title()"
+  [closable]="false"
+  [modal]="true"
+  [style]="{ width: '400px' }"
+>
+  <div class="flex items-center justify-center">
+    <p>{{ text() }}</p>
+  </div>
+  <div class="flex justify-between p-4 mt-4">
+    <p-button type="submit" severity="secondary" (click)="onCancel()">
+      {{ cancelButtonText() }}
+    </p-button>
+    <p-button type="submit" severity="danger" (click)="onConfirm()">
+      {{ confirmButtonText() }}
+    </p-button>
+  </div>
+</p-dialog>

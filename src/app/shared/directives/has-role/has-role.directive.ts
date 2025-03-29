@@ -15,9 +15,6 @@ export class HasRoleDirective {
   ) {}
 
   ngOnInit() {
-    console.log(this.hasRole());
-    console.log(this.authService.getCurrentUser());
-
     if (this.authService.hasRole(this.hasRole())) {
       this.viewContainerRef.createEmbeddedView(this.templateRef);
     } else {

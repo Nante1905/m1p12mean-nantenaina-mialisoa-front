@@ -1,52 +1,28 @@
-import {
-  Component,
-  HostListener,
-  OnInit,
-  output,
-  ViewChild,
-} from '@angular/core';
+import { Component, input, OnInit, output, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { AutoComplete, AutoCompleteCompleteEvent } from 'primeng/autocomplete';
+import {
+  AutoComplete,
+  AutoCompleteCompleteEvent,
+  AutoCompleteSelectEvent,
+} from 'primeng/autocomplete';
 import { Avatar } from 'primeng/avatar';
 import { AvatarGroup } from 'primeng/avatargroup';
 import { ButtonModule } from 'primeng/button';
 import { Popover, PopoverModule } from 'primeng/popover';
 import { Tooltip } from 'primeng/tooltip';
-import { Tache } from '../../../../shared/types/Intervention';
+import { ConfirmationModalComponent } from '../../../../shared/components/confirmation-modal/confirmation-modal.component';
+import { HasRoleDirective } from '../../../../shared/directives/has-role/has-role.directive';
+import {
+  getUserCompleteInitial,
+  getUserFullname,
+} from '../../../../shared/helpers/user';
+import { RoleType } from '../../../../shared/types/Auth';
+import { ActionTache, Tache } from '../../../../shared/types/Intervention';
 import { Utilisateur } from '../../../../shared/types/Utilisateur';
-
-const users = [
-  {
-    id: '21350',
-    nom: 'Rakoto',
-    prenom: 'JEan',
-    email: 'jean@test.com',
-  },
-  {
-    id: '213',
-    nom: 'Rabe',
-    prenom: 'Marc',
-    email: 'jean@test.com',
-  },
-  {
-    id: '2150',
-    nom: 'Rakoto',
-    prenom: 'Kely',
-    email: 'jean@test.com',
-  },
-  {
-    id: '210',
-    nom: 'Rasoa',
-    prenom: 'JEan',
-    email: 'jean@test.com',
-  },
-  {
-    id: '20',
-    nom: 'RAvao',
-    prenom: 'Be',
-    email: 'jean@test.com',
-  },
-];
+import {
+  AssignRespEventProps,
+  UpdateStatusEventProps,
+} from '../../types/intervention.type';
 
 @Component({
   selector: 'app-ticket',
@@ -58,25 +34,38 @@ const users = [
     ButtonModule,
     AutoComplete,
     FormsModule,
+    HasRoleDirective,
+    ConfirmationModalComponent,
   ],
   templateUrl: './ticket.component.html',
   styleUrl: './ticket.component.scss',
 })
 export class TicketComponent implements OnInit {
+  ROLES = RoleType;
   @ViewChild('popover') popover!: Popover;
   @ViewChild('userPopover') userPopover!: Popover;
 
-  // mivadika input
-  previousResponsables: Partial<Utilisateur>[] = [];
+  responsables!: Utilisateur[];
+  suggestions: Utilisateur[] = [];
 
-  responsables!: Partial<Utilisateur>[];
+  task = input.required<Tache>();
+  users = input.required<Utilisateur[]>();
 
-  suggestions: Partial<Utilisateur>[] = [];
+  getInitial = getUserCompleteInitial;
+  getFullname = getUserFullname;
+  permittedActions: ActionTache[] = [];
 
   onClick = output<Tache>();
+  updateStatus = output<UpdateStatusEventProps>();
+  deleteTache = output<Tache>();
+  assignResponsables = output<AssignRespEventProps>();
+
+  showConfirmationModal = false;
+  activateAssignBtn = false;
 
   ngOnInit(): void {
-    this.responsables = this.previousResponsables;
+    this.responsables = this.task().responsables as Utilisateur[];
+    this.permittedActions = Object.values(this.task().actionPermis || {});
   }
 
   togglePopOver(event: any) {
@@ -96,23 +85,53 @@ export class TicketComponent implements OnInit {
       'i'
     );
 
-    this.suggestions = [...users].filter((u) =>
-      searchRegex.test(`${u.nom} ${u.prenom}`)
+    this.suggestions = [...this.users()].filter(
+      (u) =>
+        searchRegex.test(`${u.nom} ${u.prenom}`) &&
+        this.responsables.filter((r) => r._id == u._id).length == 0
     );
   }
 
-  // TODO: implement
   hasResponsableChanged() {
-    return true;
+    const previousId = [...this.task().responsables.map((r) => r._id)].sort();
+    const currentId = [...this.responsables.map((r) => r._id)].sort();
+
+    if (previousId.length != currentId.length) return true;
+    return !previousId.every((id, index) => id === currentId[index]);
   }
 
-  @HostListener('click')
-  click() {
-    this.onClick.emit({
-      _id: '135453',
-      nom: 'Tâche exemple',
-      estimation: 2,
-      responsable: this.responsables,
+  handleSelectResponsable(event: AutoCompleteSelectEvent) {
+    this.activateAssignBtn = this.hasResponsableChanged();
+  }
+
+  handleAssignResponsable() {
+    this.assignResponsables.emit({
+      task: this.task(),
+      responsables: this.responsables,
     });
+    this.userPopover.toggle({});
+  }
+
+  updateTaskStatus(targetStatus: number) {
+    this.updateStatus.emit({ task: this.task(), target: targetStatus });
+    this.popover.toggle({ target: this.popover });
+  }
+
+  showDeleteConfirmation() {
+    this.popover.toggle({ target: this.popover });
+    this.showConfirmationModal = true;
+  }
+
+  handleDeleteTask() {
+    this.showConfirmationModal = false;
+    this.deleteTache.emit(this.task());
+  }
+
+  handleCancelDelete() {
+    this.showConfirmationModal = false;
+  }
+
+  click() {
+    this.onClick.emit(this.task());
   }
 }
