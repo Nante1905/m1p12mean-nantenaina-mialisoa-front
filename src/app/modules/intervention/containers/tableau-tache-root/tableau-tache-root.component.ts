@@ -4,8 +4,11 @@ import { ActivatedRoute } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { catchError, finalize, map, Observable, of } from 'rxjs';
 import { Tache } from '../../../../shared/types/Intervention';
+import { Utilisateur } from '../../../../shared/types/Utilisateur';
+import { UtilisateurService } from '../../../utilisateurs/service/utilisateur.service';
 import { InterventionService } from '../../services/intervention.service';
 import {
+  AssignRespEventProps,
   InterventionDTO,
   UpdateStatusEventProps,
 } from '../../types/intervention.type';
@@ -21,13 +24,15 @@ export class TableauTacheRootComponent implements OnInit {
   constructor(
     private interventionService: InterventionService,
     private messageService: MessageService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private userService: UtilisateurService
   ) {}
 
   intervention$!: Observable<InterventionDTO | null>;
   loading: boolean = false;
   loadingTaches: boolean = false;
   interventionData: InterventionDTO | null = null;
+  users$!: Observable<Utilisateur[]>;
 
   ngOnInit(): void {
     this.loading = true;
@@ -54,6 +59,18 @@ export class TableauTacheRootComponent implements OnInit {
           })
         );
     });
+    this.users$ = this.userService.findAllMecanoAndManager().pipe(
+      map((res) => res.data),
+      catchError((err) => {
+        console.log(err);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Erreur',
+          detail: err.error.message,
+        });
+        return of([]);
+      })
+    );
   }
 
   handleTicketStatusUpdate(event: UpdateStatusEventProps) {
@@ -109,10 +126,39 @@ export class TableauTacheRootComponent implements OnInit {
   }
 
   handleDeleteTicket(task: Tache) {
-    console.log('root', event);
     this.loadingTaches = true;
     this.interventionService
       .deleteTache(task)
+      .pipe(
+        map((res) => {
+          this.messageService.add({
+            severity: 'success',
+            detail: res.message,
+            summary: 'Succès',
+          });
+          this.refetchTaches().subscribe();
+        }),
+        catchError((err) => {
+          console.log(err);
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Erreur',
+            detail: err.error.message,
+          });
+          return of();
+        }),
+        finalize(() => {
+          this.loadingTaches = false;
+        })
+      )
+      .subscribe();
+  }
+
+  handleAssigneResponsable(event: AssignRespEventProps) {
+    console.log('root', event);
+    this.loadingTaches = true;
+    this.interventionService
+      .assignToResponsable(event.task._id, event.responsables)
       .pipe(
         map((res) => {
           this.messageService.add({

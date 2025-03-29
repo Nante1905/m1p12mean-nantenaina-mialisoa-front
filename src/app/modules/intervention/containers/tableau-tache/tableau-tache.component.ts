@@ -14,8 +14,10 @@ import {
 } from '../../../../shared/helpers/vehicule';
 import { RoleType } from '../../../../shared/types/Auth';
 import { Comment, Tache } from '../../../../shared/types/Intervention';
+import { Utilisateur } from '../../../../shared/types/Utilisateur';
 import { TicketComponent } from '../../components/ticket/ticket.component';
 import {
+  AssignRespEventProps,
   InterventionDTO,
   RequiredInterventionDTO,
   UpdateStatusEventProps,
@@ -44,6 +46,8 @@ export class TableauTacheComponent {
   loadingIntervention = input<boolean>(false);
   loadingTache = input<boolean>(false);
 
+  users = input.required<Utilisateur[]>();
+
   intervention = input.required<
     InterventionDTO | null,
     RequiredInterventionDTO | null
@@ -62,6 +66,7 @@ export class TableauTacheComponent {
 
   onUpdateTicketStatus = output<UpdateStatusEventProps>();
   onDeleteTask = output<Tache>();
+  assignResponsable = output<AssignRespEventProps>();
 
   selectTache(tache: Tache) {
     this.selectedTache = tache;
@@ -79,8 +84,6 @@ export class TableauTacheComponent {
   }
 
   deleteTask(event: Tache) {
-    console.log('delete confirm ');
-
     this.onDeleteTask.emit(event);
   }
 }

@@ -7,4 +7,4 @@ export const getUserCompleteInitial = (
 };
 
 export const getUserFullname = (user: Utilisateur | Partial<Utilisateur>) =>
-  `${user.nom ? user.nom : ''}${user.prenom ? user.prenom : ''}`;
+  `${user.nom ? user.nom : ''} ${user.prenom ? user.prenom : ''}`;

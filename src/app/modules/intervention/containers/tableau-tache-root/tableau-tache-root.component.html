@@ -5,8 +5,10 @@
   <app-tableau-tache
     [intervention]="intervention$ | async"
     [loadingIntervention]="loading"
-    (onUpdateTicketStatus)="handleTicketStatusUpdate($event)"
     [loadingTache]="loadingTaches"
+    [users]="(users$ | async) || []"
+    (onUpdateTicketStatus)="handleTicketStatusUpdate($event)"
     (onDeleteTask)="handleDeleteTicket($event)"
+    (assignResponsable)="handleAssigneResponsable($event)"
   />
 </section>

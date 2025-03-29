@@ -4,6 +4,7 @@ import { filterToHttpParams } from '../../../shared/helpers/filter';
 import { ApiResponse } from '../../../shared/types/ApiResponse';
 import { Intervention, Tache } from '../../../shared/types/Intervention';
 import { Paginated } from '../../../shared/types/Paginated';
+import { Utilisateur } from '../../../shared/types/Utilisateur';
 import {
   InterventionDTO,
   InterventionListFilter,
@@ -47,6 +48,16 @@ export class InterventionService {
   findAllTache(idIntervention: string) {
     return this.http.get<ApiResponse<TacheByStatus[]>>(
       `/interventions/${idIntervention}/taches`
+    );
+  }
+
+  assignToResponsable(idTache: string, utilisateurs: Utilisateur[]) {
+    const ids = utilisateurs.map((u) => u._id);
+    return this.http.post<ApiResponse<any>>(
+      `/interventions/taches/${idTache}/assign`,
+      {
+        responsables: ids,
+      }
     );
   }
 }

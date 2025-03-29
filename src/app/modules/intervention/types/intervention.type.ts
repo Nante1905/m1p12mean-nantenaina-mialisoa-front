@@ -33,3 +33,8 @@ export interface UpdateStatusEventProps {
   task: Tache;
   target: number;
 }
+
+export interface AssignRespEventProps {
+  task: Tache;
+  responsables: Utilisateur[];
+}

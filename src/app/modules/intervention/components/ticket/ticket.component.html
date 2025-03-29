@@ -8,6 +8,7 @@
       size="small"
       variant="outlined"
       severity="secondary"
+      *hasRole="[ROLES.MANAGER, ROLES.MECANICIEN]"
     >
       <span class="material-icons">clear_all</span>
     </p-button>
@@ -47,7 +48,9 @@
         severity="warn"
         [rounded]="true"
         (onClick)="toggleUserPopover($event); $event.stopPropagation()"
-        ><span class="material-icons text-accent !text-[16px]"
+        ><span
+          class="material-icons text-primary !text-[16px]"
+          *hasRole="[ROLES.MANAGER]"
           >edit</span
         ></p-button
       >
@@ -94,6 +97,9 @@
       forceSelection="true"
       translate="yes"
       lang="fr"
+      emptySelectionMessage="Aucune personne sélectionnée"
+      (onSelect)="handleSelectResponsable($event)"
+      (onUnselect)="handleSelectResponsable($event)"
     >
       <ng-template let-user #item>
         <div class="flex items-center gap-2">
@@ -108,7 +114,7 @@
 
         <li class="flex items-center gap-2 px-2 py-3 rounded-border">
           <p-avatar
-            [label]="resp.nom?.charAt(0)?.toUpperCase()"
+            [label]="resp.nom.charAt(0).toUpperCase()"
             shape="circle"
             class="!bg-primary"
           />
@@ -126,7 +132,8 @@
       <p-button
         size="small"
         severity="contrast"
-        [disabled]="responsables.length == 0 && hasResponsableChanged()"
+        [disabled]="!activateAssignBtn"
+        (onClick)="handleAssignResponsable()"
         >Enregistrer</p-button
       >
     </div>
