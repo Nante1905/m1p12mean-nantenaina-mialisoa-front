@@ -28,3 +28,8 @@ export type RequiredInterventionDTO = Pick<
   InterventionDTO,
   '_id' | 'date' | 'status' | 'vehicule' | 'client' | 'taches'
 >;
+
+export interface UpdateStatusEventProps {
+  task: Tache;
+  target: number;
+}

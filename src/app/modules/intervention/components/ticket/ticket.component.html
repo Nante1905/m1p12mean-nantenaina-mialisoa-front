@@ -1,5 +1,6 @@
 <div
   class="bg-[#fff] p-4 rounded-xl w-2xs hover:scale-[1.05] cursor-pointer transition duration-300 ease-in-out"
+  (click)="click()"
 >
   <div class="flex items-center justify-end">
     <p-button
@@ -22,8 +23,9 @@
       <strong>{{ task().estimation }}h</strong>
     </p>
     <div class="flex items-center">
+      @if(task().responsables.length > 0) {
       <p-avatar-group class="justify-end" onclick="toggleUserPopover($event)">
-        @for(user of task().responsables; track user) {
+        @for(user of task().responsables; track user._id) {
         <p-avatar
           [label]="getInitial(user)"
           shape="circle"
@@ -33,6 +35,12 @@
         />
         }
       </p-avatar-group>
+      } @else {
+      <p class="flex items-center">
+        <span class="material-icons text-red-500 text-xs">report</span>
+        Non assigné
+      </p>
+      }
       <p-button
         size="small"
         [text]="true"
@@ -51,7 +59,10 @@
     <div>
       <ul class="list-none p-0 m-0 flex flex-col">
         @for(action of permittedActions; track action) {
-        <li class="px-2 py-3 hover:bg-sky-50 cursor-pointer rounded-border">
+        <li
+          class="px-2 py-3 hover:bg-sky-50 cursor-pointer rounded-border"
+          (click)="updateTaskStatus(action.value)"
+        >
           <p>
             Déplacer vers
             <strong class="text-primary">"{{ action.step }}"</strong>
@@ -59,8 +70,9 @@
         </li>
         }
         <li
-          class="px-2 py-3 hover:bg-red-50 hover:text-red-800 cursor-pointer rounded-border"
+          class="px-2 py-3 hover:bg-red-50 text-red-400 hover:text-red-800 cursor-pointer rounded-border"
           *hasRole="[ROLES.MANAGER]"
+          (click)="showDeleteConfirmation()"
         >
           <p>Supprimer</p>
         </li>
@@ -120,3 +132,10 @@
     </div>
   </div>
 </p-popover>
+<app-confirmation-modal
+  [visible]="showConfirmationModal"
+  [title]="'Supprimer la tâche'"
+  [text]="'Êtes-vous sûr de vouloir supprimer la tâche ' + task().nom + ' ?'"
+  (cancel)="handleCancelDelete()"
+  (confirm)="handleDeleteTask()"
+/>

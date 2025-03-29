@@ -13,19 +13,28 @@
 </section>
 } @else if(intervention()) {
 <section class="flex gap-4 flex-col-reverse lg:flex-row">
-  <section class="flex flex-row gap-4 flex-nowrap overflow-x-scroll">
-    @for (taskGroup of intervention()?.taches; track taskGroup) {
+  <section
+    class="flex flex-row gap-4 flex-nowrap relative overflow-x-scroll"
+    [class.clip]="loadingTache()"
+  >
+    @if (loadingTache()) {
+    <div class="absolute bg-[#ffffff94] h-full w-full z-10">
+      <app-loader [loading]="true" />
+    </div>
+    } @for (taskGroup of intervention()?.taches; track taskGroup.label) {
     <div
       class="min-w-2xs !box-content bg-[#acefa92e] p-4 rounded-md min-h-[100vh]"
     >
       <p class="uppercase">{{ taskGroup.label }}</p>
       <p-divider />
       <div class="flex flex-col gap-y-4">
-        @for(task of taskGroup.taches; track task) {
+        @for(task of taskGroup.taches; track task._id) {
         <app-ticket
           [task]="task"
           (onClick)="selectTache($event)"
           class="w-fit"
+          (updateStatus)="updateTaskStatus($event)"
+          (deleteTache)="deleteTask($event)"
         />
         }
       </div>

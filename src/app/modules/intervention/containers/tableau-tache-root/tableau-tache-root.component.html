@@ -5,5 +5,8 @@
   <app-tableau-tache
     [intervention]="intervention$ | async"
     [loadingIntervention]="loading"
+    (onUpdateTicketStatus)="handleTicketStatusUpdate($event)"
+    [loadingTache]="loadingTaches"
+    (onDeleteTask)="handleDeleteTicket($event)"
   />
 </section>

@@ -1,11 +1,4 @@
-import {
-  Component,
-  HostListener,
-  input,
-  OnInit,
-  output,
-  ViewChild,
-} from '@angular/core';
+import { Component, input, OnInit, output, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AutoComplete, AutoCompleteCompleteEvent } from 'primeng/autocomplete';
 import { Avatar } from 'primeng/avatar';
@@ -13,6 +6,7 @@ import { AvatarGroup } from 'primeng/avatargroup';
 import { ButtonModule } from 'primeng/button';
 import { Popover, PopoverModule } from 'primeng/popover';
 import { Tooltip } from 'primeng/tooltip';
+import { ConfirmationModalComponent } from '../../../../shared/components/confirmation-modal/confirmation-modal.component';
 import { HasRoleDirective } from '../../../../shared/directives/has-role/has-role.directive';
 import {
   getUserCompleteInitial,
@@ -21,6 +15,7 @@ import {
 import { RoleType } from '../../../../shared/types/Auth';
 import { ActionTache, Tache } from '../../../../shared/types/Intervention';
 import { Utilisateur } from '../../../../shared/types/Utilisateur';
+import { UpdateStatusEventProps } from '../../types/intervention.type';
 
 const users = [
   {
@@ -66,6 +61,7 @@ const users = [
     AutoComplete,
     FormsModule,
     HasRoleDirective,
+    ConfirmationModalComponent,
   ],
   templateUrl: './ticket.component.html',
   styleUrl: './ticket.component.scss',
@@ -82,13 +78,17 @@ export class TicketComponent implements OnInit {
 
   suggestions: Partial<Utilisateur>[] = [];
 
-  onClick = output<Tache>();
-
   task = input.required<Tache>();
 
   getInitial = getUserCompleteInitial;
   getFullname = getUserFullname;
   permittedActions: ActionTache[] = [];
+
+  onClick = output<Tache>();
+  updateStatus = output<UpdateStatusEventProps>();
+  deleteTache = output<Tache>();
+
+  showConfirmationModal = false;
 
   ngOnInit(): void {
     this.previousResponsables = this.task().responsables;
@@ -123,7 +123,25 @@ export class TicketComponent implements OnInit {
     return true;
   }
 
-  @HostListener('click')
+  updateTaskStatus(targetStatus: number) {
+    this.updateStatus.emit({ task: this.task(), target: targetStatus });
+    this.popover.toggle({ target: this.popover });
+  }
+
+  showDeleteConfirmation() {
+    this.popover.toggle({ target: this.popover });
+    this.showConfirmationModal = true;
+  }
+
+  handleDeleteTask() {
+    this.showConfirmationModal = false;
+    this.deleteTache.emit(this.task());
+  }
+
+  handleCancelDelete() {
+    this.showConfirmationModal = false;
+  }
+
   click() {
     this.onClick.emit(this.task());
   }
