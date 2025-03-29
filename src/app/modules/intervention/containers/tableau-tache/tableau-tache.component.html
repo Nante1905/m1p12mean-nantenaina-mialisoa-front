@@ -55,12 +55,22 @@
             <u>Véhicule:</u>
           </strong>
           <ul>
-            <li>{{ intervention()?.vehicule?.immatriculation }}</li>
             <li>
-              {{ intervention()?.vehicule?.marque }} -
+              <strong>Immatriculation: </strong>
+              {{ intervention()?.vehicule?.immatriculation }}
+            </li>
+            <li>
+              <strong>Marque: </strong>
+              {{ intervention()?.vehicule?.marque }}
+            </li>
+            <li>
+              <strong>Modèle: </strong>
               {{ intervention()?.vehicule?.modele }}
             </li>
-            <li>Moteur: {{ intervention()?.vehicule?.motorisation }}</li>
+            <li>
+              <strong>Moteur:</strong>
+              {{ intervention()?.vehicule?.motorisation }}
+            </li>
           </ul>
         </p-accordion-content>
       </p-accordion-panel>
@@ -71,7 +81,7 @@
         <p-accordion-header>Information sur le client</p-accordion-header>
         <p-accordion-content>
           <p>
-            {{ intervention()?.client?.nom || "" }}
+            <strong>Nom: </strong>{{ intervention()?.client?.nom || "" }}
             {{ intervention()?.client?.prenom || "" }}
           </p>
           <p>
@@ -80,8 +90,13 @@
             </strong>
           </p>
           <ul>
-            <li>{{ intervention()?.client?.telephone }}</li>
-            <li>{{ intervention()?.client?.email }}</li>
+            <li>
+              <strong>Téléphone: </strong>
+              {{ intervention()?.client?.telephone }}
+            </li>
+            <li>
+              <strong>Email: </strong> {{ intervention()?.client?.email }}
+            </li>
           </ul>
         </p-accordion-content>
       </p-accordion-panel>

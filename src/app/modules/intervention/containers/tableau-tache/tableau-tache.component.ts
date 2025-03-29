@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, input, output } from '@angular/core';
+import dayjs from 'dayjs';
 import { AccordionModule } from 'primeng/accordion';
 import { DividerModule } from 'primeng/divider';
 import { DrawerModule } from 'primeng/drawer';
 import { SkeletonModule } from 'primeng/skeleton';
 import { LoaderComponent } from '../../../../shared/components/loader/loader.component';
 import { HasRoleDirective } from '../../../../shared/directives/has-role/has-role.directive';
-import { formatDateToReadable } from '../../../../shared/helpers/date';
 import { getUserFullname } from '../../../../shared/helpers/user';
 import {
   getMarqueName,
@@ -54,7 +54,9 @@ export class TableauTacheComponent {
   >({
     transform: (data: InterventionDTO | null): InterventionDTO | null => {
       if (data) {
-        data.date = formatDateToReadable(data.date);
+        data.date = dayjs(new Date(data.date)).format(
+          'ddd, DD MMMM YYYY à HH:mm'
+        );
         data.vehicule.marque = getMarqueName(data.vehicule);
         data.vehicule.motorisation = getMotorisationName(data.vehicule);
       }
