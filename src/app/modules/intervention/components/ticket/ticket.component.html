@@ -1,4 +1,6 @@
-<div class="bg-[#fff] p-4 rounded-xl w-2xs hover:bg-[#10b9811f] cursor-pointer">
+<div
+  class="bg-[#fff] p-4 rounded-xl w-2xs hover:scale-[1.05] cursor-pointer transition duration-300 ease-in-out"
+>
   <div class="flex items-center justify-end">
     <p-button
       (onClick)="togglePopOver($event); $event.stopPropagation()"
@@ -11,43 +13,25 @@
   </div>
   <div class="py-2">
     <p class="test">
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla, deleniti.
+      {{ task().nom }}
     </p>
   </div>
   <div class="flex items-center justify-between flex-wrap">
     <p class="flex items-center gap-1 my-2">
-      <span class="material-icons">schedule</span> <strong>2h</strong>
+      <span class="material-icons">schedule</span>
+      <strong>{{ task().estimation }}h</strong>
     </p>
     <div class="flex items-center">
       <p-avatar-group class="justify-end" onclick="toggleUserPopover($event)">
+        @for(user of task().responsables; track user) {
         <p-avatar
-          label="R"
+          [label]="getInitial(user)"
           shape="circle"
           class="!bg-secondary"
-          pTooltip="Rakoto Jean"
+          [pTooltip]="getFullname(user)"
           tooltipPosition="bottom"
         />
-        <p-avatar
-          label="R"
-          shape="circle"
-          class="!bg-secondary"
-          pTooltip="Rakoto Jean"
-          tooltipPosition="bottom"
-        />
-        <p-avatar
-          label="R"
-          shape="circle"
-          class="!bg-secondary"
-          pTooltip="Rakoto Jean"
-          tooltipPosition="bottom"
-        />
-        <p-avatar
-          label="R"
-          shape="circle"
-          class="!bg-secondary"
-          pTooltip="Rakoto Jean"
-          tooltipPosition="bottom"
-        />
+        }
       </p-avatar-group>
       <p-button
         size="small"
@@ -66,11 +50,17 @@
   <div class="flex flex-col gap-4">
     <div>
       <ul class="list-none p-0 m-0 flex flex-col">
+        @for(action of permittedActions; track action) {
         <li class="px-2 py-3 hover:bg-sky-50 cursor-pointer rounded-border">
-          <p>Déplacer vers <strong class="text-primary">"En cours"</strong></p>
+          <p>
+            Déplacer vers
+            <strong class="text-primary">"{{ action.step }}"</strong>
+          </p>
         </li>
+        }
         <li
           class="px-2 py-3 hover:bg-red-50 hover:text-red-800 cursor-pointer rounded-border"
+          *hasRole="[ROLES.MANAGER]"
         >
           <p>Supprimer</p>
         </li>

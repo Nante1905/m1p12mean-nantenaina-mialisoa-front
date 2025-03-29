@@ -60,8 +60,6 @@ export class DetailsDevisRootComponent implements OnInit {
   }
 
   onDownloadPdf = () => {
-    console.log('click');
-
     this.loadingPdf = true;
     this.devis$.pipe(first()).subscribe((devis) => {
       if (devis && devis._id) {

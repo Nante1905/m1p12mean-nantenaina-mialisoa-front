@@ -1,6 +1,7 @@
 import {
   Component,
   HostListener,
+  input,
   OnInit,
   output,
   ViewChild,
@@ -12,7 +13,13 @@ import { AvatarGroup } from 'primeng/avatargroup';
 import { ButtonModule } from 'primeng/button';
 import { Popover, PopoverModule } from 'primeng/popover';
 import { Tooltip } from 'primeng/tooltip';
-import { Tache } from '../../../../shared/types/Intervention';
+import { HasRoleDirective } from '../../../../shared/directives/has-role/has-role.directive';
+import {
+  getUserCompleteInitial,
+  getUserFullname,
+} from '../../../../shared/helpers/user';
+import { RoleType } from '../../../../shared/types/Auth';
+import { ActionTache, Tache } from '../../../../shared/types/Intervention';
 import { Utilisateur } from '../../../../shared/types/Utilisateur';
 
 const users = [
@@ -58,11 +65,13 @@ const users = [
     ButtonModule,
     AutoComplete,
     FormsModule,
+    HasRoleDirective,
   ],
   templateUrl: './ticket.component.html',
   styleUrl: './ticket.component.scss',
 })
 export class TicketComponent implements OnInit {
+  ROLES = RoleType;
   @ViewChild('popover') popover!: Popover;
   @ViewChild('userPopover') userPopover!: Popover;
 
@@ -75,8 +84,16 @@ export class TicketComponent implements OnInit {
 
   onClick = output<Tache>();
 
+  task = input.required<Tache>();
+
+  getInitial = getUserCompleteInitial;
+  getFullname = getUserFullname;
+  permittedActions: ActionTache[] = [];
+
   ngOnInit(): void {
+    this.previousResponsables = this.task().responsables;
     this.responsables = this.previousResponsables;
+    this.permittedActions = Object.values(this.task().actionPermis || {});
   }
 
   togglePopOver(event: any) {
@@ -108,11 +125,6 @@ export class TicketComponent implements OnInit {
 
   @HostListener('click')
   click() {
-    this.onClick.emit({
-      _id: '135453',
-      nom: 'Tâche exemple',
-      estimation: 2,
-      responsable: this.responsables,
-    });
+    this.onClick.emit(this.task());
   }
 }

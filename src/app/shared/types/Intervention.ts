@@ -10,11 +10,27 @@ export interface Intervention {
   taches?: Tache[];
 }
 
+export interface ActionTache {
+  step: string;
+  value: number;
+}
+
 export interface Tache {
   _id: string;
   nom: string;
   estimation: number;
-  responsable: Partial<Utilisateur>[];
+  status: number;
+  responsables: Partial<Utilisateur>[];
+  actionPermis?: {
+    previous?: {
+      step: string;
+      value: number;
+    };
+    next?: {
+      step: string;
+      value: number;
+    };
+  };
 }
 
 export interface Comment {
