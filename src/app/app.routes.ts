@@ -5,6 +5,7 @@ import { CreationDevisFormRootComponent } from './modules/estimation/containers/
 import { DemandeDevisRootComponent } from './modules/estimation/containers/demande-devis-root/demande-devis-root.component';
 import { DetailsDevisRootComponent } from './modules/estimation/containers/details-devis-root/details-devis-root.component';
 import { DevisListRootComponent } from './modules/estimation/containers/devis-list-root/devis-list-root.component';
+import { FacturationFormRootComponent } from './modules/facturation/containers/facturation-form-root/facturation-form-root.component';
 import { InterventionListRootComponent } from './modules/intervention/containers/intervention-list-root/intervention-list-root.component';
 import { TableauTacheComponent } from './modules/intervention/containers/tableau-tache/tableau-tache.component';
 import { ListRdvRootComponent } from './modules/rdv/containers/list-rdv-root/list-rdv-root.component';
@@ -27,6 +28,10 @@ export const routes: Routes = [
       {
         path: '',
         component: TestComponentComponent,
+      },
+      {
+        path: 'factures',
+        component: FacturationFormRootComponent,
       },
       {
         path: 'devis',
