@@ -7,15 +7,13 @@
       >
         {{ getMarqueName() }} {{ demande().vehicule.immatriculation }}
       </h6>
-      @if (role == ROLES.CLIENT || (role === ROLES.MANAGER && demande().status
-      != DISPO_STATUS)) {
+
       <p-tag
         class="status-tag !text-white !rounded-full"
         [styleClass]="statusClassname"
       >
         <small>{{ statusLabel }}</small>
       </p-tag>
-      }
     </div>
     <p>
       <small class="capitalize">{{ demande().dateDemande }}</small>

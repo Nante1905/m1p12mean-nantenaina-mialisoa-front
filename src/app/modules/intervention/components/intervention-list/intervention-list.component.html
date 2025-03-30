@@ -12,7 +12,7 @@
         <th pFrozenColumn></th>
         <th>Date</th>
         <th>Véhicule</th>
-        <th>Client</th>
+        <th *hasRole="[ROLES.MANAGER]">Client</th>
         <th>État</th>
         <th>Actions</th>
       </tr>
@@ -45,7 +45,7 @@
             {{ intervention.vehicule.modele }}
           </p>
         </td>
-        <td>
+        <td *hasRole="[ROLES.MANAGER]">
           <p>
             {{ intervention.client.nom || "" }}
             {{ intervention.client.prenom || "" }}
@@ -60,26 +60,41 @@
           <p-progressbar [value]="intervention.progression || 0" />
         </td>
         <td class="">
+          @if(userRole == ROLES.MANAGER ||(userRole == ROLES.MECANICIEN &&
+          intervention.isResponsable)) {
           <a
             [href]="'/app/tableau-taches/' + intervention._id"
             class="flex items-center gap-0.5 text-primary"
-            *hasRole="[ROLES.MANAGER, ROLES.MECANICIEN]"
           >
             <span class="material-icons">table_chart</span>
             Tableau Kanban
           </a>
+          }
         </td>
       </tr>
     </ng-template>
     <ng-template #expandedrow let-intervention>
       <tr class="">
-        <th colspan="4" class="text-left pt-8">Taches</th>
+        <th colspan="4" class="text-left pt-8" *hasRole="[ROLE.MANAGER]">
+          Taches
+        </th>
+        <th
+          colspan="3"
+          class="text-left pt-8"
+          *hasRole="[ROLE.CLIENT, ROLE.MECANICIEN]"
+        >
+          Taches
+        </th>
         <th class="text-center pt-8">Status</th>
         <th class="text-left pt-8">Responsables</th>
       </tr>
       @for(tache of intervention.taches; track $index) {
       <tr>
-        <td colspan="4">{{ tache.nom }}</td>
+        <td colspan="4" *hasRole="[ROLE.MANAGER]">{{ tache.nom }}</td>
+        <td colspan="3" *hasRole="[ROLE.CLIENT, ROLE.MECANICIEN]">
+          {{ tache.nom }}
+        </td>
+
         <td class="!text-center">
           <p-tag
             class="!text-white !text-xs"

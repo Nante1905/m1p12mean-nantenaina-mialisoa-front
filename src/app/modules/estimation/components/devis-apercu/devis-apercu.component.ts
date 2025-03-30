@@ -3,8 +3,10 @@ import {
   EventEmitter,
   Input,
   input,
+  OnChanges,
   OnInit,
   Output,
+  SimpleChanges,
 } from '@angular/core';
 import dayjs from 'dayjs';
 import { ButtonModule } from 'primeng/button';
@@ -32,7 +34,7 @@ import { RequiredDevisType } from '../../types/Devis';
   templateUrl: './devis-apercu.component.html',
   styleUrl: './devis-apercu.component.scss',
 })
-export class DevisApercuComponent implements OnInit {
+export class DevisApercuComponent implements OnInit, OnChanges {
   CREATED = CREATED_DEVIS_STATUS;
   DELETED = DELETED_DEVIS_STATUS;
   @Output() onTakeRdv: EventEmitter<void> = new EventEmitter<void>();
@@ -57,6 +59,18 @@ export class DevisApercuComponent implements OnInit {
   ROLES = USER_ROLE;
 
   constructor(private authService: AuthService) {}
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (this.userRole) {
+      this.statusLabel = getDevisStatusLabel(this.userRole)[
+        this.devis().status
+      ];
+      this.statusClassname = getDevisStatusClassname(
+        this.userRole,
+        this.devis().status
+      );
+    }
+  }
 
   ngOnInit(): void {
     const role = this.authService.getCurrentUser()?.role;

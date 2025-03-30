@@ -5,7 +5,8 @@
   &.devis-attente-rdv {
     background-color: #6b728078 !important;
   }
-  &.demande-dispo {
+  &.demande-dispo,
+  &.demande-repondu {
     background-color: $success !important;
   }
   &.demande-rdv {
