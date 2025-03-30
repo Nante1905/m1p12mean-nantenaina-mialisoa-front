@@ -9,28 +9,27 @@
     <div class="client-info bg-[#fff] p-4 rounded-2xl shadow-md w-[40%]">
       <h2 class="text-xl mb-3">Informations client</h2>
       <p>
-        <strong>Nom</strong> Nante
+        <strong>Nom : </strong> {{ client.nom }}
         <br />
-        <strong>Prénom</strong> Jean
+        <strong>Prénom : </strong> {{ client.prenom }}
         <br />
-        <strong>Adresse</strong> 12 rue de la paix
+        <strong>Email : </strong> {{ client.email }}
         <br />
-        <strong>Code postal</strong> 75000
+        <strong>Tel : </strong> {{ client.telephone }}
         <br />
       </p>
     </div>
     <div class="vehicule-info bg-[#fff] p-4 rounded-2xl shadow-md w-[40%]">
       <h2 class="text-xl mb-3">Informations du véhicule</h2>
       <p>
-        <strong>Marque</strong> Renault
+        <strong>Marque : </strong> {{ getVehiculeMarque() }}
         <br />
-        <strong>Modèle</strong> Clio
+        <strong>Modèle : </strong> {{ vehicule.modele }}
         <br />
-        <strong>Immatriculation</strong> AB-123-CD
+        <strong>Immatriculation : </strong> {{ vehicule.immatriculation }}
         <br />
-        <strong>Type de véhicule</strong> Berline
+        <strong>Type de moteur : </strong> {{ getVehiculeMotorisation() }}
         <br />
-        <strong>Numéro de série</strong> 12345678901234567
       </p>
     </div>
   </section>
@@ -39,6 +38,8 @@
     <app-facturation-form
       [services]="(services$ | async) || []"
       [servicesForm]="serviceForm"
+      (onSubmit)="handleSubmit($event)"
+      [loading]="loading"
     ></app-facturation-form>
   </div>
 </section>

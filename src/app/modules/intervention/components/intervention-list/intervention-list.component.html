@@ -83,6 +83,13 @@
             <span class="material-icons">add</span>
             <!-- Ajouter une taches -->
           </p-button>
+          <a
+            [href]="'/app/factures?intervention=' + intervention._id"
+            class="flex items-center gap-0.5"
+            *hasRole="[ROLES.MANAGER]"
+          >
+            <p-button size="small" severity="secondary"> Facturer </p-button>
+          </a>
         </td>
       </tr>
     </ng-template>

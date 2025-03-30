@@ -6,6 +6,7 @@ import { DemandeDevisRootComponent } from './modules/estimation/containers/deman
 import { DetailsDevisRootComponent } from './modules/estimation/containers/details-devis-root/details-devis-root.component';
 import { DevisListRootComponent } from './modules/estimation/containers/devis-list-root/devis-list-root.component';
 import { FacturationFormRootComponent } from './modules/facturation/containers/facturation-form-root/facturation-form-root.component';
+import { FactureListRootComponent } from './modules/facturation/containers/facture-list-root/facture-list-root.component';
 import { InterventionListRootComponent } from './modules/intervention/containers/intervention-list-root/intervention-list-root.component';
 import { TableauTacheRootComponent } from './modules/intervention/containers/tableau-tache-root/tableau-tache-root.component';
 import { ListRdvRootComponent } from './modules/rdv/containers/list-rdv-root/list-rdv-root.component';
@@ -32,6 +33,10 @@ export const routes: Routes = [
       {
         path: 'factures',
         component: FacturationFormRootComponent,
+      },
+      {
+        path: 'mes_factures',
+        component: FactureListRootComponent,
       },
       {
         path: 'devis',

@@ -1,5 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, Input } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
@@ -33,10 +39,12 @@ import { FacturationServiceForm } from '../../types/facturation.type';
 })
 export class FacturationFormComponent {
   @Input() servicesForm: FacturationServiceForm[] = [];
+  @Input() loading!: boolean;
 
   @Input() services!: Service[];
+  @Output() onSubmit: EventEmitter<any> = new EventEmitter<any>();
+
   totalRemise = 0;
-  loading = false;
 
   constructor(private cdr: ChangeDetectorRef) {}
 
@@ -93,6 +101,11 @@ export class FacturationFormComponent {
 
   handleSubmit() {
     console.log(this.servicesForm);
+
+    this.onSubmit.emit({
+      details: this.servicesForm,
+      remise: this.totalRemise,
+    });
   }
 
   handleTotalChange(e: any, index: number) {

@@ -9,6 +9,7 @@ import {
   AddTacheDto,
   InterventionDTO,
   InterventionListFilter,
+  InterventionServiceDTO,
   TacheByStatus,
 } from '../types/intervention.type';
 
@@ -65,6 +66,12 @@ export class InterventionService {
       {
         responsables: ids,
       }
+    );
+  }
+
+  findInterventionWithService(idIntervention: string) {
+    return this.http.get<ApiResponse<InterventionServiceDTO>>(
+      `/interventions/${idIntervention}/services`
     );
   }
 }

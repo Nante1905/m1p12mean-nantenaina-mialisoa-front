@@ -63,6 +63,11 @@ export class SidebarComponent implements OnInit {
       icon: 'schedule',
       route: 'interventions',
     },
+    {
+      label: 'Factures',
+      icon: 'payments',
+      route: 'mes_factures',
+    },
     // schedule
     // { label: 'Utilisateurs', icon: 'people', route: 'users' },
     // { label: 'Projets', icon: 'work', route: 'projects' },
