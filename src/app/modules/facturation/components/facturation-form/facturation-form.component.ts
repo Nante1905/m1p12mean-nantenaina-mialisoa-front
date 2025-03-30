@@ -32,7 +32,7 @@ import { FacturationServiceForm } from '../../types/facturation.type';
   styleUrl: './facturation-form.component.scss',
 })
 export class FacturationFormComponent {
-  servicesForm: FacturationServiceForm[] = [];
+  @Input() servicesForm: FacturationServiceForm[] = [];
 
   @Input() services!: Service[];
   totalRemise = 0;

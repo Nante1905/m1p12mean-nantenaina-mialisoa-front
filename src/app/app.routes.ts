@@ -7,7 +7,7 @@ import { DetailsDevisRootComponent } from './modules/estimation/containers/detai
 import { DevisListRootComponent } from './modules/estimation/containers/devis-list-root/devis-list-root.component';
 import { FacturationFormRootComponent } from './modules/facturation/containers/facturation-form-root/facturation-form-root.component';
 import { InterventionListRootComponent } from './modules/intervention/containers/intervention-list-root/intervention-list-root.component';
-import { TableauTacheComponent } from './modules/intervention/containers/tableau-tache/tableau-tache.component';
+import { TableauTacheRootComponent } from './modules/intervention/containers/tableau-tache-root/tableau-tache-root.component';
 import { ListRdvRootComponent } from './modules/rdv/containers/list-rdv-root/list-rdv-root.component';
 import { authGuard } from './shared/guards/auth/auth.guard';
 import { roleGuard } from './shared/guards/auth/role.guard';
@@ -59,8 +59,8 @@ export const routes: Routes = [
         component: InterventionListRootComponent,
       },
       {
-        path: 'tableau-taches',
-        component: TableauTacheComponent,
+        path: 'tableau-taches/:id',
+        component: TableauTacheRootComponent,
       },
     ],
   },

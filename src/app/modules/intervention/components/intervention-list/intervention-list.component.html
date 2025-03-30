@@ -63,7 +63,7 @@
         <td>Statut ??</td>
         <td class="flex gap-5">
           <a
-            href="/app/tableau-taches"
+            [href]="'/app/tableau-taches/' + intervention._id"
             class="flex items-center gap-0.5 text-primary"
             *hasRole="[ROLES.MANAGER, ROLES.MECANICIEN]"
           >

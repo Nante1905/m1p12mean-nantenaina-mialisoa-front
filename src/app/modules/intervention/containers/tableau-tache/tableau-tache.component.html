@@ -1,89 +1,168 @@
-<section>
-  <header class="rdv-root__header mb-8 bg-[#fff] p-4 rounded-2xl shadow-md">
-    <h1 class="text-2xl">Tableau des tâches</h1>
-  </header>
-  <div class="flex flex-col gap-y-4">
-    <app-ticket (onClick)="selectTache($event)" />
-    <app-ticket (onClick)="selectTache($event)" />
-    <app-ticket (onClick)="selectTache($event)" />
-    <app-ticket (onClick)="selectTache($event)" />
-    <app-ticket (onClick)="selectTache($event)" />
-  </div>
-  <p-drawer
-    [header]="selectedTache?.nom"
-    [(visible)]="showDetailsTache"
-    position="right"
-    styleClass="!w-[90%] md:!w-80 lg:!w-[30rem]"
+@if(loadingIntervention()) {
+<section
+  class="my-8 grid grid-cols-1 md:grid-cols-2 gap-4"
+  *hasRole="[ROLES.MANAGER]"
+>
+  <p-skeleton height="4rem" />
+  <p-skeleton height="4rem" />
+</section>
+<section class="flex flex-row gap-4 flex-nowrap">
+  <p-skeleton height="50vh" width="18rem" class="p-4 rounded-md" />
+  <p-skeleton height="50vh" width="18rem" class="p-4 rounded-md" />
+  <p-skeleton height="50vh" width="18rem" class="p-4 rounded-md" />
+</section>
+} @else if(intervention()) {
+<section class="flex gap-4 flex-col-reverse lg:flex-row">
+  <section
+    class="flex flex-row gap-4 flex-nowrap relative overflow-x-scroll"
+    [class.clip]="loadingTache()"
   >
-    <div class="mb-6 border-b pb-4">
-      <div class="grid grid-cols-2 gap-4">
-        <div>
-          <label class="text-sm font-medium text-gray-600"
-            >Nom de la tâche</label
-          >
-          <p class="font-semibold">{{ selectedTache?.nom }}</p>
-        </div>
-        <div>
-          <label class="text-sm font-medium text-gray-600">Estimation</label>
-          <p>{{ selectedTache?.estimation }} h</p>
-        </div>
-
-        <div>
-          <label class="text-sm font-medium text-gray-600"
-            >Responsable(s)</label
-          >
-          <p>Rakoto Jean, Rasoa Naivo, Rabe</p>
-        </div>
-      </div>
-      <div class="mt-4">
-        <a [href]="" class="text-accent hover:underline cursor-pointer">
-          Historique d'interventions de 1234TAB
-        </a>
-      </div>
+    @if (loadingTache()) {
+    <div class="absolute bg-[#ffffff94] h-full w-full z-10">
+      <app-loader [loading]="true" />
     </div>
-
-    <!-- Comments Section -->
-    <div class="mb-6">
-      <h3 class="text-lg font-bold mb-4">Commentaires</h3>
-      @if (comments.length) {
-      <div class="space-y-4 mb-6">
-        @for (comment of comments; track comment) {
-        <div class="bg-gray-100 p-4 rounded-lg">
-          <div class="flex justify-between items-center mb-2">
-            <span class="font-medium text-gray-700">
-              {{ comment.author }}
-            </span>
-            <span class="text-sm text-gray-500">
-              {{ comment.createdAt | date : "short" }}
-            </span>
-          </div>
-          <p>{{ comment.text }}</p>
-        </div>
+    } @for (taskGroup of intervention()?.taches; track taskGroup.label) {
+    <div
+      class="min-w-2xs !box-content bg-[#b281e117] p-4 rounded-md min-h-[100vh]"
+    >
+      <p class="uppercase">{{ taskGroup.label }}</p>
+      <p-divider />
+      <div class="flex flex-col gap-y-4">
+        @for(task of taskGroup.taches; track task._id) {
+        <app-ticket
+          [task]="task"
+          (onClick)="selectTache($event)"
+          class="w-fit"
+          [users]="users()"
+          (updateStatus)="updateTaskStatus($event)"
+          (deleteTache)="deleteTask($event)"
+          (assignResponsables)="assignResponsable.emit($event)"
+        />
         }
       </div>
-      }
-      <div *ngIf="!comments.length" class="text-gray-500 text-center py-4">
-        Aucun commentaire pour le moment
-      </div>
     </div>
 
-    <!-- Add Comment Section -->
-    <!-- <div class="border-t pt-4">
-    <form (ngSubmit)="addComment()" class="flex items-center space-x-4">
-      <input 
-        [(ngModel)]="newCommentText"
-        name="newComment"
-        placeholder="Ajouter un commentaire..."
-        class="flex-grow p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-      />
-      <button 
-        type="submit" 
-        [disabled]="!newCommentText"
-        class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 disabled:bg-gray-300"
-      >
-        Envoyer
-      </button>
-    </form>
-  </div> -->
-  </p-drawer>
+    }
+  </section>
+
+  <section class="md:flex-[25%]">
+    <p-accordion>
+      <p-accordion-panel value="INTERVENTION" class="my-4">
+        <p-accordion-header>Information sur l'intervention</p-accordion-header>
+        <p-accordion-content>
+          <p><strong>Prévu le: </strong> {{ intervention()?.date }}</p>
+          <strong>
+            <u>Véhicule:</u>
+          </strong>
+          <ul>
+            <li>{{ intervention()?.vehicule?.immatriculation }}</li>
+            <li>
+              {{ intervention()?.vehicule?.marque }} -
+              {{ intervention()?.vehicule?.modele }}
+            </li>
+            <li>Moteur: {{ intervention()?.vehicule?.motorisation }}</li>
+          </ul>
+        </p-accordion-content>
+      </p-accordion-panel>
+    </p-accordion>
+
+    <p-accordion *hasRole="[ROLES.MANAGER]">
+      <p-accordion-panel value="CLIENT" class="my-4">
+        <p-accordion-header>Information sur le client</p-accordion-header>
+        <p-accordion-content>
+          <p>
+            {{ intervention()?.client?.nom || "" }}
+            {{ intervention()?.client?.prenom || "" }}
+          </p>
+          <p>
+            <strong>
+              <u>Contact</u>
+            </strong>
+          </p>
+          <ul>
+            <li>{{ intervention()?.client?.telephone }}</li>
+            <li>{{ intervention()?.client?.email }}</li>
+          </ul>
+        </p-accordion-content>
+      </p-accordion-panel>
+    </p-accordion>
+  </section>
 </section>
+
+<p-drawer
+  [header]="selectedTache?.nom"
+  [(visible)]="showDetailsTache"
+  position="right"
+  styleClass="!w-[90%] md:!w-80 lg:!w-[30rem]"
+>
+  <div class="mb-6 border-b pb-4">
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <label class="text-sm font-medium text-gray-600">Nom de la tâche</label>
+        <p class="font-semibold">{{ selectedTache?.nom }}</p>
+      </div>
+      <div>
+        <label class="text-sm font-medium text-gray-600">Estimation</label>
+        <p>{{ selectedTache?.estimation }} h</p>
+      </div>
+
+      <div>
+        <label class="text-sm font-medium text-gray-600">Responsable(s)</label>
+        <p>{{ getResponsableOfSelectedTache() }}</p>
+      </div>
+    </div>
+    <div class="mt-4">
+      <a [href]="" class="text-accent hover:underline cursor-pointer">
+        Historique d'interventions de
+        {{ intervention()?.vehicule?.immatriculation }}
+      </a>
+    </div>
+  </div>
+
+  <div class="mb-6">
+    <h3 class="text-lg font-bold mb-4">Commentaires</h3>
+    @if (comments.length) {
+    <div class="space-y-4 mb-6">
+      @for (comment of comments; track comment) {
+      <div class="bg-gray-100 p-4 rounded-lg">
+        <div class="flex justify-between items-center mb-2">
+          <span class="font-medium text-gray-700">
+            {{ comment.author }}
+          </span>
+          <span class="text-sm text-gray-500">
+            {{ comment.createdAt | date : "short" }}
+          </span>
+        </div>
+        <p>{{ comment.text }}</p>
+      </div>
+      }
+    </div>
+    }
+    <div *ngIf="!comments.length" class="text-gray-500 text-center py-4">
+      Aucun commentaire pour le moment
+    </div>
+  </div>
+
+  <!-- Add Comment Section -->
+  <!-- <div class="border-t pt-4">
+      <form (ngSubmit)="addComment()" class="flex items-center space-x-4">
+        <input 
+          [(ngModel)]="newCommentText"
+          name="newComment"
+          placeholder="Ajouter un commentaire..."
+          class="flex-grow p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+        <button 
+          type="submit" 
+          [disabled]="!newCommentText"
+          class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 disabled:bg-gray-300"
+        >
+          Envoyer
+        </button>
+      </form>
+    </div> -->
+</p-drawer>
+
+} @else {
+<p class="text-center">Intervention introuvable.</p>
+}

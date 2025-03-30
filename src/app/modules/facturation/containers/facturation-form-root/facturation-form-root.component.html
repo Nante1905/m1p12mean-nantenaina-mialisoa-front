@@ -5,9 +5,40 @@
     <h1 class="text-2xl">Créer une facture</h1>
   </header>
 
+  <section class="facture-info flex gap-4 mb-8 justify-between">
+    <div class="client-info bg-[#fff] p-4 rounded-2xl shadow-md w-[40%]">
+      <h2 class="text-xl mb-3">Informations client</h2>
+      <p>
+        <strong>Nom</strong> Nante
+        <br />
+        <strong>Prénom</strong> Jean
+        <br />
+        <strong>Adresse</strong> 12 rue de la paix
+        <br />
+        <strong>Code postal</strong> 75000
+        <br />
+      </p>
+    </div>
+    <div class="vehicule-info bg-[#fff] p-4 rounded-2xl shadow-md w-[40%]">
+      <h2 class="text-xl mb-3">Informations du véhicule</h2>
+      <p>
+        <strong>Marque</strong> Renault
+        <br />
+        <strong>Modèle</strong> Clio
+        <br />
+        <strong>Immatriculation</strong> AB-123-CD
+        <br />
+        <strong>Type de véhicule</strong> Berline
+        <br />
+        <strong>Numéro de série</strong> 12345678901234567
+      </p>
+    </div>
+  </section>
+
   <div class="content bg-[#fff] p-4 rounded-2xl shadow-md">
     <app-facturation-form
       [services]="(services$ | async) || []"
+      [servicesForm]="serviceForm"
     ></app-facturation-form>
   </div>
 </section>
