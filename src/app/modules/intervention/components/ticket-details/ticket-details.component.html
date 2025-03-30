@@ -23,7 +23,10 @@
   </div>
   @if (immatriculation()) {
   <div class="mt-4">
-    <a [href]="" class="text-accent hover:underline cursor-pointer">
+    <a
+      [href]="'app/interventions?immatriculation=' + immatriculation()"
+      class="text-accent hover:underline cursor-pointer"
+    >
       Historique d'interventions de
       {{ immatriculation() }}
     </a>

@@ -50,7 +50,6 @@ export class TicketDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.comments$ = this.getAllComments();
     this.currentUser = this.authService.getCurrentUser() as Utilisateur;
-    console.log(this.authService.getCurrentUser());
   }
 
   @Input()
