@@ -2,16 +2,16 @@
   <div class="grid grid-cols-2 gap-4">
     <div>
       <label class="text-sm font-medium text-gray-600">Nom de la tâche</label>
-      <p class="font-semibold">{{ tache().nom }}</p>
+      <p class="font-semibold">{{ tache.nom }}</p>
     </div>
     <div>
       <label class="text-sm font-medium text-gray-600">Estimation</label>
-      <p>{{ tache().estimation }} h</p>
+      <p>{{ tache.estimation }} h</p>
     </div>
 
     <div>
       <label class="text-sm font-medium text-gray-600">Responsable(s)</label>
-      @if ((tache().responsables.length > 0 )) {
+      @if ((tache.responsables.length > 0 )) {
       <p>{{ getResponsableOfSelectedTache() }}</p>
       } @else {
       <p class="flex items-center">
@@ -38,44 +38,57 @@
     <p-skeleton height="5rem" />
     <p-skeleton height="5rem" />
   </section>
-  } @else { @if (((comments$ | async) || []).length > 0) {
-  <div class="space-y-4 mb-6">
+  } @else if(commentsLength == 0){
+  <div class="text-gray-500 text-center py-4">
+    Aucun commentaire pour le moment
+  </div>
+  }
+  <div
+    class="div_list_comments space-y-4 pr-2 mb-6 overflow-y-scroll max-h-[20rem]"
+  >
     @for (comment of (comments$ | async); track comment._id) {
     <div class="bg-gray-100 p-4 rounded-lg">
       <div class="flex justify-between items-center mb-2">
         <span class="font-medium text-gray-700">
-          {{ comment.auteur.nom }} {{ comment.auteur.prenom }}
+          @if (comment.auteur._id === currentUser.id) {
+          <strong class="text-accent"> Vous </strong>
+          } @else {
+          <strong class="text-secondary">
+            {{ comment.auteur.nom }} {{ comment.auteur.prenom }}
+          </strong>
+
+          }
         </span>
         <span class="text-sm text-gray-500">
-          {{ comment.date | date : "short" }}
+          {{ formatDate(comment.date, undefined, true) }}
         </span>
       </div>
       <p>{{ comment.contenu }}</p>
     </div>
     }
   </div>
-  } @else {
-  <div class="text-gray-500 text-center py-4">
-    Aucun commentaire pour le moment
-  </div>
-  } }
 </div>
 
-<!-- Add Comment Section -->
 <div class="border-t pt-4">
-  <form (ngSubmit)="addNewComment()" class="flex items-center space-x-4">
-    <input
+  <form (ngSubmit)="addNewComment()" class="flex items-end space-x-4 w-full">
+    <textarea
+      rows="2"
+      cols="30"
+      pTextarea
+      [autoResize]="true"
       [(ngModel)]="newComment"
-      pInputText
       name="newComment"
       placeholder="Ajouter un commentaire..."
       severity="primary"
-    />
+      class="flex-[80%]"
+    ></textarea>
     <p-button
       type="submit"
       class="disabled:bg-gray-300 rounded-lg"
       [disabled]="!newComment"
       size="small"
+      variant="text"
+      [loading]="sendingComment"
     >
       <span class="material-icons">send</span>
     </p-button>

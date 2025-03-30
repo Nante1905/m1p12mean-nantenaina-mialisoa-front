@@ -70,4 +70,13 @@ export class InterventionService {
       `/interventions/taches/${idTache}/comments`
     );
   }
+
+  addComment(idTache: string, comment: string) {
+    return this.http.post<ApiResponse<any>>(
+      `/interventions/taches/${idTache}/comments`,
+      {
+        contenu: comment,
+      }
+    );
+  }
 }

@@ -111,7 +111,10 @@
   styleClass="!w-[90%] md:!w-80 lg:!w-[30rem]"
 >
   @if(selectedTache) {
-  <app-ticket-details [tache]="selectedTache" />
+  <app-ticket-details
+    [tache]="selectedTache"
+    [immatriculation]="intervention()?.vehicule?.immatriculation"
+  />
   }
 </p-drawer>
 
