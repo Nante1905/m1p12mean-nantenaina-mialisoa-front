@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -28,16 +29,13 @@ import { InterventionListFilter } from '../../types/intervention.type';
 export class InterventionListRootComponent implements OnInit {
   constructor(
     private interventionService: InterventionService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private activatedRoute: ActivatedRoute
   ) {}
   defaultInterventions = defaultPaginatedData;
 
   interventions$!: Observable<Paginated<Intervention>>;
   loadingIntervention!: boolean;
-
-  ngOnInit(): void {
-    this.interventions$ = this.fetchIntervention();
-  }
 
   filter: InterventionListFilter = {
     immatriculation: '',
@@ -45,6 +43,16 @@ export class InterventionListRootComponent implements OnInit {
     page: 1,
     limit: 10,
   };
+
+  ngOnInit(): void {
+    this.activatedRoute.queryParams.subscribe((params) => {
+      const defaultImmatriculation = params['immatriculation'];
+      if (defaultImmatriculation) {
+        this.filter.immatriculation = defaultImmatriculation;
+      }
+      this.interventions$ = this.fetchIntervention(this.filter);
+    });
+  }
 
   fetchIntervention = (filter?: InterventionListFilter) => {
     this.loadingIntervention = true;

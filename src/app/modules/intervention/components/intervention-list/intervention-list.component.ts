@@ -4,13 +4,14 @@ import dayjs from 'dayjs';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
+import { ProgressBar } from 'primeng/progressbar';
 import { TableModule } from 'primeng/table';
+import { TagModule } from 'primeng/tag';
 import { HasRoleDirective } from '../../../../shared/directives/has-role/has-role.directive';
 import { RoleType } from '../../../../shared/types/Auth';
 import { Intervention } from '../../../../shared/types/Intervention';
 import { Paginated } from '../../../../shared/types/Paginated';
 import { InterventionListFilter } from '../../types/intervention.type';
-
 @Component({
   selector: 'app-intervention-list',
   imports: [
@@ -20,6 +21,8 @@ import { InterventionListFilter } from '../../types/intervention.type';
     FormsModule,
     InputTextModule,
     HasRoleDirective,
+    TagModule,
+    ProgressBar,
   ],
   templateUrl: './intervention-list.component.html',
   styleUrl: './intervention-list.component.scss',
@@ -55,5 +58,13 @@ export class InterventionListComponent {
 
   changePage = (event: PaginatorState) => {
     this.onPageChange.emit({ page: (event.page ?? 0) + 1 });
+  };
+
+  getClassName = (status: string) => {
+    return `tache-${status
+      .toLowerCase()
+      .replace(/\s+/g, '-')
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')}`;
   };
 }

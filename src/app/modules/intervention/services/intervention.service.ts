@@ -2,7 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { filterToHttpParams } from '../../../shared/helpers/filter';
 import { ApiResponse } from '../../../shared/types/ApiResponse';
-import { Intervention, Tache } from '../../../shared/types/Intervention';
+import {
+  Comment,
+  Intervention,
+  Tache,
+} from '../../../shared/types/Intervention';
 import { Paginated } from '../../../shared/types/Paginated';
 import { Utilisateur } from '../../../shared/types/Utilisateur';
 import {
@@ -57,6 +61,21 @@ export class InterventionService {
       `/interventions/taches/${idTache}/assign`,
       {
         responsables: ids,
+      }
+    );
+  }
+
+  findAllCommentsOfTache(idTache: string) {
+    return this.http.get<ApiResponse<Comment[]>>(
+      `/interventions/taches/${idTache}/comments`
+    );
+  }
+
+  addComment(idTache: string, comment: string) {
+    return this.http.post<ApiResponse<any>>(
+      `/interventions/taches/${idTache}/comments`,
+      {
+        contenu: comment,
       }
     );
   }
