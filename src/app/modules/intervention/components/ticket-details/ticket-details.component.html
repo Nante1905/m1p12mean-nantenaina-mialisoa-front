@@ -34,7 +34,7 @@
   }
 </div>
 
-<div class="mb-6">
+<div class="mb-6" *hasRole="[ROLES.MANAGER, ROLES.MECANICIEN]">
   <h3 class="text-lg font-bold mb-4">Commentaires</h3>
   @if(loadingComments) {
   <section class="flex flex-col gap-2">

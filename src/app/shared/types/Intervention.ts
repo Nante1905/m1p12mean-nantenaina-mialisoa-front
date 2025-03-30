@@ -8,6 +8,7 @@ export interface Intervention {
   vehicule: Vehicule;
   client: Utilisateur;
   taches?: Tache[];
+  progression?: number;
 }
 
 export interface ActionTache {

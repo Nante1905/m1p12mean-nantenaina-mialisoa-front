@@ -7,9 +7,11 @@ import { InputTextModule } from 'primeng/inputtext';
 import { SkeletonModule } from 'primeng/skeleton';
 import { TextareaModule } from 'primeng/textarea';
 import { catchError, finalize, map, Observable, of, tap } from 'rxjs';
+import { HasRoleDirective } from '../../../../shared/directives/has-role/has-role.directive';
 import { formatDateToReadable } from '../../../../shared/helpers/date';
 import { getUserFullname } from '../../../../shared/helpers/user';
 import { AuthService } from '../../../../shared/services/auth/auth.service';
+import { RoleType } from '../../../../shared/types/Auth';
 import { Comment, Tache } from '../../../../shared/types/Intervention';
 import { Utilisateur } from '../../../../shared/types/Utilisateur';
 import { InterventionService } from '../../services/intervention.service';
@@ -23,6 +25,7 @@ import { InterventionService } from '../../services/intervention.service';
     InputTextModule,
     SkeletonModule,
     TextareaModule,
+    HasRoleDirective,
   ],
   templateUrl: './ticket-details.component.html',
   styleUrl: './ticket-details.component.scss',
@@ -33,6 +36,7 @@ export class TicketDetailsComponent implements OnInit {
     private messageService: MessageService,
     private authService: AuthService
   ) {}
+  ROLES = RoleType;
   private _tache!: Tache;
 
   immatriculation = input<string | undefined>(undefined);
