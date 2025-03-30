@@ -1,4 +1,10 @@
-import { Component, input, OnInit } from '@angular/core';
+import {
+  Component,
+  input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { TagModule } from 'primeng/tag';
 import { formatDateToReadable } from '../../../../shared/helpers/date';
 import {
@@ -18,7 +24,7 @@ import { RequiredDemandeDevisType } from '../../types/DemandeDevis';
   templateUrl: './demande-devis-apercu.component.html',
   styleUrl: './demande-devis-apercu.component.scss',
 })
-export class DemandeDevisApercuComponent implements OnInit {
+export class DemandeDevisApercuComponent implements OnInit, OnChanges {
   demande = input.required<DemandeDevis, RequiredDemandeDevisType>({
     transform: (props: DemandeDevis) => ({
       ...props,
@@ -33,6 +39,18 @@ export class DemandeDevisApercuComponent implements OnInit {
   statusClassname: string = '';
 
   constructor(private authService: AuthService) {}
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (this.role) {
+      this.statusLabel = getDemandeDevisStatusLabel(this.role)[
+        this.demande().status as number
+      ];
+      this.statusClassname = getDemandeDevisStatusClassname(
+        this.role,
+        this.demande().status as number
+      );
+    }
+  }
 
   ngOnInit(): void {
     const role = this.authService.getCurrentUser()?.role;
