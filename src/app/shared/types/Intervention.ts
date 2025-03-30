@@ -9,6 +9,7 @@ export interface Intervention {
   client: Utilisateur;
   taches?: Tache[];
   progression?: number;
+  isResponsable?: boolean;
 }
 
 export interface ActionTache {
