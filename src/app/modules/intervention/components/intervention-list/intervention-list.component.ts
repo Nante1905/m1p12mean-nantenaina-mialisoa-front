@@ -2,6 +2,7 @@ import { Component, input, OnInit, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import dayjs from 'dayjs';
 import { ButtonModule } from 'primeng/button';
+import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { ProgressBar } from 'primeng/progressbar';
@@ -13,6 +14,8 @@ import { RoleType } from '../../../../shared/types/Auth';
 import { Intervention } from '../../../../shared/types/Intervention';
 import { Paginated } from '../../../../shared/types/Paginated';
 import { InterventionListFilter } from '../../types/intervention.type';
+import { AddTaskFormComponent } from '../add-task-form/add-task-form.component';
+
 @Component({
   selector: 'app-intervention-list',
   imports: [
@@ -22,6 +25,8 @@ import { InterventionListFilter } from '../../types/intervention.type';
     FormsModule,
     InputTextModule,
     HasRoleDirective,
+    DialogModule,
+    AddTaskFormComponent,
     TagModule,
     ProgressBar,
   ],
@@ -30,6 +35,8 @@ import { InterventionListFilter } from '../../types/intervention.type';
 })
 export class InterventionListComponent implements OnInit {
   constructor(private authService: AuthService) {}
+  visible: boolean = false;
+  selectedIntervention: Intervention | null = null;
 
   ROLE = RoleType;
   expandedRows = {};
@@ -67,6 +74,17 @@ export class InterventionListComponent implements OnInit {
   changePage = (event: PaginatorState) => {
     this.onPageChange.emit({ page: (event.page ?? 0) + 1 });
   };
+  closeDialog() {
+    this.visible = false;
+  }
+
+  openDialog(index: number) {
+    this.visible = true;
+    this.selectedIntervention = this.interventions().items[index];
+    console.log(index);
+
+    console.log(this.selectedIntervention);
+  }
 
   getClassName = (status: string) => {
     return `tache-${status

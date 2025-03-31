@@ -10,8 +10,10 @@ import {
 import { Paginated } from '../../../shared/types/Paginated';
 import { Utilisateur } from '../../../shared/types/Utilisateur';
 import {
+  AddTacheDto,
   InterventionDTO,
   InterventionListFilter,
+  InterventionServiceDTO,
   TacheByStatus,
 } from '../types/intervention.type';
 
@@ -30,6 +32,12 @@ export class InterventionService {
     );
   }
 
+  addTache(idIntervention: string, data: AddTacheDto) {
+    return this.http.post<ApiResponse<Intervention>>(
+      `/interventions/${idIntervention}/taches`,
+      data
+    );
+  }
   findById(id: string) {
     return this.http.get<ApiResponse<InterventionDTO>>(`/interventions/${id}`);
   }
@@ -65,6 +73,11 @@ export class InterventionService {
     );
   }
 
+  findInterventionWithService(idIntervention: string) {
+    return this.http.get<ApiResponse<InterventionServiceDTO>>(
+      `/interventions/${idIntervention}/services`
+    );
+  }
   findAllCommentsOfTache(idTache: string) {
     return this.http.get<ApiResponse<Comment[]>>(
       `/interventions/taches/${idTache}/comments`

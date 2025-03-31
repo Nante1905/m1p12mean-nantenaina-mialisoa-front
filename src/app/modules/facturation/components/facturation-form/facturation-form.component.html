@@ -1,0 +1,170 @@
+<section class="form-container">
+  <section class="service-table w-full bg-[#fff] px-10 py-5 rounded-2xl">
+    <p class="py-5 font-bold">Choisissez les services</p>
+    <p-table
+      [value]="servicesForm"
+      dataKey="_id"
+      styleClass="p-datatable-gridlines"
+      showGridlines
+    >
+      <ng-template #header>
+        <tr>
+          <th class="p-3!">Service</th>
+          <th class="p-3!">Prix</th>
+          <th class="p-3!">Heures</th>
+          <th class="p-3!">Remise</th>
+          <th class="p-3!">Total</th>
+          <th class="p-3!">Actions</th>
+        </tr>
+      </ng-template>
+      <ng-template #body let-service let-editing="editing" let-index="rowIndex">
+        <!-- @for(service of servicesForm; track $index; let index = $index) { -->
+        <tr>
+          <td
+            [pEditableColumn]="service.idService"
+            pEditableColumnField="service"
+            class="max-w-3"
+          >
+            <p-cellEditor>
+              <ng-template #input>
+                <p-select
+                  [options]="services || []"
+                  optionLabel="nom"
+                  optionValue="_id"
+                  placeholder="Choisir un service"
+                  class="w-full"
+                  appendTo="body"
+                  [(ngModel)]="service.idService"
+                  (onChange)="handleServiceChange(service, index)"
+                ></p-select>
+              </ng-template>
+              <ng-template #output>
+                {{ service.nom }}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td class="max-w-3 text-right!">
+            {{ service.prix | currency : "MGA" }}
+          </td>
+          <td
+            [pEditableColumn]="service.heures"
+            pEditableColumnField="heures"
+            class="max-w-3 text-right!"
+          >
+            <p-cellEditor>
+              <ng-template #input>
+                <input
+                  pInputText
+                  type="number"
+                  [(ngModel)]="service.heures"
+                  (input)="handleChangeHeures($event, index)"
+                  class="w-full"
+                />
+              </ng-template>
+              <ng-template #output>
+                {{ service.heures }}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+
+          <td
+            class="text-right! max-w-3!"
+            [pEditableColumn]="service.remise"
+            pEditableColumnField="remise"
+          >
+            <p-cellEditor>
+              <ng-template #input>
+                <input
+                  pInputText
+                  type="number"
+                  [defaultValue]="service.remise"
+                  (input)="handleChangeRemise($event, index)"
+                  required
+                  class="w-full"
+                />
+              </ng-template>
+              <ng-template #output> {{ service.remise }} % </ng-template>
+            </p-cellEditor>
+          </td>
+          <td
+            class="text-right! max-w-3!"
+            pEditableColumnField="total"
+            [pEditableColumn]="service.total"
+          >
+            <p-cellEditor>
+              <ng-template #input>
+                <input
+                  pInputText
+                  type="number"
+                  class="w-full"
+                  [defaultValue]="
+                    getServiceTotal(
+                      service.prix,
+                      service.heures,
+                      service.remise
+                    )
+                  "
+                  (input)="handleTotalChange($event, index)"
+                />
+              </ng-template>
+              <ng-template #output>
+                {{
+                  getServiceTotal(service.prix, service.heures, service.remise)
+                    | currency : "MGA"
+                }}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td>
+            <p-button
+              class="suppr-btn"
+              size="small"
+              severity="danger"
+              (onClick)="handeDeleteService(index)"
+            >
+              <span class="material-icons">delete</span>
+            </p-button>
+          </td>
+        </tr>
+        <!-- } -->
+      </ng-template>
+      <ng-template #footer
+        ><tr>
+          <td colspan="3" class="font-bold">Total general</td>
+          <td
+            class="text-right! w-[100px]!"
+            [pEditableColumn]="totalRemise"
+            pEditableColumnField="totalRemise"
+          >
+            <p-cellEditor>
+              <ng-template #input>
+                <input
+                  pInputText
+                  type="number"
+                  [(ngModel)]="totalRemise"
+                  required
+                  class="w-full"
+                />
+              </ng-template>
+              <ng-template #output> {{ totalRemise }} % </ng-template>
+            </p-cellEditor>
+          </td>
+          <td class="text-right!">
+            {{ getServiceFormTotal() | currency : "MGA" }}
+          </td>
+          <td></td>
+        </tr>
+      </ng-template>
+    </p-table>
+    <!-- <ng-template #footer> -->
+    <div class="flex items-center justify-between my-3">
+      <p-button size="small" (onClick)="handleAddService()">Ajouter</p-button>
+    </div>
+    <!-- </ng-template> -->
+    <div class="text-right">
+      <p-button (onClick)="handleSubmit()" [loading]="loading"
+        >Confirmer</p-button
+      >
+    </div>
+  </section>
+</section>

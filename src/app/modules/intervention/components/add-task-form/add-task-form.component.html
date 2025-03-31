@@ -1,0 +1,76 @@
+<div class="card flex justify-center">
+  <p-dialog
+    header="Ajouter une tache à cette intervention"
+    [modal]="true"
+    [(visible)]="visible"
+    [style]="{ width: '25rem' }"
+    (onHide)="handleClose()"
+  >
+    <!-- <span class="p-text-secondary block mb-8"
+      >Choissir une date pour accepter le RDV.</span
+    > -->
+    <div class="form my-5" [formGroup]="formGroup">
+      <div class="form-group">
+        <label for="service">Service</label>
+        <p-select
+          id="service"
+          [options]="(services$ | async) || []"
+          optionLabel="nom"
+          optionValue="_id"
+          placeholder="Choisir un service"
+          class="w-full"
+          appendTo="body"
+          formControlName="service"
+        ></p-select>
+        <app-validation-error
+          [control]="formGroup.controls['service']"
+        ></app-validation-error>
+      </div>
+      <div class="form-group">
+        <label for="heure">Estimation</label>
+        <br />
+        <p-inputnumber
+          inputId="integeronly"
+          class="w-full"
+          formControlName="heure"
+        />
+        <app-validation-error
+          [control]="formGroup.controls['heure']"
+        ></app-validation-error>
+      </div>
+      <div class="form-group">
+        <label for="responsable">Assigner à</label>
+        <p-autocomplete
+          formControlName="responsables"
+          inputId="reponsables"
+          multiple
+          fluid
+          optionLabel="nom"
+          [suggestions]="suggestions"
+          (completeMethod)="autoComplete($event)"
+          placeholder="Assigner responsable"
+          forceSelection="true"
+          translate="yes"
+          lang="fr"
+        >
+          <ng-template let-user #item>
+            <div class="flex items-center gap-2">
+              <p>{{ user.nom }} {{ user.prenom }}</p>
+            </div>
+          </ng-template>
+        </p-autocomplete>
+        <app-validation-error
+          [control]="formGroup.controls['responsables']"
+        ></app-validation-error>
+      </div>
+    </div>
+    <div class="flex justify-end gap-2">
+      <p-button label="Annuler" severity="secondary" (click)="handleClose()" />
+      <p-button
+        label="Accepter"
+        (onClick)="handleSubmit()"
+        [loading]="loading"
+      />
+    </div>
+  </p-dialog>
+</div>

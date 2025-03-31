@@ -173,20 +173,22 @@
 
 .sidebar-footer {
   padding: 1.2rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(0, 0, 0, 0.1);
+  // border-top: 1px solid rgba(255, 255, 255, 0.08);
+  // background: rgba(0, 0, 0, 0.1);
 
   .user-info {
     display: flex;
+    flex-direction: row-reverse;
     align-items: center;
     cursor: pointer;
     padding: 0.4rem;
     border-radius: 12px;
     transition: background-color 0.2s;
+    justify-content: space-between;
 
-    &:hover {
-      background-color: rgba(255, 255, 255, 0.08);
-    }
+    // &:hover {
+    //   background-color: rgba(255, 255, 255, 0.08);
+    // }
   }
 
   .user-avatar {
@@ -228,7 +230,7 @@
     .user-role {
       display: block;
       font-size: 0.8rem;
-      color: rgba(255, 255, 255, 0.6);
+      // color: rgba(255, 255, 255, 0.6);
     }
   }
 

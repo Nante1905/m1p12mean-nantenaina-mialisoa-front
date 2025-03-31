@@ -1,0 +1,45 @@
+<section class="facturation-form-root">
+  <header
+    class="facturation-form-root__header mb-8 bg-[#fff] p-4 rounded-2xl shadow-md"
+  >
+    <h1 class="text-2xl">Créer une facture</h1>
+  </header>
+
+  <section class="facture-info flex gap-4 mb-8 justify-between">
+    <div class="client-info bg-[#fff] p-4 rounded-2xl shadow-md w-[40%]">
+      <h2 class="text-xl mb-3">Informations client</h2>
+      <p>
+        <strong>Nom : </strong> {{ client.nom }}
+        <br />
+        <strong>Prénom : </strong> {{ client.prenom }}
+        <br />
+        <strong>Email : </strong> {{ client.email }}
+        <br />
+        <strong>Tel : </strong> {{ client.telephone }}
+        <br />
+      </p>
+    </div>
+    <div class="vehicule-info bg-[#fff] p-4 rounded-2xl shadow-md w-[40%]">
+      <h2 class="text-xl mb-3">Informations du véhicule</h2>
+      <p>
+        <strong>Marque : </strong> {{ getVehiculeMarque() }}
+        <br />
+        <strong>Modèle : </strong> {{ vehicule.modele }}
+        <br />
+        <strong>Immatriculation : </strong> {{ vehicule.immatriculation }}
+        <br />
+        <strong>Type de moteur : </strong> {{ getVehiculeMotorisation() }}
+        <br />
+      </p>
+    </div>
+  </section>
+
+  <div class="content bg-[#fff] p-4 rounded-2xl shadow-md">
+    <app-facturation-form
+      [services]="(services$ | async) || []"
+      [servicesForm]="serviceForm"
+      (onSubmit)="handleSubmit($event)"
+      [loading]="loading"
+    ></app-facturation-form>
+  </div>
+</section>

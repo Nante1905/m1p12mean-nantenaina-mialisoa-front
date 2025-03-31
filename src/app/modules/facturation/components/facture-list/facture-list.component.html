@@ -1,0 +1,92 @@
+<section class="facture-list mb-8 bg-[#fff] p-4 rounded-2xl shadow-md">
+  <p-table
+    [value]="factures.items || []"
+    size="small"
+    [scrollable]="true"
+    [scrollHeight]="'500px'"
+    dataKey="_id"
+    [expandedRowKeys]="expandedRows"
+  >
+    <ng-template #header>
+      <tr>
+        <th pFrozenColumn></th>
+        <th>Ref</th>
+        <th>Date de facturation</th>
+        <th>Client</th>
+        <th>Vehicule</th>
+        <th>Remise</th>
+        <th>Montant total</th>
+        <th>Actions</th>
+      </tr>
+    </ng-template>
+    <ng-template #body let-facture let-expanded="expanded" let-index="rowIndex">
+      <tr>
+        <td pFrozenColumn>
+          <p-button
+            type="button"
+            pRipple
+            [pRowToggler]="facture"
+            [text]="true"
+            [rounded]="true"
+            [plain]="true"
+          >
+            @if(expanded) {
+            <span class="material-icons"> keyboard_arrow_down </span>
+            } @else {
+            <span class="material-icons"> keyboard_arrow_right </span>
+            }
+          </p-button>
+        </td>
+        <td>
+          {{ facture.ref }}
+        </td>
+        <td>{{ facture.date | date }}</td>
+        <td>{{ facture.client.nom }} {{ facture.client.prenom }}</td>
+        <td>
+          {{ facture.vehicule.modele }} - {{ facture.vehicule.immatriculation }}
+        </td>
+        <td>{{ facture.remise }}</td>
+        <td>{{ facture.montant | currency : "MGA" }}</td>
+        <td>
+          <p-button
+            title="PDF"
+            type="button"
+            size="small"
+            (onClick)="downloadPDF(facture._id, index)"
+            [loading]="loadingExport[index]"
+          >
+            Exporter
+          </p-button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template #expandedrow let-facture>
+      <br />
+      <tr>
+        <th>Désignation</th>
+        <th>Prix</th>
+        <th>Heures</th>
+        <th>Remise</th>
+        <th>Total</th>
+      </tr>
+      @for(service of facture.details; track $index) {
+
+      <tr>
+        <td>{{ service.designation }}</td>
+        <td class="text-right!">{{ service.prix | currency : "MGA" }}</td>
+        <td class="text-right!">{{ service.heures }}</td>
+        <td class="text-right!">{{ service.remise }} %</td>
+        <!-- total -->
+        <td class="text-right!">
+          {{
+            service.prix * service.heures -
+              (service.prix * service.heures * service.remise) / 100
+              | currency : "MGA"
+          }}
+        </td>
+      </tr>
+      }
+      <br />
+    </ng-template>
+  </p-table>
+</section>

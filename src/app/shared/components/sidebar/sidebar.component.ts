@@ -1,6 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { ButtonModule } from 'primeng/button';
+import { AuthService } from '../../services/auth/auth.service';
+import { Utilisateur } from '../../types/Utilisateur';
 
 interface NavItem {
   label: string;
@@ -16,19 +19,23 @@ interface NavItem {
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterLinkActive],
-  providers: [Router],
+  imports: [CommonModule, RouterLink, RouterLinkActive, ButtonModule],
+  providers: [Router, AuthService],
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnInit {
   @Input() collapsed: boolean = true;
   @Output() collapsedChange = new EventEmitter<boolean>();
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) {}
+  ngOnInit(): void {
+    this.utililsateur = this.authService.getCurrentUser() as Utilisateur;
+  }
 
   // isMobile: boolean = false;
   activeMenuItem: string | null = null;
+  utililsateur!: Utilisateur;
 
   navItems: NavItem[] = [
     {
@@ -55,6 +62,11 @@ export class SidebarComponent {
       label: 'Les interventions',
       icon: 'schedule',
       route: 'interventions',
+    },
+    {
+      label: 'Factures',
+      icon: 'payments',
+      route: 'mes_factures',
     },
     // schedule
     // { label: 'Utilisateurs', icon: 'people', route: 'users' },
