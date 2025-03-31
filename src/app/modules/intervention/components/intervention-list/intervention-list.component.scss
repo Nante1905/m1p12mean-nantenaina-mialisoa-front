@@ -1,0 +1,18 @@
+@import "../../../../styles/themes/colors.scss";
+
+#table_intervention {
+  --p-progressbar-height: 1rem !important;
+}
+
+.tache-a-faire {
+  background-color: $error-color;
+}
+.tache-en-cours {
+  background-color: #f5be5a;
+}
+.tache-termine {
+  background-color: $success;
+}
+::ng-deep .p-progressbar-value {
+  background-color: $accent !important;
+}

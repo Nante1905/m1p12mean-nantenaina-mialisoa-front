@@ -1,0 +1,99 @@
+<div class="mb-6 border-b pb-4">
+  <div class="grid grid-cols-2 gap-4">
+    <div>
+      <label class="text-sm font-medium text-gray-600">Nom de la tâche</label>
+      <p class="font-semibold">{{ tache.nom }}</p>
+    </div>
+    <div>
+      <label class="text-sm font-medium text-gray-600">Estimation</label>
+      <p>{{ tache.estimation }} h</p>
+    </div>
+
+    <div>
+      <label class="text-sm font-medium text-gray-600">Responsable(s)</label>
+      @if ((tache.responsables.length > 0 )) {
+      <p>{{ getResponsableOfSelectedTache() }}</p>
+      } @else {
+      <p class="flex items-center">
+        <span class="material-icons text-red-500 text-xs">report</span>
+        Non assigné
+      </p>
+      }
+    </div>
+  </div>
+  @if (immatriculation()) {
+  <div class="mt-4">
+    <a
+      [href]="'app/interventions?immatriculation=' + immatriculation()"
+      class="text-accent hover:underline cursor-pointer"
+    >
+      Historique d'interventions de
+      {{ immatriculation() }}
+    </a>
+  </div>
+  }
+</div>
+
+<div class="mb-6" *hasRole="[ROLES.MANAGER, ROLES.MECANICIEN]">
+  <h3 class="text-lg font-bold mb-4">Commentaires</h3>
+  @if(loadingComments) {
+  <section class="flex flex-col gap-2">
+    <p-skeleton height="5rem" />
+    <p-skeleton height="5rem" />
+  </section>
+  } @else if(commentsLength == 0){
+  <div class="text-gray-500 text-center py-4">
+    Aucun commentaire pour le moment
+  </div>
+  }
+  <div
+    class="div_list_comments space-y-4 pr-2 mb-6 overflow-y-scroll max-h-[20rem]"
+  >
+    @for (comment of (comments$ | async); track comment._id) {
+    <div class="bg-gray-100 p-4 rounded-lg">
+      <div class="flex justify-between items-center mb-2">
+        <span class="font-medium text-gray-700">
+          @if (comment.auteur._id === currentUser.id) {
+          <strong class="text-accent"> Vous </strong>
+          } @else {
+          <strong class="text-secondary">
+            {{ comment.auteur.nom }} {{ comment.auteur.prenom }}
+          </strong>
+
+          }
+        </span>
+        <span class="text-sm text-gray-500">
+          {{ formatDate(comment.date, undefined, true) }}
+        </span>
+      </div>
+      <p>{{ comment.contenu }}</p>
+    </div>
+    }
+  </div>
+</div>
+
+<div class="border-t pt-4">
+  <form (ngSubmit)="addNewComment()" class="flex items-end space-x-4 w-full">
+    <textarea
+      rows="2"
+      cols="30"
+      pTextarea
+      [autoResize]="true"
+      [(ngModel)]="newComment"
+      name="newComment"
+      placeholder="Ajouter un commentaire..."
+      severity="primary"
+      class="flex-[80%]"
+    ></textarea>
+    <p-button
+      type="submit"
+      class="disabled:bg-gray-300 rounded-lg"
+      [disabled]="!newComment"
+      size="small"
+      variant="text"
+      [loading]="sendingComment"
+    >
+      <span class="material-icons">send</span>
+    </p-button>
+  </form>
+</div>

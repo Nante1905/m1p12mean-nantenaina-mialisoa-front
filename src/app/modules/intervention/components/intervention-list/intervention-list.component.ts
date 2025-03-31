@@ -1,12 +1,15 @@
-import { Component, input, output } from '@angular/core';
+import { Component, input, OnInit, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import dayjs from 'dayjs';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
+import { ProgressBar } from 'primeng/progressbar';
 import { TableModule } from 'primeng/table';
+import { TagModule } from 'primeng/tag';
 import { HasRoleDirective } from '../../../../shared/directives/has-role/has-role.directive';
+import { AuthService } from '../../../../shared/services/auth/auth.service';
 import { RoleType } from '../../../../shared/types/Auth';
 import { Intervention } from '../../../../shared/types/Intervention';
 import { Paginated } from '../../../../shared/types/Paginated';
@@ -24,13 +27,17 @@ import { AddTaskFormComponent } from '../add-task-form/add-task-form.component';
     HasRoleDirective,
     DialogModule,
     AddTaskFormComponent,
+    TagModule,
+    ProgressBar,
   ],
   templateUrl: './intervention-list.component.html',
   styleUrl: './intervention-list.component.scss',
 })
-export class InterventionListComponent {
+export class InterventionListComponent implements OnInit {
+  constructor(private authService: AuthService) {}
   visible: boolean = false;
   selectedIntervention: Intervention | null = null;
+
   ROLE = RoleType;
   expandedRows = {};
   interventions = input.required<
@@ -50,6 +57,7 @@ export class InterventionListComponent {
   ROLES = RoleType;
   loading = input<boolean>(false);
   rows = 10;
+  userRole = '';
 
   filter = input<InterventionListFilter>({
     immatriculation: '',
@@ -58,6 +66,10 @@ export class InterventionListComponent {
     limit: 10,
   });
   onPageChange = output<{ page: number }>();
+
+  ngOnInit(): void {
+    this.userRole = this.authService.getCurrentUser()?.role || '';
+  }
 
   changePage = (event: PaginatorState) => {
     this.onPageChange.emit({ page: (event.page ?? 0) + 1 });
@@ -73,4 +85,12 @@ export class InterventionListComponent {
 
     console.log(this.selectedIntervention);
   }
+
+  getClassName = (status: string) => {
+    return `tache-${status
+      .toLowerCase()
+      .replace(/\s+/g, '-')
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')}`;
+  };
 }
