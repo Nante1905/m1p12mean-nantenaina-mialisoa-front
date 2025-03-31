@@ -155,6 +155,7 @@
     [visible]="visible"
     [idIntervention]="selectedIntervention?._id || ''"
     (onClose)="closeDialog()"
+    [users]="(users$ | async) || []"
   ></app-add-task-form>
   }
 </section>

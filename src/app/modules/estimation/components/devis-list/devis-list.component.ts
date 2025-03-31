@@ -20,6 +20,7 @@ import { DividerModule } from 'primeng/divider';
 import { InputTextModule } from 'primeng/inputtext';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { TagModule } from 'primeng/tag';
+import { ToastModule } from 'primeng/toast';
 import { LoaderComponent } from '../../../../shared/components/loader/loader.component';
 import { HasRoleDirective } from '../../../../shared/directives/has-role/has-role.directive';
 import { RoleType } from '../../../../shared/types/Auth';
@@ -44,6 +45,7 @@ import { DevisItemComponent } from '../devis-item/devis-item.component';
     DevisApercuComponent,
     InputTextModule,
     HasRoleDirective,
+    ToastModule,
   ],
   templateUrl: './devis-list.component.html',
   styleUrl: './devis-list.component.scss',

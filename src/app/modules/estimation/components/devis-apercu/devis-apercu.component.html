@@ -52,6 +52,56 @@
     >
     } @else {
     <p></p>
+    } @if(!devis().client._id && devis().status < RDV_DEVIS_STATUS) {
+    <p-button
+      variant="outlined"
+      size="small"
+      rounded
+      severity="info"
+      (onClick)="showDialog()"
+      *hasRole="[userRoles.MANAGER]"
+    >
+      Planifier un rendez-vous
+    </p-button>
     }
   </div>
 </section>
+
+@if(visible) {
+<div class="card flex justify-center">
+  <p-dialog
+    header="planifier le RDV"
+    [modal]="true"
+    [(visible)]="visible"
+    [style]="{ width: '25rem' }"
+    (onHide)="closeDialog()"
+    appendTo="body"
+  >
+    <span class="p-text-secondary block mb-8"
+      >Choissir une date pour planifier le RDV.</span
+    >
+    <div class="flex items-start flex-col mb-6">
+      <label for="username" class="font-semibold w-24">Date</label>
+      <p-datepicker
+        id="username"
+        class="flex-auto w-full"
+        autocomplete="off"
+        appendTo="body"
+        [showTime]="true"
+        [(ngModel)]="dateRdv"
+        [dateFormat]="'dd/mm/yy'"
+      />
+    </div>
+    <p class="my-[20px] text-red-400 text-xs">{{ errors }}</p>
+    <div class="flex justify-end gap-2">
+      <p-button label="Annuler" severity="secondary" (click)="closeDialog()" />
+      <p-button
+        label="Accepter"
+        (click)="handlePlanifyRdv()"
+        [loading]="loadingAcceptRdv"
+      />
+    </div>
+  </p-dialog>
+</div>
+}
+<p-toast></p-toast>
