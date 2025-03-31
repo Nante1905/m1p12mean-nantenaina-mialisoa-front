@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import {
   Component,
   EventEmitter,
+  input,
   Input,
   OnChanges,
   OnInit,
@@ -11,6 +12,7 @@ import {
 import {
   FormBuilder,
   FormGroup,
+  FormsModule,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
@@ -18,11 +20,14 @@ import { MessageService } from 'primeng/api';
 import {
   AutoCompleteCompleteEvent,
   AutoCompleteModule,
+  AutoCompleteSelectEvent,
 } from 'primeng/autocomplete';
+import { AvatarModule } from 'primeng/avatar';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { InputNumber } from 'primeng/inputnumber';
 import { SelectModule } from 'primeng/select';
+import { ToastModule } from 'primeng/toast';
 import { catchError, finalize, map, Observable } from 'rxjs';
 import { ValidationErrorComponent } from '../../../../shared/components/validation-error/validation-error.component';
 import { Service } from '../../../../shared/types/Services';
@@ -46,44 +51,16 @@ import { InterventionService } from '../../services/intervention.service';
     CommonModule,
     ReactiveFormsModule,
     ValidationErrorComponent,
+    FormsModule,
+    AvatarModule,
+    ToastModule,
   ],
   providers: [DevisService, FormBuilder, InterventionService, MessageService],
   templateUrl: './add-task-form.component.html',
   styleUrl: './add-task-form.component.scss',
 })
 export class AddTaskFormComponent implements OnInit, OnChanges {
-  users = [
-    {
-      id: '21350',
-      nom: 'Rakoto',
-      prenom: 'JEan',
-      email: 'jean@test.com',
-    },
-    {
-      id: '213',
-      nom: 'Rabe',
-      prenom: 'Marc',
-      email: 'jean@test.com',
-    },
-    {
-      id: '2150',
-      nom: 'Rakoto',
-      prenom: 'Kely',
-      email: 'jean@test.com',
-    },
-    {
-      id: '210',
-      nom: 'Rasoa',
-      prenom: 'JEan',
-      email: 'jean@test.com',
-    },
-    {
-      id: '20',
-      nom: 'RAvao',
-      prenom: 'Be',
-      email: 'jean@test.com',
-    },
-  ];
+  users = input.required<Utilisateur[]>();
 
   constructor(
     private devisService: DevisService,
@@ -99,6 +76,7 @@ export class AddTaskFormComponent implements OnInit, OnChanges {
   formGroup!: FormGroup;
   services$!: Observable<Service[]>;
 
+  responsables: Utilisateur[] = [];
   suggestions: Partial<Utilisateur>[] = [];
   loading: boolean = false;
 
@@ -137,8 +115,6 @@ export class AddTaskFormComponent implements OnInit, OnChanges {
 
     this.loading = true;
     const { idIntervention, ...data } = this.formGroup.value;
-
-    console.log(data, idIntervention);
     this.interventionService
       .addTache(idIntervention, data)
       .pipe(
@@ -165,8 +141,34 @@ export class AddTaskFormComponent implements OnInit, OnChanges {
       'i'
     );
 
-    this.suggestions = [...this.users].filter((u) =>
+    this.suggestions = [...this.users()].filter((u) =>
       searchRegex.test(`${u.nom} ${u.prenom}`)
     );
+  }
+
+  handleSelectResponsable(event: AutoCompleteSelectEvent) {
+    const selectedUser = event.value as Utilisateur;
+    if (typeof event.value == 'string') {
+      // remove the user from the selected list
+      this.responsables = this.responsables.filter(
+        (user) => user._id !== event.value
+      );
+    } else {
+      // check if the user is already in the selected list
+      const userExists = this.responsables.some(
+        (user) => user._id === selectedUser._id
+      );
+      if (!userExists) {
+        this.responsables.push(selectedUser);
+      }
+      // add the user to the selected list
+    }
+  }
+
+  getResponsableName(users: Utilisateur[]) {
+    return (item: any) => {
+      const label = users.find((u) => u._id === item);
+      return label ? `${label.nom} ${label.prenom}` : item;
+    };
   }
 }

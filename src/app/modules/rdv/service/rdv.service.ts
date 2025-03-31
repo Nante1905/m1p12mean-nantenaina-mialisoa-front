@@ -26,4 +26,11 @@ export class RdvService {
       date,
     });
   }
+
+  planifyRdv(date: string, idDevis: string) {
+    return this.http.post<ApiResponse<any>>(`/rdv/planify`, {
+      idDevis,
+      date,
+    });
+  }
 }

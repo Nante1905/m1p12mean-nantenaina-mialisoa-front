@@ -1,5 +1,6 @@
 import { Component, HostListener, input, OnInit, output } from '@angular/core';
 import dayjs from 'dayjs';
+import { ButtonModule } from 'primeng/button';
 import { DividerModule } from 'primeng/divider';
 import { TagModule } from 'primeng/tag';
 import { formatDateToReadable } from '../../../../shared/helpers/date';
@@ -13,7 +14,7 @@ import { RequiredDevisType } from '../../types/Devis';
 
 @Component({
   selector: 'app-devis-item',
-  imports: [TagModule, DividerModule],
+  imports: [TagModule, DividerModule, ButtonModule],
   templateUrl: './devis-item.component.html',
   styleUrl: './devis-item.component.scss',
 })

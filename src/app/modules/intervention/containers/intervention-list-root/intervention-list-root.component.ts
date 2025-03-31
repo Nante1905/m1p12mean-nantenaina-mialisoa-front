@@ -10,6 +10,7 @@ import { defaultPaginatedData } from '../../../../shared/constants/pagination';
 import { Intervention } from '../../../../shared/types/Intervention';
 import { Paginated } from '../../../../shared/types/Paginated';
 import { showToastError } from '../../../../shared/utils/form.utils';
+import { UtilisateurService } from '../../../utilisateurs/service/utilisateur.service';
 import { InterventionListComponent } from '../../components/intervention-list/intervention-list.component';
 import { InterventionService } from '../../services/intervention.service';
 import { InterventionListFilter } from '../../types/intervention.type';
@@ -23,6 +24,7 @@ import { InterventionListFilter } from '../../types/intervention.type';
     FormsModule,
     InputTextModule,
   ],
+  providers: [InterventionService, MessageService, UtilisateurService],
   templateUrl: './intervention-list-root.component.html',
   styleUrl: './intervention-list-root.component.scss',
 })
@@ -30,7 +32,8 @@ export class InterventionListRootComponent implements OnInit {
   constructor(
     private interventionService: InterventionService,
     private messageService: MessageService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private userService: UtilisateurService
   ) {}
   defaultInterventions = defaultPaginatedData;
 
