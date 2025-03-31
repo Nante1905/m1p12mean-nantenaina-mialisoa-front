@@ -5,6 +5,7 @@
     [scrollable]="true"
     [expandedRowKeys]="expandedRows"
     dataKey="_id"
+    id="table_intervention"
   >
     <ng-template #header>
       <tr>
@@ -60,8 +61,10 @@
             }}
           </p>
         </td>
-        <td>Statut ??</td>
-        <td class="flex gap-5">
+        <td style="width: 10rem">
+          <p-progressbar [value]="intervention.progression || 0" />
+        </td>
+        <td class="">
           <a
             [href]="'/app/tableau-taches/' + intervention._id"
             class="flex items-center gap-0.5 text-primary"
@@ -96,13 +99,19 @@
     <ng-template #expandedrow let-intervention>
       <tr class="">
         <th colspan="4" class="text-left pt-8">Taches</th>
-        <th class="text-left pt-8">Status</th>
+        <th class="text-center pt-8">Status</th>
         <th class="text-left pt-8">Responsables</th>
       </tr>
       @for(tache of intervention.taches; track $index) {
       <tr>
         <td colspan="4">{{ tache.nom }}</td>
-        <td>{{ tache.status }}</td>
+        <td class="!text-center">
+          <p-tag
+            class="!text-white !text-xs"
+            [styleClass]="getClassName(tache.status)"
+            [value]="tache.status"
+          />
+        </td>
         <td>
           <ul>
             @for(resp of tache.responsables; track $index) {

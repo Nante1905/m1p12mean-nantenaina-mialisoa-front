@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TableauTacheComponent } from './tableau-tache.component';
+import { TicketDetailsComponent } from './ticket-details.component';
 
-describe('TableauTacheComponent', () => {
-  let component: TableauTacheComponent;
-  let fixture: ComponentFixture<TableauTacheComponent>;
+describe('TicketDetailsComponent', () => {
+  let component: TicketDetailsComponent;
+  let fixture: ComponentFixture<TicketDetailsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TableauTacheComponent]
+      imports: [TicketDetailsComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(TableauTacheComponent);
+    fixture = TestBed.createComponent(TicketDetailsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

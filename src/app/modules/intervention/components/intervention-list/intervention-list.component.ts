@@ -5,7 +5,9 @@ import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
+import { ProgressBar } from 'primeng/progressbar';
 import { TableModule } from 'primeng/table';
+import { TagModule } from 'primeng/tag';
 import { HasRoleDirective } from '../../../../shared/directives/has-role/has-role.directive';
 import { RoleType } from '../../../../shared/types/Auth';
 import { Intervention } from '../../../../shared/types/Intervention';
@@ -24,6 +26,8 @@ import { AddTaskFormComponent } from '../add-task-form/add-task-form.component';
     HasRoleDirective,
     DialogModule,
     AddTaskFormComponent,
+    TagModule,
+    ProgressBar,
   ],
   templateUrl: './intervention-list.component.html',
   styleUrl: './intervention-list.component.scss',
@@ -73,4 +77,12 @@ export class InterventionListComponent {
 
     console.log(this.selectedIntervention);
   }
+
+  getClassName = (status: string) => {
+    return `tache-${status
+      .toLowerCase()
+      .replace(/\s+/g, '-')
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')}`;
+  };
 }

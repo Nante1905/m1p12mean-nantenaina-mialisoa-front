@@ -8,6 +8,7 @@ export interface Intervention {
   vehicule: Vehicule;
   client: Utilisateur;
   taches?: Tache[];
+  progression?: number;
 }
 
 export interface ActionTache {
@@ -34,8 +35,8 @@ export interface Tache {
 }
 
 export interface Comment {
-  id: number;
-  text: string;
-  author: string;
-  createdAt: Date;
+  _id: number;
+  contenu: string;
+  auteur: Utilisateur;
+  date: string;
 }
