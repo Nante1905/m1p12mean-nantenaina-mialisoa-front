@@ -1,0 +1,9 @@
+.footer {
+  background: rgb(255 255 255 / 72%) !important;
+  margin-left: 80px;
+  flex: 1;
+  transition: margin-left 0.3s;
+  &.expand {
+    margin-left: 280px;
+  }
+}

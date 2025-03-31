@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ToastModule } from 'primeng/toast';
 import { SidebarComponent } from '../../shared/components/sidebar/sidebar.component';
+import { FooterComponent } from '../footer/footer.component';
 
 @Component({
   selector: 'app-main',
-  imports: [SidebarComponent, RouterOutlet, ToastModule],
+  imports: [SidebarComponent, RouterOutlet, ToastModule, FooterComponent],
   templateUrl: './main.component.html',
   styleUrl: './main.component.scss',
 })

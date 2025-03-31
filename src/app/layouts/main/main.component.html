@@ -1,7 +1,11 @@
-<div class="app-container">
+<div class="app-container flex flex-col">
   <app-sidebar (collapsedChange)="toggleSidebar($event)"></app-sidebar>
   <div class="main-content" [class.expand]="sidebarCollapsed">
     <router-outlet></router-outlet>
   </div>
+  <app-footer
+    class="mt-8 overflow-hidden"
+    [expand]="sidebarCollapsed"
+  ></app-footer>
   <p-toast></p-toast>
 </div>
