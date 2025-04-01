@@ -1,6 +1,7 @@
 <div class="login-container">
   <div class="login-card">
-    <h2 class="login-title">Connexion</h2>
+    <h2 class="login-title" [class.mb-4]="subtitle == ''">Connexion</h2>
+    <p class="text-center mb-4">{{ subtitle }}</p>
     <form [formGroup]="loginForm" (ngSubmit)="handleSubmit()">
       <div class="field">
         <label for="email">Email</label>

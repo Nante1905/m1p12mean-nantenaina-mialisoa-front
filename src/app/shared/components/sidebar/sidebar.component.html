@@ -33,7 +33,7 @@
 
   <div class="sidebar-footer">
     <div class="user-info" *ngIf="!collapsed" title="Profile">
-      <p-button class="user-avatar-small">
+      <p-button class="user-avatar-small" (onClick)="logOut()">
         <span class="material-icons">logout</span>
       </p-button>
       <div class="user-details">
@@ -44,15 +44,9 @@
       </div>
     </div>
     <div class="user-icon" *ngIf="collapsed">
-      <p-button class="user-avatar-small">
+      <p-button class="user-avatar-small" (onClick)="logOut()">
         <span class="material-icons">logout</span>
       </p-button>
-      <!-- <img
-        src="assets/user-avatar.jpg"
-        alt="User Avatar"
-        class="user-avatar-small"
-        title="Profile"
-      /> -->
     </div>
   </div>
 </aside>

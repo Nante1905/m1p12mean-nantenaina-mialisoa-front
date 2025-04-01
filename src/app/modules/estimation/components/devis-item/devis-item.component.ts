@@ -8,8 +8,8 @@ import {
   getDevisStatusClassname,
   getDevisStatusLabel,
 } from '../../../../shared/helpers/devis';
-import { AuthService } from '../../../../shared/services/auth/auth.service';
 import { Devis } from '../../../../shared/types/Devis';
+import { AuthService } from '../../../auth/services/auth.service';
 import { RequiredDevisType } from '../../types/Devis';
 
 @Component({
