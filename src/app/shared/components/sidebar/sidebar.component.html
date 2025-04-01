@@ -21,6 +21,7 @@
             class="nav-link"
             [title]="collapsed ? item.label : ''"
             (click)="onclick($event)"
+            *hasRole="item.auth || []"
           >
             <span class="material-icons nav-icon">{{ item.icon }}</span>
             <span *ngIf="!collapsed" class="nav-text">{{ item.label }}</span>

@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { AuthService } from '../../../modules/auth/services/auth.service';
+import { HasRoleDirective } from '../../directives/has-role/has-role.directive';
 import { RoleType } from '../../types/Auth';
 import { Utilisateur } from '../../types/Utilisateur';
 
@@ -15,12 +16,19 @@ interface NavItem {
     text: string;
     variant: 'primary' | 'success' | 'danger' | 'warning';
   };
+  auth?: RoleType[];
 }
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterLinkActive, ButtonModule],
+  imports: [
+    CommonModule,
+    RouterLink,
+    RouterLinkActive,
+    ButtonModule,
+    HasRoleDirective,
+  ],
   providers: [Router, AuthService],
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],
@@ -48,26 +56,31 @@ export class SidebarComponent implements OnInit {
       label: 'Devis',
       icon: 'request_quote',
       route: 'devis',
+      auth: [RoleType.CLIENT, RoleType.MANAGER],
     },
     {
       label: 'Creer Devis',
       icon: 'request_quote',
       route: 'creation-devis',
+      auth: [RoleType.MANAGER],
     },
     {
       label: 'Rendez-vous',
       icon: 'schedule',
       route: 'rdv',
+      auth: [RoleType.MANAGER, RoleType.CLIENT],
     },
     {
       label: 'Les interventions',
       icon: 'schedule',
       route: 'interventions',
+      auth: [RoleType.MANAGER, RoleType.MECANICIEN],
     },
     {
       label: 'Factures',
       icon: 'payments',
       route: 'mes_factures',
+      auth: [RoleType.CLIENT, RoleType.MANAGER],
     },
     // schedule
     // { label: 'Utilisateurs', icon: 'people', route: 'users' },
