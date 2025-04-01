@@ -14,7 +14,6 @@ import { ListRdvRootComponent } from './modules/rdv/containers/list-rdv-root/lis
 import { authGuard } from './shared/guards/auth/auth.guard';
 import { roleGuard } from './shared/guards/auth/role.guard';
 import { RoleType } from './shared/types/Auth';
-import { TestComponentComponent } from './test/components/test-component/test-component.component';
 
 export const routes: Routes = [
   {
@@ -29,7 +28,7 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        component: TestComponentComponent,
+        component: InterventionListRootComponent,
       },
       {
         path: 'factures',
