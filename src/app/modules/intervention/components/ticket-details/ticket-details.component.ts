@@ -10,10 +10,10 @@ import { catchError, finalize, map, Observable, of, tap } from 'rxjs';
 import { HasRoleDirective } from '../../../../shared/directives/has-role/has-role.directive';
 import { formatDateToReadable } from '../../../../shared/helpers/date';
 import { getUserFullname } from '../../../../shared/helpers/user';
-import { AuthService } from '../../../../shared/services/auth/auth.service';
 import { RoleType } from '../../../../shared/types/Auth';
 import { Comment, Tache } from '../../../../shared/types/Intervention';
 import { Utilisateur } from '../../../../shared/types/Utilisateur';
+import { AuthService } from '../../../auth/services/auth.service';
 import { InterventionService } from '../../services/intervention.service';
 
 @Component({

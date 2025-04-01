@@ -26,13 +26,13 @@ import {
   getDevisStatusClassname,
   getDevisStatusLabel,
 } from '../../../../shared/helpers/devis';
-import { AuthService } from '../../../../shared/services/auth/auth.service';
 import { RoleType } from '../../../../shared/types/Auth';
 import { Devis } from '../../../../shared/types/Devis';
 import {
   showToastError,
   showToastSuccess,
 } from '../../../../shared/utils/form.utils';
+import { AuthService } from '../../../auth/services/auth.service';
 import { RdvService } from '../../../rdv/service/rdv.service';
 import {
   CREATED_DEVIS_STATUS,

@@ -1,9 +1,6 @@
 .app-container {
   display: flex;
-  height: 100vh;
   width: 100%;
-  overflow: hidden;
-  // background-color: rgba(203, 238, 255, 0.39)
   background-color: var(--color-white);
 }
 
@@ -13,8 +10,16 @@
   padding: 30px;
   margin-left: 70px;
   transition: margin-left 0.3s;
+  min-height: calc(100vh - 5rem - 2rem);
   // background-color: rgba(203, 238, 255, 0.39);
 
+  &.expand {
+    margin-left: 280px;
+  }
+}
+
+.footer {
+  margin-left: 80px;
   &.expand {
     margin-left: 280px;
   }

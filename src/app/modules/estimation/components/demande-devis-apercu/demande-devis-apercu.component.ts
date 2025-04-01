@@ -11,10 +11,10 @@ import {
   getDemandeDevisStatusClassname,
   getDemandeDevisStatusLabel,
 } from '../../../../shared/helpers/devis';
-import { AuthService } from '../../../../shared/services/auth/auth.service';
 import { RoleType } from '../../../../shared/types/Auth';
 import { DemandeDevis } from '../../../../shared/types/DemandeDevis';
 import { Marque } from '../../../../shared/types/Marque';
+import { AuthService } from '../../../auth/services/auth.service';
 import { DISPO_DEMANDE_DEVIS_STATUS } from '../../constants/devis';
 import { RequiredDemandeDevisType } from '../../types/DemandeDevis';
 

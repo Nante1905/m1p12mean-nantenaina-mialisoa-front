@@ -2,7 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
-import { AuthService } from '../../services/auth/auth.service';
+import { AuthService } from '../../../modules/auth/services/auth.service';
+import { RoleType } from '../../types/Auth';
 import { Utilisateur } from '../../types/Utilisateur';
 
 interface NavItem {
@@ -93,11 +94,13 @@ export class SidebarComponent implements OnInit {
     this.collapsedChange.emit(this.collapsed);
   }
 
-  // private checkScreenSize() {
-  //   this.isMobile = window.innerWidth < 768;
-  //   if (this.isMobile && !this.collapsed) {
-  //     this.collapsed = true;
-  //     this.collapsedChange.emit(this.collapsed);
-  //   }
-  // }
+  logOut() {
+    const loggedOut = this.authService.logOut();
+
+    if (loggedOut?.role == RoleType.CLIENT) {
+      this.router.navigateByUrl('/login');
+    } else {
+      this.router.navigateByUrl('/bo/login');
+    }
+  }
 }

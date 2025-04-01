@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { MainComponent } from './layouts/main/main.component';
+import { LoginBoRootComponent } from './modules/auth/container/login-bo-root/login-bo-root.component';
 import { LoginRootComponent } from './modules/auth/container/login-root/login-root.component';
 import { CreationDevisFormRootComponent } from './modules/estimation/containers/creation-devis-form-root/creation-devis-form-root.component';
 import { DemandeDevisRootComponent } from './modules/estimation/containers/demande-devis-root/demande-devis-root.component';
@@ -72,5 +73,9 @@ export const routes: Routes = [
   {
     path: 'login',
     component: LoginRootComponent,
+  },
+  {
+    path: 'bo/login',
+    component: LoginBoRootComponent,
   },
 ];

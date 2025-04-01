@@ -62,38 +62,45 @@
           </p>
         </td>
         <td style="width: 10rem">
-          <p-progressbar [value]="intervention.progression || 0" />
+          <div>
+            <small> {{ intervention.progression || 0 }}% </small>
+            <p-progressbar [value]="intervention.progression || 0">
+              <ng-template #content let-value> </ng-template>
+            </p-progressbar>
+          </div>
         </td>
-        <td class="">
+        <td>
           @if(userRole == ROLES.MANAGER ||(userRole == ROLES.MECANICIEN &&
           intervention.isResponsable)) {
-          <a
-            [href]="'/app/tableau-taches/' + intervention._id"
-            class="flex items-center gap-0.5 text-primary"
-          >
-            <span class="material-icons">table_chart</span>
-            Tableau Kanban
-          </a>
-          <p-button
-            class="flex items-center gap-0.5"
-            severity="secondary"
-            size="small"
-            raised="true"
-            ariaLabel="Ajouter une tache"
-            title="Ajouter une tache"
-            (onClick)="openDialog(index)"
-            *hasRole="[ROLES.MANAGER, ROLES.MECANICIEN]"
-          >
-            <span class="material-icons">add</span>
-            <!-- Ajouter une taches -->
-          </p-button>
-          <a
-            [href]="'/app/factures?intervention=' + intervention._id"
-            class="flex items-center gap-0.5"
-            *hasRole="[ROLES.MANAGER]"
-          >
-            <p-button size="small" severity="secondary"> Facturer </p-button>
-          </a>
+          <div class="flex flex-wrap items-center justify-around">
+            <a
+              [href]="'/app/tableau-taches/' + intervention._id"
+              class="flex items-center gap-0.5 text-primary"
+            >
+              <span class="material-icons">table_chart</span>
+              Tableau Kanban
+            </a>
+            <p-button
+              class="flex items-center gap-0.5"
+              severity="secondary"
+              size="small"
+              raised="true"
+              ariaLabel="Ajouter une tache"
+              title="Ajouter une tache"
+              (onClick)="openDialog(index)"
+              *hasRole="[ROLES.MANAGER]"
+            >
+              <span class="material-icons">add</span>
+              <!-- Ajouter une taches -->
+            </p-button>
+            <a
+              [href]="'/app/factures?intervention=' + intervention._id"
+              class="flex items-center gap-0.5"
+              *hasRole="[ROLES.MANAGER]"
+            >
+              <p-button size="small" severity="secondary"> Facturer </p-button>
+            </a>
+          </div>
           }
         </td>
       </tr>
