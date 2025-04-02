@@ -1,0 +1,112 @@
+<div>
+  <h1 class="text-center my-8">{{ title() }}</h1>
+  <form
+    [formGroup]="inscriptionForm"
+    (ngSubmit)="handleSubmit()"
+    class="flex flex-col gap-y-4"
+  >
+    <div>
+      <input
+        formControlName="nom"
+        type="text"
+        pInputText
+        class="w-full"
+        placeholder="Nom"
+      />
+      <app-validation-error
+        [control]="inscriptionForm.controls['nom']"
+      ></app-validation-error>
+    </div>
+    <div>
+      <input
+        formControlName="prenom"
+        type="text"
+        pInputText
+        class="w-full"
+        placeholder="Prénom"
+      />
+      <app-validation-error
+        [control]="inscriptionForm.controls['prenom']"
+      ></app-validation-error>
+    </div>
+    <div>
+      <input
+        formControlName="email"
+        type="email"
+        pInputText
+        class="w-full"
+        placeholder="Adresse email"
+      />
+      <app-validation-error
+        [control]="inscriptionForm.controls['email']"
+      ></app-validation-error>
+    </div>
+    <div>
+      <input
+        formControlName="telephone"
+        type="tel"
+        pInputText
+        class="w-full"
+        placeholder="Téléphone"
+      />
+      <app-validation-error
+        [control]="inscriptionForm.controls['telephone']"
+      ></app-validation-error>
+    </div>
+    <div>
+      <p-password
+        id="password"
+        formControlName="pwd"
+        [toggleMask]="true"
+        [feedback]="false"
+        placeholder="Mot de passe"
+        styleClass="w-full"
+        [style]="{ width: '100%' }"
+        inputStyleClass="w-full"
+      >
+      </p-password>
+      <app-validation-error
+        [control]="inscriptionForm.controls['pwd']"
+      ></app-validation-error>
+      @if(addGenerateRandomPwd()) {
+      <div class="flex justify-end">
+        <p-button
+          size="small"
+          variant="text"
+          severity="secondary"
+          (onClick)="generatePwd()"
+          >Générer mot de passe</p-button
+        >
+      </div>
+      }
+    </div>
+    @if(addConfirmPwd()) {
+    <div>
+      <p-password
+        id="password"
+        formControlName="confirmPwd"
+        [toggleMask]="true"
+        [feedback]="false"
+        placeholder="Confirmer le mot de passe"
+        styleClass="w-full"
+        [style]="{ width: '100%' }"
+        inputStyleClass="w-full"
+      >
+      </p-password>
+      <app-validation-error
+        [control]="inscriptionForm.controls['confirmPwd']"
+      ></app-validation-error>
+    </div>
+    }
+
+    <div class="action-buttons">
+      <p-button
+        type="submit"
+        label="Se connecter"
+        [loading]="false"
+        styleClass="w-full"
+      >
+      </p-button>
+    </div>
+  </form>
+</div>

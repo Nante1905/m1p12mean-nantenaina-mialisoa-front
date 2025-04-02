@@ -15,6 +15,7 @@ import { MecanoListRootComponent } from './modules/utilisateurs/containers/mecan
 import { authGuard } from './shared/guards/auth/auth.guard';
 import { roleGuard } from './shared/guards/auth/role.guard';
 import { RoleType } from './shared/types/Auth';
+import { TestComponentComponent } from './test/components/test-component/test-component.component';
 
 export const routes: Routes = [
   {
@@ -27,6 +28,10 @@ export const routes: Routes = [
     component: MainComponent,
     canActivate: [authGuard],
     children: [
+      {
+        path: 'test',
+        component: TestComponentComponent,
+      },
       {
         path: '',
         component: InterventionListRootComponent,
