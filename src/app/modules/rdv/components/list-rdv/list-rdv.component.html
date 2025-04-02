@@ -49,7 +49,7 @@
           {{ rdv.devis.client.tel || rdv.devis.client.email }}
         </td>
         <td>{{ rdv.dateCreation | date }}</td>
-        <td>
+        <td *hasRole="[ROLES.MANAGER]">
           <p-button
             title="Accepter"
             type="button"

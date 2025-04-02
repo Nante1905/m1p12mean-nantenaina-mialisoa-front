@@ -1,0 +1,75 @@
+<section class="dashboard-root">
+  <div class="dashboard-root__header mb-8 bg-[#fff] p-4 rounded-2xl shadow-md">
+    <h1 class="dashboard-root__title">Dashboard</h1>
+  </div>
+
+  <section class="dashboard-root_content">
+    <div class="recettes">
+      <app-card-number
+        [title]="'Recettes du mois'"
+        [value]="recettesOfActualMonth"
+        [suffixe]="'MGA'"
+      ></app-card-number>
+    </div>
+    <div class="intervention">
+      <app-card-number
+        [title]="'Interventions du mois'"
+        [value]="nbrIntervention"
+      >
+        <span class="text-xs italic mt-2">
+          <p>
+            Dont
+            <span class="text-accent">{{ nbrInterventionByApp }}%</span>
+            provient de votre app
+          </p>
+        </span>
+      </app-card-number>
+    </div>
+    <div
+      class="chart-recettes w-[500px] mb-8 bg-[#fff] p-4 rounded-2xl shadow-md"
+    >
+      <span>Evolution </span>
+      <app-bar-chart
+        [labels]="recettesLabels"
+        [datasets]="recettesData"
+      ></app-bar-chart>
+    </div>
+
+    <div class="top-services mb-8 bg-[#fff] p-4 rounded-2xl shadow-md">
+      <p class="font-bold">Top 5 des services</p>
+      <p-table [value]="topServiceData">
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th>Services</th>
+            <th>Demandes pour la période</th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-service let-columns="columns">
+          <tr>
+            <td>{{ service.nom }}</td>
+            <td class="text-right!">{{ service.count }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+    <div class="top-clients mb-8 bg-[#fff] p-4 rounded-2xl shadow-md">
+      <p class="font-bold">Top 5 des clients</p>
+      <p-table [value]="topClientData">
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th>Clients</th>
+            <th>Interventions pour la période</th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-client let-columns="columns">
+          <tr>
+            <td>{{ client.nom }} {{ client.prenom }}</td>
+            <td class="text-right!">{{ client.count }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </section>
+</section>

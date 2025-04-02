@@ -18,6 +18,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
+import { HasRoleDirective } from '../../../../shared/directives/has-role/has-role.directive';
+import { RoleType } from '../../../../shared/types/Auth';
 import { showToastError } from '../../../../shared/utils/form.utils';
 import { AcceptRdvEventPayload } from '../../types/AcceptRdvEventPayload';
 import { RdvDemandeDto } from '../../types/RdvDemandeDto';
@@ -37,6 +39,7 @@ import { RdvStatusChipComponent } from '../rdv-status-chip/rdv-status-chip.compo
     DatePickerModule,
     FormsModule,
     ToastModule,
+    HasRoleDirective,
   ],
   providers: [MessageService],
   templateUrl: './list-rdv.component.html',
@@ -44,6 +47,7 @@ import { RdvStatusChipComponent } from '../rdv-status-chip/rdv-status-chip.compo
 })
 export class ListRdvComponent implements OnChanges {
   constructor(private messageService: MessageService) {}
+  ROLES = RoleType;
 
   expandedRows = {};
   @Input() rdvs!: RdvDemandeDto | null;

@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { MainComponent } from './layouts/main/main.component';
 import { LoginBoRootComponent } from './modules/auth/container/login-bo-root/login-bo-root.component';
 import { LoginRootComponent } from './modules/auth/container/login-root/login-root.component';
+import { DashboardRootComponent } from './modules/dashboard/containers/dashboard-root/dashboard-root.component';
 import { CreationDevisFormRootComponent } from './modules/estimation/containers/creation-devis-form-root/creation-devis-form-root.component';
 import { DemandeDevisRootComponent } from './modules/estimation/containers/demande-devis-root/demande-devis-root.component';
 import { DetailsDevisRootComponent } from './modules/estimation/containers/details-devis-root/details-devis-root.component';
@@ -67,6 +68,10 @@ export const routes: Routes = [
       {
         path: 'tableau-taches/:id',
         component: TableauTacheRootComponent,
+      },
+      {
+        path: 'dashboard',
+        component: DashboardRootComponent,
       },
     ],
   },

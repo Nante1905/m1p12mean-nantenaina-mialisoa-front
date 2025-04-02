@@ -48,9 +48,10 @@ export class SidebarComponent implements OnInit {
 
   navItems: NavItem[] = [
     {
-      label: 'Accueil',
-      icon: 'home',
-      route: 'home',
+      label: 'Tableau de bord',
+      icon: 'dashboard',
+      route: 'dashboard',
+      auth: [RoleType.MANAGER],
     },
     {
       label: 'Devis',
@@ -74,7 +75,7 @@ export class SidebarComponent implements OnInit {
       label: 'Les interventions',
       icon: 'schedule',
       route: 'interventions',
-      auth: [RoleType.MANAGER, RoleType.MECANICIEN],
+      auth: [RoleType.MANAGER, RoleType.MECANICIEN, RoleType.CLIENT],
     },
     {
       label: 'Factures',
