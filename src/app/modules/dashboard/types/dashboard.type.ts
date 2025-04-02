@@ -33,3 +33,16 @@ export interface TopClientDTO {
   prenom: string;
   email: string;
 }
+
+export interface NbrInterventionMecDTO {
+  interventions: number;
+}
+
+export interface WorkedHour {
+  heures: number;
+}
+
+export interface TaskResumeDTO {
+  count: number;
+  status: string;
+}

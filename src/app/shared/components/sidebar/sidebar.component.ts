@@ -51,7 +51,7 @@ export class SidebarComponent implements OnInit {
       label: 'Tableau de bord',
       icon: 'dashboard',
       route: 'dashboard',
-      auth: [RoleType.MANAGER],
+      auth: [RoleType.MANAGER, RoleType.MECANICIEN],
     },
     {
       label: 'Devis',
