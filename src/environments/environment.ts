@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  apiBaseUrl: 'http://localhost:5555',
+  apiBaseUrl: 'http://m1mean-api.lumos-it.studio',
 };
