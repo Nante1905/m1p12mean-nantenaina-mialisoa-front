@@ -46,7 +46,7 @@ export class BarChartComponent implements OnInit, OnDestroy, OnChanges {
         datasets: this.datasets,
       },
       options: {
-        aspectRatio: 1,
+        aspectRatio: 2.5,
       },
     });
   }

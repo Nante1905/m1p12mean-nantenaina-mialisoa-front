@@ -52,9 +52,11 @@ export class LoginBoRootComponent {
             this.authService.setCurrentUser(user);
 
             if (user.role == RoleType.MANAGER) {
-              this.router.navigateByUrl('/app/rdv');
+              // this.router.navigate(['/app/rdv']);
+              window.location.href = '/app/rdv';
             } else if (user.role == RoleType.MECANICIEN) {
-              this.router.navigateByUrl('/app/interventions');
+              // this.router.navigate(['/app/interventions']);
+              window.location.href = '/app/interventions';
             }
           }
         }

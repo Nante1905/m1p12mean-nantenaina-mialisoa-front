@@ -1,0 +1,39 @@
+<div class="flex justify-between gap-15 mb-8">
+  <div class="interventions w-[50%]">
+    <app-card-number
+      [title]="'Interventions du mois'"
+      [value]="nbrInterventionMec"
+    ></app-card-number>
+  </div>
+  <div class="worked-hour w-[50%]">
+    <app-card-number
+      [title]="'Heures travaillées du mois'"
+      [value]="workedHoursMec"
+      [suffixe]="'h'"
+    ></app-card-number>
+  </div>
+</div>
+<div class="task-resume mb-8 bg-[#fff] p-4 rounded-2xl shadow-md">
+  <p class="font-bold mb-5">Resume des taches</p>
+  <p-table [value]="taskResume">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Status</th>
+        <th class="text-right!">Nombre de taches</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-task>
+      <tr>
+        <td>
+          <p-tag
+            class="!text-white !text-xs"
+            [styleClass]="getClassName(task.status)"
+            [value]="task.status"
+          />
+        </td>
+        <td class="text-right!">{{ task.count }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
