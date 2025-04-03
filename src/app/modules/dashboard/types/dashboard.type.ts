@@ -20,6 +20,7 @@ export interface RecettesDashboardResponse {
 export interface NbrInterventionStat {
   interventions: number;
   interventionsByAppPercent: number;
+  interventionsByApp: number;
 }
 
 export interface TopServiceDTO {
