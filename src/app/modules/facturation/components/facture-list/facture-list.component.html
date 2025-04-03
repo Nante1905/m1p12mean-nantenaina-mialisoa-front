@@ -43,7 +43,8 @@
         <td>{{ facture.date | date }}</td>
         <td>{{ facture.client.nom }} {{ facture.client.prenom }}</td>
         <td>
-          {{ facture.vehicule.modele }} - {{ facture.vehicule.immatriculation }}
+          {{ facture.vehicule.marque.nom }} {{ facture.vehicule.modele }} -
+          {{ facture.vehicule.immatriculation }}
         </td>
         <td>{{ facture.remise }}</td>
         <td>{{ facture.montant | currency : "MGA" }}</td>
