@@ -1,9 +1,9 @@
 <div>
-  <h1 class="text-center my-8">{{ title() }}</h1>
+  <h1 class="text-center mt-4 mb-8">{{ title() }}</h1>
   <form
     [formGroup]="inscriptionForm"
     (ngSubmit)="handleSubmit()"
-    class="flex flex-col gap-y-4"
+    class="flex flex-col gap-y-2"
   >
     <div>
       <input
@@ -103,14 +103,18 @@
     </div>
     }
 
-    <div class="action-buttons">
-      <p-button
-        type="submit"
-        label="Se connecter"
-        [loading]="loading()"
-        styleClass="w-full"
-      >
+    <div class="action-buttons mx-auto">
+      <p-button type="submit" [label]="submitBtnText()" [loading]="loading()">
       </p-button>
+      @if(connexionUrl()) {
+      <p-divider>OU</p-divider>
+      <p class="text-center">
+        <a [href]="connexionUrl()" class="text-accent hover:underline"
+          >Se connecter</a
+        >
+      </p>
+
+      }
     </div>
   </form>
 </div>

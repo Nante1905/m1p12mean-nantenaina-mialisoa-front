@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import { DividerModule } from 'primeng/divider';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { ValidationErrorComponent } from '../../../../shared/components/validation-error/validation-error.component';
@@ -28,6 +29,7 @@ import { InscriptionFormDTO } from '../../types/inscription';
     PasswordModule,
     ButtonModule,
     ReactiveFormsModule,
+    DividerModule,
   ],
   templateUrl: './inscription-form.component.html',
   styleUrl: './inscription-form.component.scss',
@@ -39,9 +41,11 @@ export class InscriptionFormComponent implements OnInit, OnDestroy {
   loading = input<boolean>(false);
   addGenerateRandomPwd = input<boolean>(false);
   addConfirmPwd = input<boolean>(false);
+  connexionUrl = input<string>('');
 
   onSubmit = output<InscriptionFormDTO>();
   passwordMismatched: boolean = false;
+  submitBtnText = input<string>("S'inscrire");
 
   constructor(private formBuilder: FormBuilder) {}
 
