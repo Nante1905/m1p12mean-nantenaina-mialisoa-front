@@ -67,14 +67,17 @@ export class ListRdvRootComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchDemandeRdv(1, 50);
-    this.fetchAcceptedRdv(
-      dayjs().startOf('month').toISOString().toString(),
-      dayjs().endOf('month').toISOString().toString()
-    );
+    // this.fetchAcceptedRdv(
+    //   dayjs().startOf('month').toISOString().toString(),
+    //   dayjs().endOf('month').toISOString().toString()
+    // );
   }
 
   handleDateChange({ start, end }: { start: string; end: string }) {
-    this.fetchAcceptedRdv(start, end);
+    this.fetchAcceptedRdv(
+      dayjs(start).toISOString(),
+      dayjs(end).add(23, 'hour').add(59, 'minute').toISOString()
+    );
     // console.log('start', start);
     // console.log('end', end);
   }
