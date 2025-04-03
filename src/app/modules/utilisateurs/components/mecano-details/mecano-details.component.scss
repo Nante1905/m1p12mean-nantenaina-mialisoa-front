@@ -1,0 +1,5 @@
+@import "../../../../styles/badge-devis.scss";
+
+.tache-tag {
+  @extend %status-tag;
+}

@@ -25,7 +25,7 @@ export class LoginBoRootComponent {
   loginLoading = false;
   defaultLogin: LoginFormDto = {
     email: 'nantemino15@gmail.com',
-    password: 'nante',
+    password: 'admin123',
   };
 
   handleLoginSubmit(loginForm: LoginFormDto) {

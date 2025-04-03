@@ -1,6 +1,9 @@
 <div class="login-container">
   <div class="login-card">
-    <h2 class="login-title" [class.mb-4]="subtitle == ''">Connexion</h2>
+    <div class="flex items-center flex-col">
+      <img src="/logo.webp" alt="logo" width="60px" />
+      <h2 class="login-title" [class.mb-4]="subtitle == ''">Connexion</h2>
+    </div>
     <p class="text-center mb-4">{{ subtitle }}</p>
     <form [formGroup]="loginForm" (ngSubmit)="handleSubmit()">
       <div class="field">
@@ -51,6 +54,15 @@
           [disabled]="loginForm.invalid"
         >
         </p-button>
+        @if(inscriptionUrl) {
+        <p-divider>OU</p-divider>
+        <p class="text-center">
+          <a [href]="inscriptionUrl" class="text-accent hover:underline"
+            >S'inscrire</a
+          >
+        </p>
+
+        }
       </div>
     </form>
   </div>

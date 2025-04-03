@@ -1,0 +1,41 @@
+<section>
+  <header class="rdv-root__header mb-8 bg-[#fff] p-4 rounded-2xl shadow-md">
+    <h1 class="text-2xl">Les mécaniciens</h1>
+  </header>
+  <div class="flex justify-end my-4">
+    <p-button (onClick)="openInscriptionModal()"
+      >Enregistrer un mécanicien</p-button
+    >
+  </div>
+  <section class="bg-[#fff] p-8 rounded-xl shadow-md">
+    <app-mecano-list
+      [mecaniciens]="(mecanoData$ | async) || defaultMecanoData"
+      [loading]="loading"
+      (onSubmitFilter)="onSubmitFilter($event)"
+      (onSelectMecano)="onSelectMecano($event)"
+    ></app-mecano-list>
+  </section>
+  <p-drawer
+    [(visible)]="showDetailsMecano"
+    position="right"
+    styleClass="!w-[90%] md:!w-[70%] lg:!w-[30rem]"
+  >
+    <app-mecano-details [mecano]="selectedMecano"></app-mecano-details>
+  </p-drawer>
+</section>
+
+@if(showInscriptionModal) {
+<p-dialog
+  header="Enregistrer un mécanicien"
+  [modal]="true"
+  [(visible)]="showInscriptionModal"
+>
+  <app-inscription-form
+    title=""
+    [addGenerateRandomPwd]="true"
+    (onSubmit)="handleInscription($event)"
+    [loading]="loadingInscription"
+  />
+</p-dialog>
+
+}

@@ -83,6 +83,12 @@ export class SidebarComponent implements OnInit {
       route: 'mes_factures',
       auth: [RoleType.CLIENT, RoleType.MANAGER],
     },
+    {
+      label: 'Mécaniciens',
+      icon: 'badge',
+      route: 'mecaniciens',
+      auth: [RoleType.MANAGER],
+    },
     // schedule
     // { label: 'Utilisateurs', icon: 'people', route: 'users' },
     // { label: 'Projets', icon: 'work', route: 'projects' },

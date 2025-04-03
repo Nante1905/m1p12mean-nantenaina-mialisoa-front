@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 // PrimeNG Imports
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
+import { DividerModule } from 'primeng/divider';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { ValidationErrorComponent } from '../../../../shared/components/validation-error/validation-error.component';
@@ -27,6 +28,7 @@ import { LoginFormDto } from '../../types/LoginFormDto';
     ButtonModule,
     CheckboxModule,
     ValidationErrorComponent,
+    DividerModule,
   ],
   templateUrl: './login-form.component.html',
   styleUrl: './login-form.component.scss',
@@ -35,6 +37,7 @@ export class LoginFormComponent implements OnInit {
   loginForm!: FormGroup;
   @Input() loading = false;
   @Input() subtitle = '';
+  @Input() inscriptionUrl = '';
   onSubmit = output<LoginFormDto>();
   @Input() defaultValue: LoginFormDto = {
     email: '',

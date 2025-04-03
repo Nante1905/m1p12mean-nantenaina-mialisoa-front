@@ -6,16 +6,11 @@
       : 'hidden'
   "
 >
-  @for (controlError of control.errors | keyvalue; track controlError.key) { @if
-  ( errorLabels[controlError.key] || (customErrorLabels &&
-  customErrorLabels[controlError.key]) ) {
-  <div class="text-wrapper text-red-500">
+  @for (controlError of control.errors | keyvalue; track controlError.key) {
+  <span class="text-wrapper text-red-500">
     <small>
-      {{
-        (customErrorLabels && customErrorLabels[controlError.key]) ||
-          errorLabels[controlError.key]
-      }}
+      {{ getErrorMessage(controlError) }}
     </small>
-  </div>
-  } }
+  </span>
+  }
 </div>
