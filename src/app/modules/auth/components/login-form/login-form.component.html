@@ -54,6 +54,15 @@
           [disabled]="loginForm.invalid"
         >
         </p-button>
+        @if(inscriptionUrl) {
+        <p-divider>OU</p-divider>
+        <p class="text-center">
+          <a [href]="inscriptionUrl" class="text-accent hover:underline"
+            >S'inscrire</a
+          >
+        </p>
+
+        }
       </div>
     </form>
   </div>
