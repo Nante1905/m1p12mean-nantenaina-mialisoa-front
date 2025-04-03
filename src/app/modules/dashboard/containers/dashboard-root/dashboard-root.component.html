@@ -1,0 +1,12 @@
+<section class="dashboard-root">
+  <div class="dashboard-root__header mb-8 bg-[#fff] p-4 rounded-2xl shadow-md">
+    <h1 class="dashboard-root__title">Dashboard</h1>
+  </div>
+  <section class="dashboard-root_content" *hasRole="[ROLES.MANAGER]">
+    <app-dashboard-mgr-root></app-dashboard-mgr-root>
+  </section>
+
+  <section *hasRole="[ROLES.MECANICIEN]">
+    <app-dashboard-mec-root></app-dashboard-mec-root>
+  </section>
+</section>

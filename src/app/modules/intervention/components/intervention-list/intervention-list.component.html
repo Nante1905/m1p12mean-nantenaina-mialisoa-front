@@ -111,12 +111,13 @@
           Taches
         </th>
         <th
-          colspan="3"
+          colspan="2"
           class="text-left pt-8"
           *hasRole="[ROLE.CLIENT, ROLE.MECANICIEN]"
         >
           Taches
         </th>
+        <th class="text-center pt-8">Estimation</th>
         <th class="text-center pt-8">Status</th>
         <th class="text-left pt-8">Responsables</th>
       </tr>
@@ -125,6 +126,9 @@
         <td colspan="4" *hasRole="[ROLE.MANAGER]">{{ tache.nom }}</td>
         <td colspan="3" *hasRole="[ROLE.CLIENT, ROLE.MECANICIEN]">
           {{ tache.nom }}
+        </td>
+        <td *hasRole="[ROLE.MANAGER]" class="!text-right">
+          {{ tache.estimation }} Heures
         </td>
 
         <td class="!text-center">

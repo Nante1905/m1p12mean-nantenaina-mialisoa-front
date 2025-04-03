@@ -1,0 +1,11 @@
+@import "../../../../styles/themes/colors.scss";
+
+.tache-a-faire {
+  background-color: $error-color;
+}
+.tache-en-cours {
+  background-color: #f5be5a;
+}
+.tache-termine {
+  background-color: $success;
+}
