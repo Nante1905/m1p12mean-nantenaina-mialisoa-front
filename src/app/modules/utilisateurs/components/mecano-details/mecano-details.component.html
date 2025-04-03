@@ -1,0 +1,36 @@
+<div class="flex justify-between items-center pb-2 mb-4">
+  <h2 class="font-bold">Information sur le mécanicien</h2>
+</div>
+<p-divider></p-divider>
+
+<div class="mb-4">
+  <p>
+    <strong>Nom :</strong>
+    {{
+      mecano()
+        ? getFullName({ nom: mecano()?.nom, prenom: mecano()?.prenom })
+        : ""
+    }}
+  </p>
+  <p><strong>Email :</strong> {{ mecano()?.email }}</p>
+  <p><strong>Téléphone :</strong> {{ mecano()?.telephone }}</p>
+</div>
+<p-divider></p-divider>
+
+<div>
+  <h3 class="font-semibold mb-2">Tâches assignées</h3>
+  <ul class="space-y-2">
+    @for (tache of (mecano()?.taches ); track tache._id) {
+    <li class="flex gap-2 items-center p-2 rounded-md">
+      <p-tag
+        class="tache-tag !text-white"
+        [ngClass]="getClassName(tache.status)"
+      >
+        {{ tache.status }}
+      </p-tag>
+      <span>{{ tache.nom }}</span>
+    </li>
+
+    }
+  </ul>
+</div>

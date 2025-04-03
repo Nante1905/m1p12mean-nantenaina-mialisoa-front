@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, KeyValue } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 
@@ -37,6 +37,7 @@ export const VALIDATION_ERROR_LABELS: Record<string, string> = {
     'Le mot de passe doit contenir au moins une majuscule, une minuscule, un chiffre et un caractère spécial',
   whitespace: 'Ce champ ne peut pas contenir uniquement des espaces',
   noSpecialChars: 'Les caractères spéciaux ne sont pas autorisés',
+  invalidConfirmPassword: 'Ne correspond pas au mot de passe',
 };
 
 @Component({
@@ -49,4 +50,15 @@ export class ValidationErrorComponent {
   errorLabels: Record<string, string> = VALIDATION_ERROR_LABELS;
   @Input() control!: AbstractControl;
   @Input() customErrorLabels?: Record<string, string>;
+
+  getErrorMessage(controlError: KeyValue<string, any>) {
+    return (this.customErrorLabels &&
+      this.customErrorLabels[controlError.key]) ||
+      controlError.key == 'minlength'
+      ? `La longueur minimale est de ${controlError.value.requiredLength} caractères`
+      : controlError.key ==
+        `La longueur maximale est de ${controlError.value.requiredLength} caractères`
+      ? ''
+      : this.errorLabels[controlError.key];
+  }
 }

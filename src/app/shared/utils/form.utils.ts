@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { UntypedFormGroup } from '@angular/forms';
+import { AbstractControl, UntypedFormGroup, ValidatorFn } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 
 export const markFormAsTouchedAndDirty = (form: UntypedFormGroup) => {
@@ -41,4 +41,26 @@ export const handleResponse = (res: any, messageService: MessageService) => {
   } else {
     showToastSuccess(res.message, messageService);
   }
+};
+
+export const phoneRegex = /^0(32|33|34|37|38|20)[0-9]{7}$/;
+
+export const validatePhoneNumber = (): ValidatorFn => {
+  return (control: AbstractControl) => {
+    if (phoneRegex.test(control.value)) {
+      return null;
+    }
+    return { invalidPhoneNumber: { value: control.value } };
+  };
+};
+
+export const generateRandomPassword = (length: number = 8) => {
+  const characters =
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!#_';
+  let password = '';
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    password += characters[randomIndex];
+  }
+  return password;
 };

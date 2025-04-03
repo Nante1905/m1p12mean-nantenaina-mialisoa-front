@@ -11,6 +11,8 @@ import { FactureListRootComponent } from './modules/facturation/containers/factu
 import { InterventionListRootComponent } from './modules/intervention/containers/intervention-list-root/intervention-list-root.component';
 import { TableauTacheRootComponent } from './modules/intervention/containers/tableau-tache-root/tableau-tache-root.component';
 import { ListRdvRootComponent } from './modules/rdv/containers/list-rdv-root/list-rdv-root.component';
+import { InscriptionRootComponent } from './modules/utilisateurs/containers/inscription-root/inscription-root.component';
+import { MecanoListRootComponent } from './modules/utilisateurs/containers/mecano-list-root/mecano-list-root.component';
 import { authGuard } from './shared/guards/auth/auth.guard';
 import { roleGuard } from './shared/guards/auth/role.guard';
 import { RoleType } from './shared/types/Auth';
@@ -28,24 +30,32 @@ export const routes: Routes = [
     canActivate: [authGuard],
     children: [
       {
-        path: '',
+        path: 'test',
         component: TestComponentComponent,
+      },
+      {
+        path: '',
+        component: InterventionListRootComponent,
       },
       {
         path: 'factures',
         component: FacturationFormRootComponent,
+        canActivate: [roleGuard([RoleType.MANAGER])],
       },
       {
         path: 'mes_factures',
         component: FactureListRootComponent,
+        canActivate: [roleGuard([RoleType.CLIENT, RoleType.MANAGER])],
       },
       {
         path: 'devis',
         component: DevisListRootComponent,
+        canActivate: [roleGuard([RoleType.MANAGER, RoleType.CLIENT])],
       },
       {
         path: 'demande-devis',
         component: DemandeDevisRootComponent,
+        canActivate: [roleGuard([RoleType.MANAGER, RoleType.CLIENT])],
       },
       {
         path: 'creation-devis',
@@ -55,10 +65,12 @@ export const routes: Routes = [
       {
         path: 'devis/:id',
         component: DetailsDevisRootComponent,
+        canActivate: [roleGuard([RoleType.MANAGER, RoleType.CLIENT])],
       },
       {
         path: 'rdv',
         component: ListRdvRootComponent,
+        canActivate: [roleGuard([RoleType.MANAGER, RoleType.CLIENT])],
       },
       {
         path: 'interventions',
@@ -67,6 +79,11 @@ export const routes: Routes = [
       {
         path: 'tableau-taches/:id',
         component: TableauTacheRootComponent,
+      },
+      {
+        path: 'mecaniciens',
+        component: MecanoListRootComponent,
+        canActivate: [roleGuard([RoleType.MANAGER])],
       },
     ],
   },
@@ -78,4 +95,5 @@ export const routes: Routes = [
     path: 'bo/login',
     component: LoginBoRootComponent,
   },
+  { path: 'inscription', component: InscriptionRootComponent },
 ];

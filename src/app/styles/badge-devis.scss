@@ -22,4 +22,13 @@
   &.demande-attente-de-reponse {
     background-color: $error-color !important;
   }
+  &.tache-a-faire {
+    background-color: $error-color;
+  }
+  &.tache-en-cours {
+    background-color: #f5be5a;
+  }
+  &.tache-termine {
+    background-color: $success;
+  }
 }
