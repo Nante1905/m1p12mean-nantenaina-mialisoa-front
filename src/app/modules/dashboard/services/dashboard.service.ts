@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApiResponse } from '../../../shared/types/ApiResponse';
+import { PeriodeFilter } from '../constants/dashboard';
 import {
   NbrInterventionMecDTO,
   NbrInterventionStat,
@@ -17,39 +18,57 @@ import {
 export class DashboardService {
   constructor(private http: HttpClient) {}
 
-  getRecettesData() {
+  getRecettesData(range?: PeriodeFilter) {
+    const filter = range ? `?start=${range?.start}&end=${range?.end}` : ``;
     return this.http.get<ApiResponse<RecettesDashboardResponse>>(
-      '/dashboard/recettes'
+      `/dashboard/recettes${filter}`
     );
   }
 
-  getNbrInterventionStat() {
+  getNbrInterventionStat(range?: PeriodeFilter) {
+    const filter = range ? `?start=${range?.start}&end=${range?.end}` : ``;
+
     return this.http.get<ApiResponse<NbrInterventionStat>>(
-      '/dashboard/intervention-stat'
+      `/dashboard/intervention-stat${filter}`
     );
   }
 
-  getTopServices() {
+  getTopServices(range?: PeriodeFilter) {
+    const filter = range ? `?start=${range?.start}&end=${range?.end}` : ``;
     return this.http.get<ApiResponse<TopServiceDTO[]>>(
-      '/dashboard/service-stat'
+      `/dashboard/service-stat${filter}`
     );
   }
 
-  getTopClient() {
-    return this.http.get<ApiResponse<TopClientDTO[]>>('/dashboard/client-stat');
+  getTopClient(range?: PeriodeFilter) {
+    const filter = range ? `?start=${range?.start}&end=${range?.end}` : ``;
+
+    return this.http.get<ApiResponse<TopClientDTO[]>>(
+      `/dashboard/client-stat${filter}`
+    );
   }
 
-  getNbrInterventionOfMec() {
+  getNbrInterventionOfMec(range?: PeriodeFilter) {
+    const filter = range ? `?start=${range?.start}&end=${range?.end}` : ``;
+
     return this.http.get<ApiResponse<NbrInterventionMecDTO>>(
-      '/dashboard/intervention-mec-stat'
+      `/dashboard/intervention-mec-stat${filter}`
     );
   }
 
-  getWorkedHoursOfMec() {
-    return this.http.get<ApiResponse<WorkedHour>>('/dashboard/heure-mec-stat');
+  getWorkedHoursOfMec(range?: PeriodeFilter) {
+    const filter = range ? `?start=${range?.start}&end=${range?.end}` : ``;
+
+    return this.http.get<ApiResponse<WorkedHour>>(
+      `/dashboard/heure-mec-stat${filter}`
+    );
   }
 
-  getTaskResume() {
-    return this.http.get<ApiResponse<TaskResumeDTO[]>>('/dashboard/task-stat');
+  getTaskResume(range?: PeriodeFilter) {
+    const filter = range ? `?start=${range?.start}&end=${range?.end}` : ``;
+
+    return this.http.get<ApiResponse<TaskResumeDTO[]>>(
+      `/dashboard/task-stat${filter}`
+    );
   }
 }

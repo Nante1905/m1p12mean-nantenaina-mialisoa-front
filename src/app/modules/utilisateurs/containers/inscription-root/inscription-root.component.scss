@@ -1,0 +1,49 @@
+.inscription-section {
+  min-height: 100vh;
+  height: inherit;
+  .background {
+    background-image: url("/inscription-client.webp");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-color: #9691915e;
+    background-blend-mode: multiply;
+  }
+
+  .form-container {
+    height: fit-content;
+    padding: 2rem 1rem;
+    border-radius: 32px;
+    width: fit-content;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem 0rem;
+
+    @media (width >= 768px) {
+      min-height: 100%;
+      width: 40% !important;
+      border-bottom-left-radius: 32px;
+      border-top-left-radius: 32px;
+      border-top-right-radius: 0 !important;
+      border-bottom-right-radius: 0 !important;
+      margin: 0 !important;
+    }
+
+    @media (768px <=width <= 900px) {
+      width: 60% !important;
+      margin: 0 !important;
+    }
+
+    .form-card {
+      width: 100%;
+
+      @media (width >= 768px) {
+        width: 95% !important;
+        margin: auto;
+      }
+    }
+  }
+}

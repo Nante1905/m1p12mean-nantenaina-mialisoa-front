@@ -1,10 +1,24 @@
 <div class="flex justify-between gap-15 mb-8">
+  @if(loadingNbrInterventionMec) {
+  <p-skeleton
+    width="100%"
+    height="8rem"
+    class="w-[50%] rounded-2xl"
+  ></p-skeleton>
+  } @else {
   <div class="interventions w-[50%]">
     <app-card-number
       [title]="'Interventions du mois'"
       [value]="nbrInterventionMec"
     ></app-card-number>
   </div>
+  } @if(loadingWorkedHoursMec) {
+  <p-skeleton
+    width="100%"
+    height="8rem"
+    class="w-[50%] rounded-2xl"
+  ></p-skeleton>
+  } @else {
   <div class="worked-hour w-[50%]">
     <app-card-number
       [title]="'Heures travaillées du mois'"
@@ -12,6 +26,7 @@
       [suffixe]="'h'"
     ></app-card-number>
   </div>
+  }
 </div>
 <div class="task-resume mb-8 bg-[#fff] p-4 rounded-2xl shadow-md">
   <p class="font-bold mb-5">Resume des taches</p>

@@ -2,11 +2,25 @@
   <div class="dashboard-root__header mb-8 bg-[#fff] p-4 rounded-2xl shadow-md">
     <h1 class="dashboard-root__title">Dashboard</h1>
   </div>
+  <p-card class="flex justify-center items-center gap-4 my-8">
+    <div class="flex justify-center items-center gap-4 my-4">
+      <p>Période</p>
+      <p-datepicker
+        [(ngModel)]="rangeDates"
+        selectionMode="range"
+        [readonlyInput]="true"
+        dateFormat="dd MM yy"
+        (onSelect)="selectDate($event)"
+        class="min-w-[250px] datepicker-container"
+        rangeSeparator="à"
+      />
+    </div>
+  </p-card>
   <section class="dashboard-root_content" *hasRole="[ROLES.MANAGER]">
-    <app-dashboard-mgr-root></app-dashboard-mgr-root>
+    <app-dashboard-mgr-root [filterDate]="filterDate"></app-dashboard-mgr-root>
   </section>
 
   <section *hasRole="[ROLES.MECANICIEN]">
-    <app-dashboard-mec-root></app-dashboard-mec-root>
+    <app-dashboard-mec-root [filterDate]="filterDate"></app-dashboard-mec-root>
   </section>
 </section>
