@@ -9,3 +9,8 @@
 .tache-termine {
   background-color: $success;
 }
+.datepicker-container {
+  ::ng-deep .p-datepicker {
+    width: 100%;
+  }
+}

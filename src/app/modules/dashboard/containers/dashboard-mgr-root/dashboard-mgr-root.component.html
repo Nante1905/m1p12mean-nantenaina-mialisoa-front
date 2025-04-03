@@ -1,4 +1,11 @@
-<div class="head-numbers flex w-full justify-between gap-15 mb-8">
+<div class="head-numbers flex w-full justify-between gap-15 mb-8 flex-wrap">
+  @if(loadingRecettesData) {
+  <p-skeleton
+    width="100%"
+    height="8rem"
+    class="w-[50%] rounded-2xl"
+  ></p-skeleton>
+  } @else {
   <div class="recettes w-[50%]">
     <app-card-number
       [title]="'Recettes du mois'"
@@ -7,6 +14,13 @@
       class="block! h-full!"
     ></app-card-number>
   </div>
+  } @if(loadingNbrIntervention) {
+  <p-skeleton
+    width="100%"
+    height="8rem"
+    class="w-[50%] rounded-2xl"
+  ></p-skeleton>
+  } @else {
   <div class="intervention w-[50%]">
     <app-card-number
       [title]="'Interventions du mois'"
@@ -15,13 +29,17 @@
       <span class="text-xs italic mt-2 text-right">
         <p>
           Dont
-          <span class="text-accent">{{ nbrInterventionByApp }}%</span>
+          <strong class="text-accent"
+            >{{ nbrInterventionByAppPercent }}% ({{ nbrInterventionByApp }})
+          </strong>
           provient de votre app
         </p>
       </span>
     </app-card-number>
   </div>
+  }
 </div>
+
 <div class="chart-recettes w-[100%] mb-8 bg-[#fff] p-4 rounded-2xl shadow-md">
   <span>Evolution </span>
   <app-bar-chart
@@ -29,8 +47,14 @@
     [datasets]="recettesData"
   ></app-bar-chart>
 </div>
-
-<div class="flex w-full gap-15 mb-8 justify-between">
+<div class="flex w-full gap-15 mb-8 justify-between mt-8 flex-wrap">
+  @if(loadingTopServiceData) {
+  <p-skeleton
+    width="100%"
+    height="8rem"
+    class="w-[50%] rounded-2xl"
+  ></p-skeleton>
+  } @else {
   <div class="top-services mb-8 bg-[#fff] p-4 rounded-2xl shadow-md">
     <p class="font-bold">Top 5 des services</p>
     <p-table [value]="topServiceData">
@@ -49,6 +73,13 @@
       </ng-template>
     </p-table>
   </div>
+  } @if(loadingTopClientData) {
+  <p-skeleton
+    width="100%"
+    height="8rem"
+    class="w-[50%] rounded-2xl"
+  ></p-skeleton>
+  } @else {
   <div class="top-clients mb-8 bg-[#fff] p-4 rounded-2xl shadow-md">
     <p class="font-bold">Top 5 des clients</p>
     <p-table [value]="topClientData">
@@ -67,4 +98,5 @@
       </ng-template>
     </p-table>
   </div>
+  }
 </div>
