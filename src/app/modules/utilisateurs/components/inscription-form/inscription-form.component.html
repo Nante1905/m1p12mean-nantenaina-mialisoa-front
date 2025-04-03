@@ -93,9 +93,13 @@
         inputStyleClass="w-full"
       >
       </p-password>
-      <app-validation-error
-        [control]="inscriptionForm.controls['confirmPwd']"
-      ></app-validation-error>
+      @if(inscriptionForm.controls['confirmPwd'].hasError('passwordsMismatch')
+      && addConfirmPwd()) {
+
+      <span class="text-wrapper text-red-500">
+        <small> Ne correspond pas au mot de passe. </small>
+      </span>
+      }
     </div>
     }
 

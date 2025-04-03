@@ -41,27 +41,31 @@ export class InscriptionFormComponent implements OnInit, OnDestroy {
   addConfirmPwd = input<boolean>(false);
 
   onSubmit = output<InscriptionFormDTO>();
+  passwordMismatched: boolean = false;
 
   constructor(private formBuilder: FormBuilder) {}
 
   ngOnDestroy(): void {
-    console.log('unmoint');
-
     this.inscriptionForm.reset();
   }
 
   ngOnInit(): void {
-    this.inscriptionForm = this.formBuilder.group({
-      nom: ['', Validators.required],
-      prenom: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      telephone: ['', [Validators.required, validatePhoneNumber()]],
-      pwd: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPwd: ['', this.validateConfirmPwd(this.addConfirmPwd())],
-    });
+    this.inscriptionForm = this.formBuilder.group(
+      {
+        nom: ['', Validators.required],
+        prenom: ['', Validators.required],
+        email: ['', [Validators.required, Validators.email]],
+        telephone: ['', [Validators.required, validatePhoneNumber()]],
+        pwd: ['', [Validators.required, Validators.minLength(6)]],
+        confirmPwd: [''],
+      },
+      { validators: this.passwordsMatchValidator }
+    );
   }
 
   handleSubmit() {
+    console.log(this.inscriptionForm.controls);
+
     if (this.inscriptionForm.invalid) {
       markFormAsTouchedAndDirty(this.inscriptionForm);
     } else {
@@ -74,19 +78,17 @@ export class InscriptionFormComponent implements OnInit, OnDestroy {
     this.inscriptionForm.patchValue({ pwd: generateRandomPassword(8) });
   }
 
-  validateConfirmPwd = (isRequired: boolean): ValidatorFn => {
-    return (control: AbstractControl) => {
-      const parent = control.parent;
-      if (!parent) {
-        return null;
-      }
-      const pwdValue = parent.get('pwd')?.value;
-      const confirmPwdValue = control.value;
-      if (!isRequired || pwdValue === confirmPwdValue) {
-        return null;
-      }
+  passwordsMatchValidator: ValidatorFn = (group: AbstractControl) => {
+    const password = group.get('pwd');
+    const confirmPassword = group.get('confirmPwd');
 
-      return { invalidConfirmPassword: { value: control.value } };
-    };
+    if (!password || !confirmPassword) return null;
+
+    if (password.value !== confirmPassword.value) {
+      confirmPassword.setErrors({ passwordsMismatch: true });
+    } else {
+      confirmPassword.setErrors(null);
+    }
+    return null;
   };
 }

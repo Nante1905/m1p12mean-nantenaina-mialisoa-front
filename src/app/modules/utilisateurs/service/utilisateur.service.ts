@@ -42,4 +42,11 @@ export class UtilisateurService {
       data
     );
   }
+
+  registerClient(data: InscriptionFormDTO) {
+    return this.http.post<ApiResponse<Utilisateur>>(
+      `/utilisateurs/inscription`,
+      data
+    );
+  }
 }

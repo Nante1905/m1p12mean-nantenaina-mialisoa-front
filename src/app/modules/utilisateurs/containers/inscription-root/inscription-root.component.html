@@ -1,0 +1,11 @@
+<section>
+  <p-card class="block w-[90%] md:w-[50%] mx-auto">
+    <app-inscription-form
+      [addConfirmPwd]="true"
+      title="Créez votre compte"
+      (onSubmit)="handleInscription($event)"
+      [loading]="loading"
+    />
+  </p-card>
+</section>
+<p-toast></p-toast>
