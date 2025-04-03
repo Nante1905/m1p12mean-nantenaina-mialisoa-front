@@ -58,7 +58,7 @@ export class MecanoListComponent implements OnChanges {
 
   renderDateArrivee(date?: string) {
     if (date) {
-      return dayjs(date).format('DD mmmm YYYY');
+      return dayjs(date).format('DD MMMM YYYY');
     }
     return '';
   }

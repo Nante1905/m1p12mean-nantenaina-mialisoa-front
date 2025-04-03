@@ -7,6 +7,7 @@ import {
   TacheWithStringStatus,
   Utilisateur,
 } from '../../../shared/types/Utilisateur';
+import { InscriptionFormDTO } from '../types/inscription';
 import { MecanoListFilter } from '../types/mecano';
 
 @Injectable({
@@ -32,6 +33,13 @@ export class UtilisateurService {
   findAllTachesOf(userId: string) {
     return this.http.get<ApiResponse<TacheWithStringStatus[]>>(
       `/utilisateurs/${userId}/taches`
+    );
+  }
+
+  registerMecano(data: InscriptionFormDTO) {
+    return this.http.post<ApiResponse<Utilisateur>>(
+      `/utilisateurs/mecaniciens/inscription`,
+      data
     );
   }
 }

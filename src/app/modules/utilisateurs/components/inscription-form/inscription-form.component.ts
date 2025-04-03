@@ -1,4 +1,4 @@
-import { Component, input, OnInit, output } from '@angular/core';
+import { Component, input, OnDestroy, OnInit, output } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -32,7 +32,7 @@ import { InscriptionFormDTO } from '../../types/inscription';
   templateUrl: './inscription-form.component.html',
   styleUrl: './inscription-form.component.scss',
 })
-export class InscriptionFormComponent implements OnInit {
+export class InscriptionFormComponent implements OnInit, OnDestroy {
   inscriptionForm!: FormGroup;
 
   title = input<string>('Inscription');
@@ -43,6 +43,12 @@ export class InscriptionFormComponent implements OnInit {
   onSubmit = output<InscriptionFormDTO>();
 
   constructor(private formBuilder: FormBuilder) {}
+
+  ngOnDestroy(): void {
+    console.log('unmoint');
+
+    this.inscriptionForm.reset();
+  }
 
   ngOnInit(): void {
     this.inscriptionForm = this.formBuilder.group({
@@ -59,7 +65,9 @@ export class InscriptionFormComponent implements OnInit {
     if (this.inscriptionForm.invalid) {
       markFormAsTouchedAndDirty(this.inscriptionForm);
     } else {
-      this.onSubmit.emit(this.inscriptionForm.value);
+      const { confirmPwd, ...rest } = this.inscriptionForm.value;
+
+      this.onSubmit.emit(this.addConfirmPwd() ? { confirmPwd, ...rest } : rest);
     }
   }
   generatePwd() {

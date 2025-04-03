@@ -43,7 +43,7 @@ export const handleResponse = (res: any, messageService: MessageService) => {
   }
 };
 
-export const phoneRegex = /0(32|33|34|37|38|20)[0-9]{7}/;
+export const phoneRegex = /^0(32|33|34|37|38|20)[0-9]{7}$/;
 
 export const validatePhoneNumber = (): ValidatorFn => {
   return (control: AbstractControl) => {

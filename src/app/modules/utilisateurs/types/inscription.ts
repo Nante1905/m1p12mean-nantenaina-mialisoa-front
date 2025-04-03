@@ -4,4 +4,5 @@ export interface InscriptionFormDTO {
   email: string;
   telephone: string;
   pwd: string;
+  confirmPwd?: string;
 }

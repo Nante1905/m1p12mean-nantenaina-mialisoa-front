@@ -86,6 +86,7 @@ export class SidebarComponent implements OnInit {
       label: 'Mécaniciens',
       icon: 'badge',
       route: 'mecaniciens',
+      auth: [RoleType.MANAGER],
     },
     // schedule
     // { label: 'Utilisateurs', icon: 'people', route: 'users' },
