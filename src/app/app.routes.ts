@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
 import { MainComponent } from './layouts/main/main.component';
+import { authGuard } from './shared/guards/auth/auth.guard';
 import { roleGuard } from './shared/guards/auth/role.guard';
 import { RoleType } from './shared/types/Auth';
-import { TestComponentComponent } from './test/components/test-component/test-component.component';
 
 export const routes: Routes = [
   {
@@ -13,12 +13,8 @@ export const routes: Routes = [
   {
     path: 'app',
     component: MainComponent,
-    // canActivate: [authGuard],
+    canActivate: [authGuard],
     children: [
-      {
-        path: 'test',
-        component: TestComponentComponent,
-      },
       {
         path: '',
         // component: InterventionListRootComponent,
@@ -26,6 +22,9 @@ export const routes: Routes = [
           import(
             './modules/intervention/containers/intervention-list-root/intervention-list-root.component'
           ).then((m) => m.InterventionListRootComponent),
+        canActivate: [
+          roleGuard([RoleType.MANAGER, RoleType.CLIENT, RoleType.MECANICIEN]),
+        ],
       },
       {
         path: 'factures',
@@ -97,6 +96,9 @@ export const routes: Routes = [
           import(
             './modules/intervention/containers/intervention-list-root/intervention-list-root.component'
           ).then((m) => m.InterventionListRootComponent),
+        canActivate: [
+          roleGuard([RoleType.MANAGER, RoleType.CLIENT, RoleType.MECANICIEN]),
+        ],
       },
       {
         path: 'tableau-taches/:id',
@@ -105,6 +107,8 @@ export const routes: Routes = [
           import(
             './modules/intervention/containers/tableau-tache-root/tableau-tache-root.component'
           ).then((m) => m.TableauTacheRootComponent),
+
+        canActivate: [roleGuard([RoleType.MANAGER, RoleType.MECANICIEN])],
       },
       {
         path: 'dashboard',
@@ -113,6 +117,7 @@ export const routes: Routes = [
           import(
             './modules/dashboard/containers/dashboard-root/dashboard-root.component'
           ).then((m) => m.DashboardRootComponent),
+        canActivate: [roleGuard([RoleType.MANAGER, RoleType.MECANICIEN])],
       },
       {
         path: 'mecaniciens',

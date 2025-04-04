@@ -7,6 +7,8 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { catchError, finalize, map, Observable, of } from 'rxjs';
 import { defaultPaginatedData } from '../../../../shared/constants/pagination';
+import { HasRoleDirective } from '../../../../shared/directives/has-role/has-role.directive';
+import { RoleType } from '../../../../shared/types/Auth';
 import { Intervention } from '../../../../shared/types/Intervention';
 import { Paginated } from '../../../../shared/types/Paginated';
 import { showToastError } from '../../../../shared/utils/form.utils';
@@ -23,6 +25,7 @@ import { InterventionListFilter } from '../../types/intervention.type';
     ButtonModule,
     FormsModule,
     InputTextModule,
+    HasRoleDirective,
   ],
   providers: [InterventionService, MessageService, UtilisateurService],
   templateUrl: './intervention-list-root.component.html',
@@ -36,6 +39,7 @@ export class InterventionListRootComponent implements OnInit {
     private userService: UtilisateurService
   ) {}
   defaultInterventions = defaultPaginatedData;
+  ROLES = RoleType;
 
   interventions$!: Observable<Paginated<Intervention>>;
   loadingIntervention!: boolean;

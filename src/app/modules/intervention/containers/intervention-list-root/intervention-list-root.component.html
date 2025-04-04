@@ -20,6 +20,7 @@
           placeholder="Client"
           [(ngModel)]="filter.nom"
           name="filter.nom"
+          *hasRole="[ROLES.MANAGER, ROLES.MECANICIEN]"
         />
         <p-button variant="outlined" severity="help" type="submit">
           <span class="material-icons">search</span>
